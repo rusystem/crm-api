@@ -6,7 +6,7 @@ import (
 	"github.com/rusystem/crm-api/internal/config"
 	"github.com/rusystem/crm-api/internal/repository"
 	"github.com/rusystem/crm-api/pkg/domain"
-	tools "github.com/rusystem/crm-api/tools"
+	"github.com/rusystem/crm-api/tools"
 	"time"
 )
 

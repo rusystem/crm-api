@@ -74,7 +74,7 @@ func (h *Handler) getCompanyInfo(c *gin.Context) {
 func (h *Handler) updateCompany(c *gin.Context) {
 	var req domain.CompanyUpdate
 	if err := c.ShouldBindJSON(&req); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -130,7 +130,7 @@ func (h *Handler) updateCompany(c *gin.Context) {
 func (h *Handler) createCompany(c *gin.Context) {
 	var req domain.CreateCompany
 	if err := c.ShouldBindJSON(&req); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 

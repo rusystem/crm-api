@@ -88,7 +88,7 @@ func (h *Handler) getUserInfo(c *gin.Context) {
 func (h *Handler) updateProfile(c *gin.Context) {
 	var req domain.UserProfileUpdate
 	if err := c.ShouldBindJSON(&req); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -200,7 +200,7 @@ func (h *Handler) getUser(c *gin.Context) {
 func (h *Handler) updateUser(c *gin.Context) {
 	var req domain.UserUpdate
 	if err := c.ShouldBindJSON(&req); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 

@@ -84,7 +84,7 @@ func (h *Handler) initMaterialsRoutes(api *gin.RouterGroup) {
 func (h *Handler) createPlanning(c *gin.Context) {
 	var inp domain.CreatePlanningMaterial
 	if err := c.ShouldBindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -206,7 +206,7 @@ func (h *Handler) updatePlanningById(c *gin.Context) {
 
 	var inp domain.UpdatePlanningMaterial
 	if err := c.ShouldBindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -407,7 +407,7 @@ func (h *Handler) movePlanningToPurchased(c *gin.Context) {
 func (h *Handler) createPurchased(c *gin.Context) {
 	var inp domain.CreatePurchasedMaterial
 	if err := c.ShouldBindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -532,7 +532,7 @@ func (h *Handler) updatePurchasedById(c *gin.Context) {
 
 	var inp domain.UpdatePurchasedMaterial
 	if err := c.ShouldBindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -1212,7 +1212,7 @@ func (h *Handler) searchMaterial(c *gin.Context) {
 func (h *Handler) createCategory(c *gin.Context) {
 	var inp domain.MaterialCategory
 	if err := c.ShouldBindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -1306,7 +1306,7 @@ func (h *Handler) updateCategory(c *gin.Context) {
 
 	var inp domain.UpdateMaterialCategory
 	if err = c.ShouldBindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 

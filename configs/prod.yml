@@ -12,3 +12,6 @@ ctx:
 auth:
   accessTokenTTL: 2h
   refreshTokenTTL: 720h #30 days
+
+http_client:
+  timeout: 10s

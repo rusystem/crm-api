@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rusystem/crm-api/pkg/domain"
 	"github.com/segmentio/ksuid"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -149,4 +150,22 @@ func RemoveFullAccessSection(slice []domain.Section, strToRemove string) []domai
 		}
 	}
 	return result
+}
+
+func IsValidCountryCode(code string) bool {
+	re := regexp.MustCompile(`^[A-Z]{2}$`)
+	return re.MatchString(code)
+}
+
+// IsValidAdminCode выполняет базовую валидацию adminCode
+func IsValidAdminCode(adminCode string) bool {
+	// Удаляем лишние пробелы
+	adminCode = strings.TrimSpace(adminCode)
+
+	// Проверка на пустое значение
+	if adminCode == "" {
+		return false
+	}
+
+	return true
 }

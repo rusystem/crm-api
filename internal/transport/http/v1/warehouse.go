@@ -143,8 +143,8 @@ func (h *Handler) getWarehouses(c *gin.Context) {
 // @Router /warehouse [POST]
 func (h *Handler) createWarehouse(c *gin.Context) {
 	var inp domain.InputWarehouse
-	if err := c.BindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, domain.ErrInvalidInputBody.Error())
+	if err := c.ShouldBindJSON(&inp); err != nil {
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -197,7 +197,7 @@ func (h *Handler) updateWarehouse(c *gin.Context) {
 
 	var inp domain.WarehouseUpdate
 	if err := c.ShouldBindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, domain.ErrInvalidInputBody.Error())
+		newBindingErrorResponse(c, err)
 		return
 	}
 

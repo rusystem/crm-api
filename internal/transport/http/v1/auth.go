@@ -41,8 +41,8 @@ func (h *Handler) initAuthRoutes(api *gin.RouterGroup) {
 // @Router /auth [POST]
 func (h *Handler) signIn(c *gin.Context) {
 	var inp domain.SignIn
-	if err := c.BindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, domain.ErrInvalidInputBody.Error())
+	if err := c.ShouldBindJSON(&inp); err != nil {
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -88,8 +88,8 @@ func (h *Handler) signIn(c *gin.Context) {
 // @Router /auth/refresh [POST]
 func (h *Handler) refresh(c *gin.Context) {
 	var inp domain.TokensRequest
-	if err := c.BindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, domain.ErrInvalidInputBody.Error())
+	if err := c.ShouldBindJSON(&inp); err != nil {
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -128,8 +128,8 @@ func (h *Handler) refresh(c *gin.Context) {
 // @Router /register [POST]
 func (h *Handler) signUp(c *gin.Context) {
 	var inp domain.SignUp
-	if err := c.BindJSON(&inp); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, domain.ErrInvalidInputBody.Error())
+	if err := c.ShouldBindJSON(&inp); err != nil {
+		newBindingErrorResponse(c, err)
 		return
 	}
 

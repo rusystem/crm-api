@@ -6,6 +6,7 @@ import (
 	"github.com/rusystem/crm-api/internal/service"
 	"github.com/rusystem/crm-api/pkg/auth"
 	"github.com/rusystem/crm-api/pkg/domain"
+	"github.com/rusystem/crm-api/tools"
 	"strconv"
 	"strings"
 )
@@ -38,6 +39,9 @@ func (h *Handler) Init(api *gin.RouterGroup) {
 		h.initCompanyRoutes(v1)
 		h.initUserRoutes(v1)
 		h.initSectionRoutes(v1)
+
+		// geo route
+		h.initGeoRoutes(v1)
 	}
 }
 
@@ -199,4 +203,32 @@ func parseEmailPathParam(c *gin.Context) (string, error) {
 	}
 
 	return id, nil
+}
+
+func parseCountryCodeStringPathParam(c *gin.Context) (string, error) {
+	code := c.Query("country_code")
+	if code == "" {
+		return "", domain.ErrInvalidCountryCodeParam
+	}
+
+	code = strings.ToUpper(code)
+
+	if !tools.IsValidCountryCode(code) {
+		return "", domain.ErrInvalidCountryCodeParam
+	}
+
+	return code, nil
+}
+
+func parseAdminCodeStringPathParam(c *gin.Context) (string, error) {
+	code := c.Query("admin_code")
+	if code == "" {
+		return "", domain.ErrInvalidAdminCodeParam
+	}
+
+	if !tools.IsValidAdminCode(code) {
+		return "", domain.ErrInvalidAdminCodeParam
+	}
+
+	return code, nil
 }

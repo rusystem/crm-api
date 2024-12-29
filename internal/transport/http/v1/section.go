@@ -134,8 +134,8 @@ func (h *Handler) getSections(c *gin.Context) {
 // @Router /sections [POST]
 func (h *Handler) createSection(c *gin.Context) {
 	var section domain.SectionCreate
-	if err := c.BindJSON(&section); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+	if err := c.ShouldBindJSON(&section); err != nil {
+		newBindingErrorResponse(c, err)
 		return
 	}
 
@@ -167,8 +167,8 @@ func (h *Handler) createSection(c *gin.Context) {
 // @Router /sections/{id} [PUT]
 func (h *Handler) updateSection(c *gin.Context) {
 	var req domain.SectionUpdate
-	if err := c.BindJSON(&req); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+	if err := c.ShouldBindJSON(&req); err != nil {
+		newBindingErrorResponse(c, err)
 		return
 	}
 

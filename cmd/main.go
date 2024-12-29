@@ -12,6 +12,7 @@ import (
 	"github.com/rusystem/crm-api/internal/service"
 	http_handler "github.com/rusystem/crm-api/internal/transport/http"
 	"github.com/rusystem/crm-api/pkg/auth"
+	"github.com/rusystem/crm-api/pkg/client/geonames"
 	"github.com/rusystem/crm-api/pkg/database"
 	"github.com/rusystem/crm-api/pkg/logger"
 	"net/http"
@@ -73,13 +74,19 @@ func main() {
 		}
 	}(pc)
 
+	// init geonames client
+	gc, err := geonames.NewGeonamesClient(cfg.HttpClient.Timeout)
+	if err != nil {
+		logger.Fatal(fmt.Sprintf("can`t initialize geonames http client, err - %+v", err))
+	}
+
 	// init dep-s
 	repo := repository.New(cfg, memCache, pc)
 	srv := service.New(service.Config{
 		Config:       cfg,
 		Repo:         repo,
 		TokenManager: tokenManager,
-	})
+	}, gc, memCache)
 	hh := http_handler.NewHandler(srv, tokenManager, cfg)
 
 	// HTTP Server

@@ -1,9 +1,11 @@
 package service
 
 import (
+	"github.com/rusystem/cache"
 	"github.com/rusystem/crm-api/internal/config"
 	"github.com/rusystem/crm-api/internal/repository"
 	"github.com/rusystem/crm-api/pkg/auth"
+	"github.com/rusystem/crm-api/pkg/client/geonames"
 )
 
 type Config struct {
@@ -21,9 +23,10 @@ type Service struct {
 	Sections  Sections
 	Materials Materials
 	Category  Category
+	Geo       Geo
 }
 
-func New(cfg Config) *Service {
+func New(cfg Config, gc *geonames.Client, cache *cache.MemoryCache) *Service {
 	return &Service{
 		Auth:      NewAuthServices(cfg.Config, cfg.Repo, cfg.TokenManager),
 		Supplier:  NewSupplierService(cfg.Config, cfg.Repo),
@@ -33,5 +36,6 @@ func New(cfg Config) *Service {
 		Sections:  NewSectionsService(cfg.Config, cfg.Repo),
 		Materials: NewMaterialsService(cfg.Config, cfg.Repo),
 		Category:  NewMaterialCategoriesService(cfg.Config, cfg.Repo),
+		Geo:       NewGeoService(cfg.Config, gc, cache),
 	}
 }

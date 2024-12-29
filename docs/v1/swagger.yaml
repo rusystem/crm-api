@@ -1,0 +1,4104 @@
+basePath: /api/web-api-gateway/v1
+definitions:
+  domain.CompanyUpdate:
+    properties:
+      address:
+        type: string
+      country:
+        type: string
+      email:
+        type: string
+      is_active:
+        type: boolean
+      is_approved:
+        type: boolean
+      name_en:
+        type: string
+      name_ru:
+        type: string
+      phone:
+        type: string
+      timezone:
+        type: string
+      website:
+        type: string
+    type: object
+  domain.CreateCompany:
+    properties:
+      address:
+        example: г. Алматы
+        type: string
+      country:
+        example: KZ
+        type: string
+      email:
+        example: example@example.com
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      is_approved:
+        example: true
+        type: boolean
+      name_en:
+        example: OOO ROGA I COPUTA
+        type: string
+      name_ru:
+        example: ООО Рога и копыта
+        type: string
+      phone:
+        example: "+77777777777"
+        type: string
+      timezone:
+        example: Asia/Almaty
+        type: string
+      website:
+        example: www.rogakopyta.kz
+        type: string
+    required:
+    - address
+    - email
+    - name_ru
+    - phone
+    type: object
+  domain.CreateMaterialCategory:
+    properties:
+      description:
+        example: Категория для стальных труб различного диаметра
+        type: string
+      img_url:
+        example: https://example.com/images/stalnye-truby.jpg
+        type: string
+      name:
+        example: Стальные трубы
+        type: string
+      slug:
+        example: stalnye-truby
+        type: string
+    type: object
+  domain.CreatePlanningMaterial:
+    properties:
+      article:
+        description: Артикул товара
+        example: SB-1234
+        type: string
+      by_invoice:
+        description: Накладная на товар
+        example: INV-987654
+        type: string
+      comments:
+        description: Комментарии
+        example: Urgent order
+        type: string
+      contract:
+        description: Дата договора
+        example: "2023-08-15T10:00:00Z"
+        type: string
+      expiration_date:
+        description: Срок годности товара
+        example: "2024-08-15T10:00:00Z"
+        type: string
+      file:
+        description: Файл, связанный с товаром
+        example: contract_1234.pdf
+        type: string
+      incoming_delivery_number:
+        description: Входящий номер поставки
+        example: DEL-56789
+        type: string
+      min_stock_level:
+        description: Минимальный уровень запаса
+        example: 10
+        type: integer
+      name:
+        description: Наименование товара
+        example: Steel Beam
+        type: string
+      other_fields:
+        additionalProperties: true
+        description: Дополнительные пользовательские поля
+        type: object
+      price_without_vat:
+        description: Цена без НДС
+        example: 150.75
+        type: number
+      product_category:
+        description: Категория товара
+        example: Construction
+        type: string
+      received_date:
+        description: Дата поступления товара
+        example: "2023-08-20T10:00:00Z"
+        type: string
+      reserve:
+        description: Резерв товара
+        example: "50"
+        type: string
+      responsible_person:
+        description: Ответственное лицо за товар
+        example: John Doe
+        type: string
+      status:
+        description: Статус товара
+        example: active
+        type: string
+      storage_cost:
+        description: Стоимость хранения товара
+        example: 500
+        type: number
+      supplier_id:
+        description: Поставщик товара
+        example: 1
+        type: integer
+      total_quantity:
+        description: Общее количество товара
+        example: 500
+        type: integer
+      total_without_vat:
+        description: Общая стоимость без НДС
+        example: 75375
+        type: number
+      unit:
+        description: Единица измерения
+        example: pcs
+        type: string
+      volume:
+        description: Объем товара
+        example: 25
+        type: integer
+      warehouse_id:
+        description: Id склада
+        example: 1
+        type: integer
+      warehouse_section:
+        description: Секция склада, где хранится товар
+        example: B-Section-2
+        type: string
+    required:
+    - name
+    type: object
+  domain.CreatePurchasedMaterial:
+    properties:
+      article:
+        description: Артикул товара
+        example: SB-1234
+        type: string
+      by_invoice:
+        description: Накладная на товар
+        example: INV-987654
+        type: string
+      comments:
+        description: Комментарии
+        example: Urgent order
+        type: string
+      contract:
+        description: Дата договора
+        example: "2023-08-15T10:00:00Z"
+        type: string
+      expiration_date:
+        description: Срок годности товара
+        example: "2024-08-15T10:00:00Z"
+        type: string
+      file:
+        description: Файл, связанный с товаром
+        example: contract_1234.pdf
+        type: string
+      incoming_delivery_number:
+        description: Входящий номер поставки
+        example: DEL-56789
+        type: string
+      location:
+        description: Локация на складе
+        example: A1-Section-3
+        type: string
+      min_stock_level:
+        description: Минимальный уровень запаса
+        example: 10
+        type: integer
+      name:
+        description: Наименование товара
+        example: Steel Beam
+        type: string
+      other_fields:
+        additionalProperties: true
+        description: Дополнительные пользовательские поля
+        type: object
+      price_without_vat:
+        description: Цена без НДС
+        example: 150.75
+        type: number
+      product_category:
+        description: Категория товара
+        example: Construction
+        type: string
+      received_date:
+        description: Дата поступления товара
+        example: "2023-08-20T10:00:00Z"
+        type: string
+      reserve:
+        description: Резерв товара
+        example: "50"
+        type: string
+      responsible_person:
+        description: Ответственное лицо за товар
+        example: John Doe
+        type: string
+      status:
+        description: Статус товара
+        example: active
+        type: string
+      storage_cost:
+        description: Стоимость хранения товара
+        example: 500
+        type: number
+      supplier_id:
+        description: Поставщик товара
+        example: 1
+        type: integer
+      total_quantity:
+        description: Общее количество товара
+        example: 500
+        type: integer
+      total_without_vat:
+        description: Общая стоимость без НДС
+        example: 75375
+        type: number
+      unit:
+        description: Единица измерения
+        example: pcs
+        type: string
+      volume:
+        description: Объем товара
+        example: 25
+        type: integer
+      warehouse_id:
+        description: Id склада
+        example: 1
+        type: integer
+      warehouse_section:
+        description: Секция склада, где хранится товар
+        example: B-Section-2
+        type: string
+    required:
+    - name
+    type: object
+  domain.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      is_error:
+        type: boolean
+      message:
+        type: string
+    type: object
+  domain.InputSupplier:
+    properties:
+      actual_address:
+        description: Фактический адрес поставщика
+        example: Фактический адрес поставщика
+        type: string
+      balance:
+        description: Баланс по поставщику
+        example: 100
+        type: number
+      bank_details:
+        description: Банковские реквизиты поставщика
+        example: Банковские реквизиты поставщика
+        type: string
+      comments:
+        description: Комментарии
+        example: Комментарии
+        type: string
+      contact_person:
+        description: Контактное лицо у поставщика
+        example: Контактное лицо у поставщика
+        maxLength: 140
+        type: string
+      contract_number:
+        description: Номер и дата договора с поставщиком
+        example: Номер и дата договора с поставщиком
+        type: string
+      country:
+        description: Страна поставщика
+        example: Страна поставщика
+        type: string
+      email:
+        description: Электронная почта поставщика
+        example: Электронная почта поставщика
+        type: string
+      files:
+        description: Ссылки на файлы или документы
+        example: Ссылки на файлы или документы
+        type: string
+      is_active:
+        description: Статус активности поставщика (активен/неактивен)
+        example: true
+        type: boolean
+      legal_address:
+        description: Юридический адрес поставщика
+        example: Юридический адрес поставщика
+        type: string
+      name:
+        description: Наименование поставщика
+        example: ООО Название поставщика
+        maxLength: 140
+        minLength: 5
+        type: string
+      other_fields:
+        additionalProperties: true
+        description: Дополнительные пользовательские поля
+        type: object
+      payment_terms:
+        description: Условия оплаты по контракту
+        example: Условия оплаты по контракту
+        type: string
+      phone:
+        description: Телефон поставщика
+        example: Телефон поставщика
+        minLength: 5
+        type: string
+      product_categories:
+        description: Категории товаров, поставляемых поставщиком
+        example: Категории товаров, поставляемых поставщиком
+        type: string
+      product_types:
+        description: Количество типов товаров от поставщика
+        example: 100
+        type: integer
+      purchase_amount:
+        description: Общая сумма закупок у поставщика
+        example: 100
+        type: number
+      region:
+        description: Регион или штат поставщика
+        example: Регион или штат поставщика
+        type: string
+      registration_date:
+        description: Дата регистрации поставщика
+        example: "2022-01-01T00:00:00Z"
+        type: string
+      tax_id:
+        description: Идентификационный номер налогоплательщика (ИНН)
+        example: Идентификационный номер налогоплательщика (ИНН)
+        type: string
+      warehouse_address:
+        description: Адрес склада поставщика
+        example: Адрес склада поставщика
+        type: string
+      website:
+        description: Сайт поставщика
+        example: Сайт поставщика
+        type: string
+    required:
+    - actual_address
+    - balance
+    - bank_details
+    - contact_person
+    - contract_number
+    - legal_address
+    - name
+    - phone
+    - warehouse_address
+    type: object
+  domain.InputWarehouse:
+    properties:
+      address:
+        description: Адрес склада
+        example: Адрес склада
+        maxLength: 140
+        minLength: 5
+        type: string
+      comments:
+        description: Комментарии к складу
+        type: string
+      country:
+        description: Страна склада
+        example: Страна склада
+        type: string
+      current_occupancy:
+        description: Текущая заполняемость склада
+        example: 50
+        type: integer
+      email:
+        description: Электронная почта для связи
+        example: Электронная почта для связи
+        type: string
+      max_capacity:
+        description: Максимальная вместимость склада
+        example: 100
+        type: integer
+      name:
+        description: Название склада
+        example: Название склада
+        maxLength: 140
+        minLength: 5
+        type: string
+      other_fields:
+        additionalProperties: true
+        description: Дополнительные пользовательские поля
+        type: object
+      phone:
+        description: Контактный телефон склада
+        example: Контактный телефон склада
+        minLength: 5
+        type: string
+      region:
+        description: Регион склада
+        type: string
+      responsible_person:
+        description: Ответственное лицо за склад
+        example: Ответственное лицо за склад
+        maxLength: 140
+        minLength: 5
+        type: string
+    required:
+    - address
+    - name
+    - phone
+    - responsible_person
+    type: object
+  domain.MaterialCategory:
+    properties:
+      company_id:
+        example: 123
+        type: integer
+      created_at:
+        example: "2023-10-01T12:00:00Z"
+        type: string
+      description:
+        example: Категория для стальных труб различного диаметра
+        type: string
+      id:
+        example: 1
+        type: integer
+      img_url:
+        example: https://example.com/images/stalnye-truby.jpg
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      name:
+        example: Стальные трубы
+        type: string
+      slug:
+        example: stalnye-truby
+        type: string
+      updated_at:
+        example: "2023-10-02T15:30:00Z"
+        type: string
+    required:
+    - name
+    type: object
+  domain.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  domain.SectionCreate:
+    properties:
+      name:
+        example: purchase_planning_access
+        type: string
+    required:
+    - name
+    type: object
+  domain.SectionUpdate:
+    properties:
+      name:
+        example: status_and_calculation_access
+        type: string
+    required:
+    - name
+    type: object
+  domain.SignIn:
+    properties:
+      company_id:
+        example: 1
+        type: integer
+      password:
+        example: admin
+        maxLength: 255
+        minLength: 8
+        type: string
+      username:
+        example: admin
+        maxLength: 140
+        minLength: 5
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  domain.SignUp:
+    properties:
+      company_id:
+        example: 1
+        type: integer
+      country:
+        example: KZ
+        type: string
+      email:
+        example: dmitry@test.com
+        maxLength: 140
+        minLength: 5
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      is_approved:
+        example: true
+        type: boolean
+      is_send_system_notification:
+        example: false
+        type: boolean
+      language:
+        example: ru
+        type: string
+      name:
+        example: Дмитрий
+        maxLength: 140
+        type: string
+      password:
+        example: "12345678"
+        maxLength: 255
+        minLength: 8
+        type: string
+      phone:
+        example: "+77777777777"
+        maxLength: 140
+        minLength: 7
+        type: string
+      position:
+        example: test
+        type: string
+      role:
+        example: user
+        type: string
+      sections:
+        example:
+        - full_company_access
+        - full_access
+        items:
+          type: string
+        type: array
+      username:
+        example: dmitry
+        maxLength: 140
+        minLength: 5
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - phone
+    - username
+    type: object
+  domain.SuccessResponse:
+    properties:
+      data: {}
+      is_error:
+        type: boolean
+      total_count:
+        type: integer
+    type: object
+  domain.TokenResponse:
+    properties:
+      expires_in:
+        type: integer
+      refresh_token:
+        type: string
+      token:
+        type: string
+    type: object
+  domain.TokensRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  domain.UpdateMaterialCategory:
+    properties:
+      description:
+        example: Категория для стальных труб различного диаметра
+        type: string
+      img_url:
+        example: https://example.com/images/stalnye-truby.jpg
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      name:
+        example: Стальные трубы
+        type: string
+      slug:
+        example: stalnye-truby
+        type: string
+    type: object
+  domain.UpdatePlanningMaterial:
+    properties:
+      article:
+        description: Артикул товара
+        example: SB-1234
+        type: string
+      by_invoice:
+        description: Накладная на товар
+        example: INV-987654
+        type: string
+      comments:
+        description: Комментарии
+        example: Urgent order
+        type: string
+      contract:
+        description: Дата договора
+        example: "2023-08-15T10:00:00Z"
+        type: string
+      expiration_date:
+        description: Срок годности товара
+        example: "2024-08-15T10:00:00Z"
+        type: string
+      file:
+        description: Файл, связанный с товаром
+        example: contract_1234.pdf
+        type: string
+      incoming_delivery_number:
+        description: Входящий номер поставки
+        example: DEL-56789
+        type: string
+      location:
+        description: Локация на складе
+        example: A1-Section-3
+        type: string
+      min_stock_level:
+        description: Минимальный уровень запаса
+        example: 10
+        type: integer
+      name:
+        description: Наименование товара
+        example: Steel Beam
+        type: string
+      other_fields:
+        additionalProperties: true
+        description: Дополнительные пользовательские поля
+        type: object
+      price_without_vat:
+        description: Цена без НДС
+        example: 150.75
+        type: number
+      product_category:
+        description: Категория товара
+        example: Construction
+        type: string
+      received_date:
+        description: Дата поступления товара
+        example: "2023-08-20T10:00:00Z"
+        type: string
+      reserve:
+        description: Резерв товара
+        example: "50"
+        type: string
+      responsible_person:
+        description: Ответственное лицо за товар
+        example: John Doe
+        type: string
+      status:
+        description: Статус товара
+        example: active
+        type: string
+      storage_cost:
+        description: Стоимость хранения товара
+        example: 500
+        type: number
+      supplier_id:
+        description: Поставщик товара
+        example: 1
+        type: integer
+      total_quantity:
+        description: Общее количество товара
+        example: 500
+        type: integer
+      total_without_vat:
+        description: Общая стоимость без НДС
+        example: 75375
+        type: number
+      unit:
+        description: Единица измерения
+        example: pcs
+        type: string
+      volume:
+        description: Объем товара
+        example: 25
+        type: integer
+      warehouse_id:
+        description: Id склада
+        example: 1
+        type: integer
+      warehouse_section:
+        description: Секция склада, где хранится товар
+        example: B-Section-2
+        type: string
+    type: object
+  domain.UpdatePurchasedMaterial:
+    properties:
+      article:
+        description: Артикул товара
+        example: SB-1234
+        type: string
+      by_invoice:
+        description: Накладная на товар
+        example: INV-987654
+        type: string
+      comments:
+        description: Комментарии
+        example: Urgent order
+        type: string
+      contract:
+        description: Дата договора
+        example: "2023-08-15T10:00:00Z"
+        type: string
+      expiration_date:
+        description: Срок годности товара
+        example: "2024-08-15T10:00:00Z"
+        type: string
+      file:
+        description: Файл, связанный с товаром
+        example: contract_1234.pdf
+        type: string
+      incoming_delivery_number:
+        description: Входящий номер поставки
+        example: DEL-56789
+        type: string
+      location:
+        description: Локация на складе
+        example: A1-Section-3
+        type: string
+      min_stock_level:
+        description: Минимальный уровень запаса
+        example: 10
+        type: integer
+      name:
+        description: Наименование товара
+        example: Steel Beam
+        type: string
+      other_fields:
+        additionalProperties: true
+        description: Дополнительные пользовательские поля
+        type: object
+      price_without_vat:
+        description: Цена без НДС
+        example: 150.75
+        type: number
+      product_category:
+        description: Категория товара
+        example: Construction
+        type: string
+      received_date:
+        description: Дата поступления товара
+        example: "2023-08-20T10:00:00Z"
+        type: string
+      reserve:
+        description: Резерв товара
+        example: "50"
+        type: string
+      responsible_person:
+        description: Ответственное лицо за товар
+        example: John Doe
+        type: string
+      status:
+        description: Статус товара
+        example: active
+        type: string
+      storage_cost:
+        description: Стоимость хранения товара
+        example: 500
+        type: number
+      supplier_id:
+        description: Поставщик товара
+        example: 1
+        type: integer
+      total_quantity:
+        description: Общее количество товара
+        example: 500
+        type: integer
+      total_without_vat:
+        description: Общая стоимость без НДС
+        example: 75375
+        type: number
+      unit:
+        description: Единица измерения
+        example: pcs
+        type: string
+      volume:
+        description: Объем товара
+        example: 25
+        type: integer
+      warehouse_id:
+        description: Id склада
+        example: 1
+        type: integer
+      warehouse_section:
+        description: Секция склада, где хранится товар
+        example: B-Section-2
+        type: string
+    type: object
+  domain.UpdateSupplier:
+    properties:
+      actual_address:
+        description: Фактический адрес поставщика
+        example: Фактический адрес поставщика
+        type: string
+      balance:
+        description: Баланс по поставщику
+        example: 100
+        type: number
+      bank_details:
+        description: Банковские реквизиты поставщика
+        example: Банковские реквизиты поставщика
+        type: string
+      comments:
+        description: Комментарии
+        example: Комментарии
+        type: string
+      contact_person:
+        description: Контактное лицо у поставщика
+        example: Контактное лицо у поставщика
+        maxLength: 140
+        type: string
+      contract_number:
+        description: Номер и дата договора с поставщиком
+        example: Номер и дата договора с поставщиком
+        type: string
+      country:
+        description: Страна поставщика
+        example: Страна поставщика
+        type: string
+      email:
+        description: Электронная почта поставщика
+        example: Электронная почта поставщика
+        type: string
+      files:
+        description: Ссылки на файлы или документы
+        example: Ссылки на файлы или документы
+        type: string
+      is_active:
+        description: Статус активности поставщика (активен/неактивен)
+        example: true
+        type: boolean
+      legal_address:
+        description: Юридический адрес поставщика
+        example: Юридический адрес поставщика
+        type: string
+      name:
+        description: Наименование поставщика
+        example: ООО Название поставщика
+        maxLength: 140
+        minLength: 5
+        type: string
+      other_fields:
+        additionalProperties: true
+        description: Дополнительные пользовательские поля
+        type: object
+      payment_terms:
+        description: Условия оплаты по контракту
+        example: Условия оплаты по контракту
+        type: string
+      phone:
+        description: Телефон поставщика
+        example: Телефон поставщика
+        minLength: 5
+        type: string
+      product_categories:
+        description: Категории товаров, поставляемых поставщиком
+        example: Категории товаров, поставляемых поставщиком
+        type: string
+      product_types:
+        description: Количество типов товаров от поставщика
+        example: 100
+        type: integer
+      purchase_amount:
+        description: Общая сумма закупок у поставщика
+        example: 100
+        type: number
+      region:
+        description: Регион или штат поставщика
+        example: Регион или штат поставщика
+        type: string
+      registration_date:
+        description: Дата регистрации поставщика
+        example: "2022-01-01T00:00:00Z"
+        type: string
+      tax_id:
+        description: Идентификационный номер налогоплательщика (ИНН)
+        example: Идентификационный номер налогоплательщика (ИНН)
+        type: string
+      warehouse_address:
+        description: Адрес склада поставщика
+        example: Адрес склада поставщика
+        type: string
+      website:
+        description: Сайт поставщика
+        example: Сайт поставщика
+        type: string
+    required:
+    - actual_address
+    - balance
+    - bank_details
+    - contact_person
+    - contract_number
+    - legal_address
+    - name
+    - phone
+    - warehouse_address
+    type: object
+  domain.UserProfileUpdate:
+    properties:
+      country:
+        description: Страна пользователя
+        example: RU
+        type: string
+      email:
+        description: Электронная почта пользователя, уникальная
+        example: a@a.aa
+        type: string
+      name:
+        description: Имя пользователя, уникальное
+        example: Иван
+        type: string
+      password_hash:
+        description: Хеш пароля пользователя
+        example: "12345678"
+        type: string
+      phone:
+        description: Телефон пользователя
+        example: "+79000000000"
+        type: string
+    type: object
+  domain.UserUpdate:
+    properties:
+      country:
+        description: Страна пользователя
+        example: Russia
+        type: string
+      email:
+        description: Электронная почта пользователя, уникальная
+        example: example@example.com
+        type: string
+      id:
+        description: Уникальный идентификатор пользователя
+        type: integer
+      is_active:
+        description: Статус активности учетной записи
+        example: true
+        type: boolean
+      is_approved:
+        description: Подтвержден ли пользователь
+        example: true
+        type: boolean
+      is_send_system_notification:
+        description: Отправлять ли пользователю уведомления
+        example: true
+        type: boolean
+      language:
+        description: Язык пользователя
+        example: ru
+        type: string
+      name:
+        description: Имя пользователя, уникальное
+        example: Иван
+        type: string
+      password_hash:
+        description: Хеш пароля пользователя
+        example: admin
+        type: string
+      phone:
+        description: Телефон пользователя
+        example: ""
+        type: string
+      position:
+        description: Должность пользователя
+        example: manager
+        type: string
+      role:
+        description: Роль пользователя (например, 'user', 'admin')
+        example: admin
+        type: string
+      sections:
+        description: Секции пользователя
+        items:
+          type: string
+        type: array
+    required:
+    - id
+    type: object
+host: 91.243.71.100:8080
+info:
+  contact:
+    email: ru.system.ru@gmail.com
+    name: ru.system.ru@gmail.com
+  description: API gateway
+  title: Web api gateway API
+  version: "1.0"
+paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Аутентификация пользователя.
+        Только у super admin есть возможность авторизоваться под определенной компанией.
+      operationId: sign-in
+      parameters:
+      - description: Необходимо указать данные для аутентификации пользователя.
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SignIn'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      summary: Sign in
+      tags:
+      - auth
+  /auth/logout:
+    get:
+      consumes:
+      - application/json
+      description: Выход из аккаунта пользователя
+      operationId: sign-out
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Sign out
+      tags:
+      - auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Обновление access токена
+      operationId: refresh-tokens
+      parameters:
+      - description: Необходимо указать текущие refresh token и sections.
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TokensRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      summary: Refresh tokens
+      tags:
+      - auth
+  /company/:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Получение информации по всем компаниям.
+        Только super admin может получать информацию.
+      operationId: get-companies
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name_ru
+        description: Field to sort by
+        enum:
+        - id
+        - name_ru
+        - name_en
+        - country
+        - address
+        - phone
+        - email
+        - website
+        - is_active
+        - created_at
+        - updated_at
+        - is_approved
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get companies
+      tags:
+      - company
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Создание компании.
+        Только super admin может создавать компании
+      operationId: create-company
+      parameters:
+      - description: Company info
+        in: body
+        name: company
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateCompany'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create company
+      tags:
+      - company
+  /company/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: |-
+        Удаление компании.
+        Только super admin может удалять компании.
+      operationId: delete-company
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete company
+      tags:
+      - company
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Получение информации о компании по ID.
+        Только super admin может получать информацию по id компании.
+      operationId: get-company
+      parameters:
+      - description: Company ID
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get company
+      tags:
+      - company
+    put:
+      consumes:
+      - application/json
+      description: |-
+        Обновление компании.
+        Только super admin может обновлять active & approve компании
+        Для обновления указывать только необходимые поля.
+      operationId: update-company
+      parameters:
+      - description: Company ID
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Company info
+        in: body
+        name: company
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CompanyUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update company
+      tags:
+      - company
+  /company/info:
+    get:
+      consumes:
+      - application/json
+      description: Получение информации о компании для пользователя
+      operationId: get-company-info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get company info
+      tags:
+      - company
+  /geo/city/list:
+    get:
+      consumes:
+      - application/json
+      description: Список городов
+      operationId: get-city-list
+      parameters:
+      - description: country code query param
+        example: RU
+        in: query
+        name: country_code
+        required: true
+        type: string
+      - description: admin code query param
+        example: "63"
+        in: query
+        name: admin_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get city list
+      tags:
+      - geo
+  /geo/country/list:
+    get:
+      consumes:
+      - application/json
+      description: Список стран
+      operationId: get-country-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get country list
+      tags:
+      - geo
+  /geo/region/list:
+    get:
+      consumes:
+      - application/json
+      description: Список регионов/областей
+      operationId: get-region-list
+      parameters:
+      - description: country code query param
+        example: RU
+        in: query
+        name: country_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get region list
+      tags:
+      - geo
+  /materials/archive/planning/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление запланированного материала из архива по ID
+      operationId: delete-planning-archive-by-id
+      parameters:
+      - description: ID архиввного планируемого материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete planning archive by id
+      tags:
+      - materials archive
+    get:
+      consumes:
+      - application/json
+      description: Получение запланированного материала из архива по ID
+      operationId: get-planning-archive-by-id
+      parameters:
+      - description: ID архиввного планируемого материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get planning archive by id
+      tags:
+      - materials archive
+  /materials/archive/planning/list:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка запланированных материалов из архива
+      operationId: get-planning-archive-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - warehouse_id
+        - item_id
+        - name
+        - article
+        - product_category
+        - total_quantity
+        - volume
+        - price_without_vat
+        - total_without_vat
+        - supplier_id
+        - location
+        - status
+        - received_date
+        - last_updated
+        - min_stock_level
+        - expiration_date
+        - storage_cost
+        - warehouse_section
+        - incoming_delivery_number
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get planning archive list
+      tags:
+      - materials archive
+  /materials/archive/purchased/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление закупленного материала из архива по ID
+      operationId: delete-purchased-archive-by-id
+      parameters:
+      - description: ID архиввного закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete purchased archive by id
+      tags:
+      - materials archive
+    get:
+      consumes:
+      - application/json
+      description: Получение закупленного материала из архива по ID
+      operationId: get-purchased-archive-by-id
+      parameters:
+      - description: ID архиввного закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get purchased archive by id
+      tags:
+      - materials archive
+  /materials/archive/purchased/list:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка закупленных материалов из архива
+      operationId: get-purchased-archive-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - warehouse_id
+        - item_id
+        - name
+        - article
+        - product_category
+        - total_quantity
+        - volume
+        - price_without_vat
+        - total_without_vat
+        - supplier_id
+        - location
+        - status
+        - received_date
+        - last_updated
+        - min_stock_level
+        - expiration_date
+        - storage_cost
+        - warehouse_section
+        - incoming_delivery_number
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get purchased archive list
+      tags:
+      - materials archive
+  /materials/category:
+    post:
+      consumes:
+      - application/json
+      description: Создание категории материала
+      operationId: create-material-category
+      parameters:
+      - description: Необходимо указать данные категории материала
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateMaterialCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create material category
+      tags:
+      - materials category
+  /materials/category/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление категории материала
+      operationId: delete-material-category
+      parameters:
+      - description: ID категории материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete material category
+      tags:
+      - materials category
+    get:
+      consumes:
+      - application/json
+      description: Получение категории материала
+      operationId: get-material-category
+      parameters:
+      - description: ID категории материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get material category
+      tags:
+      - materials category
+    put:
+      consumes:
+      - application/json
+      description: Обновление категории материала
+      operationId: update-material-category
+      parameters:
+      - description: ID категории материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Необходимо указать данные категории материала
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateMaterialCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update material category
+      tags:
+      - materials category
+  /materials/category/list:
+    get:
+      consumes:
+      - application/json
+      description: Список категорий материалов
+      operationId: get-material-category-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - name
+        - slug
+        - created_at
+        - updated_at
+        - is_active
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get material category list
+      tags:
+      - materials category
+  /materials/category/search:
+    get:
+      consumes:
+      - application/json
+      description: Поиск категорий материалов
+      operationId: search-material-category
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - name
+        - slug
+        - created_at
+        - updated_at
+        - is_active
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.MaterialCategory'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Search material category
+      tags:
+      - materials category
+  /materials/planning:
+    post:
+      consumes:
+      - application/json
+      description: Создание планируемого материала
+      operationId: create-planning-material
+      parameters:
+      - description: Необходимо указать данные планируемого материала
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreatePlanningMaterial'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create planning material
+      tags:
+      - materials planning
+  /materials/planning/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление планируемого материала
+      operationId: delete-planning-material
+      parameters:
+      - description: ID планируемого материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete planning material
+      tags:
+      - materials planning
+    get:
+      consumes:
+      - application/json
+      description: Получение планируемого материала
+      operationId: get-planning-material
+      parameters:
+      - description: ID планируемого материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get planning material
+      tags:
+      - materials planning
+    put:
+      consumes:
+      - application/json
+      description: Обновление планируемого материала
+      operationId: update-planning-material
+      parameters:
+      - description: ID планируемого материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Необходимо указать данные планируемого материала
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdatePlanningMaterial'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update planning material
+      tags:
+      - materials planning
+  /materials/planning/list:
+    get:
+      consumes:
+      - application/json
+      description: Список планируемых материалов
+      operationId: get-planning-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - warehouse_id
+        - item_id
+        - name
+        - article
+        - product_category
+        - total_quantity
+        - volume
+        - price_without_vat
+        - total_without_vat
+        - supplier_id
+        - location
+        - status
+        - received_date
+        - last_updated
+        - min_stock_level
+        - expiration_date
+        - storage_cost
+        - warehouse_section
+        - incoming_delivery_number
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get planning list
+      tags:
+      - materials planning
+  /materials/planning/move-to-purchased/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Перемещение планируемого материала в закупленные
+      operationId: move-planning-to-purchased
+      parameters:
+      - description: ID планируемого материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Move planning material to purchased
+      tags:
+      - materials planning
+  /materials/purchased:
+    post:
+      consumes:
+      - application/json
+      description: Создание закупленного материала
+      operationId: create-purchased-material
+      parameters:
+      - description: Необходимо указать данные закупленного материала
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreatePurchasedMaterial'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create purchased material
+      tags:
+      - materials purchased
+  /materials/purchased/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление закупленного материала
+      operationId: delete-purchased-material
+      parameters:
+      - description: ID закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete purchased material
+      tags:
+      - materials purchased
+    get:
+      consumes:
+      - application/json
+      description: Получение закупленного материала
+      operationId: get-purchased-material
+      parameters:
+      - description: ID закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get purchased material
+      tags:
+      - materials purchased
+    put:
+      consumes:
+      - application/json
+      description: Обновление закупленного материала
+      operationId: update-purchased-material
+      parameters:
+      - description: ID закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Необходимо указать данные закупленного материала
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdatePurchasedMaterial'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update purchased material
+      tags:
+      - materials purchased
+  /materials/purchased/{id}/barcode:
+    get:
+      consumes:
+      - application/json
+      description: Получение штрихкода закупленного материала
+      operationId: get-purchased-barcode
+      parameters:
+      - description: ID закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: Штрихкод
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get purchased barcode
+      tags:
+      - materials purchased
+  /materials/purchased/{id}/qr-code:
+    get:
+      consumes:
+      - application/json
+      description: Получение QR кода закупленного материала
+      operationId: get-purchased-qr-code
+      parameters:
+      - description: ID закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: QR-код в формате PNG
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get purchased QR code
+      tags:
+      - materials purchased
+  /materials/purchased/list:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка закупленных материалов
+      operationId: get-purchased-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - warehouse_id
+        - item_id
+        - name
+        - article
+        - product_category
+        - total_quantity
+        - volume
+        - price_without_vat
+        - total_without_vat
+        - supplier_id
+        - location
+        - status
+        - received_date
+        - last_updated
+        - min_stock_level
+        - expiration_date
+        - storage_cost
+        - warehouse_section
+        - incoming_delivery_number
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get purchased list
+      tags:
+      - materials purchased
+  /materials/purchased/move-to-archive/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Перемещение закупленного материала в архив
+      operationId: move-purchased-to-archive
+      parameters:
+      - description: ID закупленного материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Move purchased to archive
+      tags:
+      - materials purchased
+  /materials/search:
+    get:
+      consumes:
+      - application/json
+      description: Поиск товара по наименованию
+      operationId: search-material
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - warehouse_id
+        - item_id
+        - name
+        - article
+        - product_category
+        - total_quantity
+        - volume
+        - price_without_vat
+        - total_without_vat
+        - supplier_id
+        - location
+        - status
+        - received_date
+        - last_updated
+        - min_stock_level
+        - expiration_date
+        - storage_cost
+        - warehouse_section
+        - incoming_delivery_number
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - description: name query param
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Search materials
+      tags:
+      - materials
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Регистрация нового пользователя.
+        Только у super admin есть возможность добавлять пользователя в другие компании.
+        Только у super admin есть возможность давать роль admin пользователю
+      operationId: sign-up
+      parameters:
+      - description: Необходимо указать данные для регистрации нового пользователя.
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SignUp'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Sign up
+      tags:
+      - auth
+  /sections:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка секций
+      operationId: get-sections
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - name
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get sections
+      tags:
+      - sections
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Создание секции
+        Только super admin может создавать секции
+      operationId: create-section
+      parameters:
+      - description: Section
+        in: body
+        name: section
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SectionCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create section
+      tags:
+      - sections
+  /sections/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление секции
+      operationId: delete-section
+      parameters:
+      - description: Section ID
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete section
+      tags:
+      - sections
+    get:
+      consumes:
+      - application/json
+      description: Получение секции по id
+      operationId: get-section
+      parameters:
+      - description: Section ID
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get section
+      tags:
+      - sections
+    put:
+      consumes:
+      - application/json
+      description: Обновление секции
+      operationId: update-section
+      parameters:
+      - description: Section ID
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Section
+        in: body
+        name: section
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SectionUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update section
+      tags:
+      - sections
+  /supplier:
+    get:
+      consumes:
+      - application/json
+      description: Получение всех поставщиков компании
+      operationId: get-suppliers
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - name
+        - legal_address
+        - actual_address
+        - warehouse_address
+        - contact_person
+        - phone
+        - email
+        - website
+        - contract_number
+        - product_categories
+        - purchase_amount
+        - balance
+        - product_types
+        - country
+        - region
+        - tax_id
+        - registration_date
+        - is_active
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get suppliers
+      tags:
+      - supplier
+    post:
+      consumes:
+      - application/json
+      description: Создание поставщика
+      operationId: create-supplier
+      parameters:
+      - description: Необходимо указать данные поставщика.
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.InputSupplier'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create supplier
+      tags:
+      - supplier
+  /supplier/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление поставщика своей компании
+      operationId: delete-supplier
+      parameters:
+      - description: ID поставщика
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete supplier
+      tags:
+      - supplier
+    get:
+      consumes:
+      - application/json
+      description: Получение поставщика по id
+      operationId: get-supplier
+      parameters:
+      - description: Supplier ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get supplier by id
+      tags:
+      - supplier
+    put:
+      consumes:
+      - application/json
+      description: Обновление поставщика
+      operationId: update-supplier
+      parameters:
+      - description: ID поставщика
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Необходимо указать данные поставщика.
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateSupplier'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update supplier
+      tags:
+      - supplier
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: |-
+        Удаление пользователя по id.
+        Только super admin может удалить пользователя по id.
+        Только admin может удалить пользователя в рамках своей компании.
+      operationId: delete-user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete user
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Получение информации о пользователе по id.
+        Только super admin может получать информацию по id пользователя.
+      operationId: get-user
+      parameters:
+      - description: User ID
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get user
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: |-
+        Обновление информации о пользователе по id.
+        Необходимо передавать только измененные данные.
+        Только super admin может обновлять информацию по любому id пользователя.
+        Только admin может обновлять информацию по id пользователя в рамках своей компании.
+        Только super admin может менять role для пользователя
+      operationId: update-user
+      parameters:
+      - description: User ID
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update user
+      tags:
+      - user
+  /user/company:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка пользователей компании.
+      operationId: get-users
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - username
+        - name
+        - email
+        - phone
+        - created_at
+        - updated_at
+        - last_login
+        - is_active
+        - role
+        - country
+        - is_approved
+        - position
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get users
+      tags:
+      - user
+  /user/info:
+    get:
+      consumes:
+      - application/json
+      description: Получение информации о пользователе.
+      operationId: get-user-info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get user info
+      tags:
+      - user
+  /user/profile:
+    put:
+      consumes:
+      - application/json
+      description: |-
+        Обновление информации о пользователе.
+        Необходимо передавать только измененные данные.
+      operationId: update-user-profile
+      parameters:
+      - description: user id
+        example: 1
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserProfileUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update user profile
+      tags:
+      - user
+  /warehouse:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка складов
+      operationId: get-warehouses
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - name
+        - address
+        - responsible_person
+        - phone
+        - email
+        - max_capacity
+        - current_occupancy
+        - country
+        - region
+        - created_at
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get warehouses
+      tags:
+      - warehouse
+    post:
+      consumes:
+      - application/json
+      description: Создание склада
+      operationId: create-warehouse
+      parameters:
+      - description: Необходимо указать данные склада.
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.InputWarehouse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create warehouse
+      tags:
+      - warehouse
+  /warehouse/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление склада своей компании
+      operationId: delete-warehouse
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete warehouse
+      tags:
+      - warehouse
+    get:
+      consumes:
+      - application/json
+      description: Получение склада по id
+      operationId: get-warehouse
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get warehouse by id
+      tags:
+      - warehouse
+    put:
+      consumes:
+      - application/json
+      description: Обновление склада своей компании
+      operationId: update-warehouse
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Необходимо указать данные склада.
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.InputWarehouse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update warehouse
+      tags:
+      - warehouse
+  /warehouse/{id}/income-history:
+    get:
+      consumes:
+      - application/json
+      description: Получение истории поступлений товаров
+      operationId: get-income-history
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: received_date
+        description: Field to sort by
+        enum:
+        - received_date
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get warehouse income history
+      tags:
+      - warehouse
+  /warehouse/responsible-person:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка доступных ответственных лиц для склада
+      operationId: get-responsible-person
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - username
+        - name
+        - email
+        - phone
+        - created_at
+        - updated_at
+        - country
+        - position
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get responsible users
+      tags:
+      - warehouse
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

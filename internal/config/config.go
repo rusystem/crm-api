@@ -13,11 +13,12 @@ const (
 )
 
 type Config struct {
-	Postgres Postgres
-	Url      Url
-	Limiter  Limiter `mapstructure:"limiter"`
-	Auth     Auth    `mapstructure:"auth"`
-	IsProd   bool
+	Postgres   Postgres
+	Url        Url
+	Limiter    Limiter    `mapstructure:"limiter"`
+	Auth       Auth       `mapstructure:"auth"`
+	HttpClient HttpClient `mapstructure:"http_client"`
+	IsProd     bool
 
 	Http struct {
 		Port int64 `mapstructure:"port"`
@@ -52,6 +53,10 @@ type Auth struct {
 	AccessTokenTTL  time.Duration `mapstructure:"accessTokenTTL"`
 	RefreshTokenTTL time.Duration `mapstructure:"refreshTokenTTL"`
 	SigningKey      string        `vault:"auth_signing_key"`
+}
+
+type HttpClient struct {
+	Timeout time.Duration `mapstructure:"timeout"`
 }
 
 func New(isProd bool) (*Config, error) {
