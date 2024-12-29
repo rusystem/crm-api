@@ -25,7 +25,7 @@ jobs:
       - name: Deploy CRM-API
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@91.243.71.100 << 'EOF'
-          cd /home/pomogator
+          cd /home/pomogator/crm-api
           docker compose build crm-api
           docker compose down crm-api
           docker compose up -d crm-api
