@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  crm-api:
+    container_name: crm-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - AUTH_SIGNINGKEY=dfgllfgjh34dflgklkr45vmwe
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=user_postgres_pomogator
+      - POSTGRES_PASSWORD=password_postgres_pomogator
+      - POSTGRES_DBNAME=db
+      - POSTGRES_SSLMODE=disable
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=user_postgres_pomogator
+      - POSTGRES_PASSWORD=password_postgres_pomogator
+      - POSTGRES_DB=db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user_postgres_pomogator -d db" ]
+      interval: 10s
+      retries: 5
+    networks:
+      - internal
+
+  migrate:
+    image: postgres:13
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./schema:/migrations
+    entrypoint: [ "sh", "-c", "export PGPASSWORD=$$POSTGRES_PASSWORD; until pg_isready -h postgres; do sleep 1; done && psql -h postgres -U $$POSTGRES_USER -d $$POSTGRES_DB -f /migrations/000001_init.up.sql" ]
+    environment:
+      POSTGRES_USER: user_postgres_pomogator
+      POSTGRES_PASSWORD: password_postgres_pomogator
+      POSTGRES_DB: db
+    networks:
+      - internal
+
+volumes:
+  postgres-data:
+
+networks:
+  internal:
+    driver: bridge

@@ -1,0 +1,14 @@
+http:
+  port: 8080
+
+limiter:
+  rps: 10
+  burst: 20
+  ttl: 10m
+
+ctx:
+  ttl: 10s
+
+auth:
+  accessTokenTTL: 2h
+  refreshTokenTTL: 720h #30 days

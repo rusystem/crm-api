@@ -1,0 +1,33 @@
+name: Deploy CRM-API
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Copy files to the server
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" rsync -avz --delete \
+          -e "ssh -o StrictHostKeyChecking=no" \
+          /home/runner/work/crm-api/crm-api/ ${{ secrets.SSH_USERNAME }}@91.243.71.100:/home/pomogator/crm-api
+
+      - name: Deploy CRM-API
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@91.243.71.100 << 'EOF'
+          cd /home/pomogator
+          docker compose build crm-api
+          docker compose down crm-api
+          docker compose up -d crm-api
+          docker image prune -f
+          EOF
