@@ -30,7 +30,8 @@ CREATE TABLE "warehouses"
     "region"             TEXT,
     "comments"           TEXT,
     "created_at"         TIMESTAMP       DEFAULT (CURRENT_TIMESTAMP),
-    "company_id"         INT
+    "company_id"         INT,
+    "locality"           TEXT
 );
 
 CREATE TABLE "planning_materials"
@@ -191,7 +192,8 @@ CREATE TABLE "suppliers"
     "payment_terms"      TEXT,
     "is_active"          BOOLEAN,
     "other_fields"       JSONB,
-    "company_id"         INT
+    "company_id"         INT,
+    "contract_date"      TIMESTAMP
 );
 
 CREATE TABLE "users"
@@ -395,9 +397,3 @@ VALUES ('full_all_access'),
        ('production_data_access'),
        ('status_and_calculate_access'),
        ('purchase_planning_access') ON CONFLICT ("name") DO NOTHING;
-
-ALTER TABLE "suppliers"
-    ADD COLUMN "contract_date" TIMESTAMP;
-
-ALTER TABLE "warehouses"
-    ADD COLUMN "locality" TEXT;
