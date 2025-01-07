@@ -395,3 +395,9 @@ VALUES ('full_all_access'),
        ('production_data_access'),
        ('status_and_calculate_access'),
        ('purchase_planning_access') ON CONFLICT ("name") DO NOTHING;
+
+ALTER TABLE "suppliers"
+    ADD COLUMN "contract_date" TIMESTAMP;
+
+ALTER TABLE "warehouses"
+    ADD COLUMN "locality" TEXT;

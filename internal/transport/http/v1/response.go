@@ -59,6 +59,9 @@ var validationMessages = map[string]map[string]string{
 	"ContractNumber": {
 		"required": "Contract number is required",
 	},
+	"ContractDate": {
+		"required": "Contract date is required",
+	},
 	"Balance": {
 		"required": "Balance is required",
 	},

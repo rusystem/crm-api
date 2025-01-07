@@ -4160,6 +4160,130 @@ const docTemplate = `{
                 }
             }
         },
+        "/warehouse/report/{id}/pdf": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Возвращает PDF файл с данными склада",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/pdf"
+                ],
+                "tags": [
+                    "warehouse"
+                ],
+                "summary": "Generate warehouse info pdf",
+                "operationId": "warehouse-info-report-pdf",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Warehouse ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PDF файл отчета",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/warehouse/report/{id}/xls": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Возвращает XLS файл с данными склада",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "warehouse"
+                ],
+                "summary": "Generate warehouse info xls",
+                "operationId": "warehouse-info-report-xls",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Warehouse ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "XLS файл отчета",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/warehouse/responsible-person": {
             "get": {
                 "security": [
@@ -4940,6 +5064,7 @@ const docTemplate = `{
                 "balance",
                 "bank_details",
                 "contact_person",
+                "contract_date",
                 "contract_number",
                 "legal_address",
                 "name",
@@ -4972,6 +5097,11 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 140,
                     "example": "Контактное лицо у поставщика"
+                },
+                "contract_date": {
+                    "description": "Дата договора с поставщиком",
+                    "type": "string",
+                    "example": "2022-01-01T00:00:00Z"
                 },
                 "contract_number": {
                     "description": "Номер и дата договора с поставщиком",
@@ -5086,7 +5216,8 @@ const docTemplate = `{
                 },
                 "comments": {
                     "description": "Комментарии к складу",
-                    "type": "string"
+                    "type": "string",
+                    "example": "Комментарии к складу"
                 },
                 "country": {
                     "description": "Страна склада",
@@ -5102,6 +5233,11 @@ const docTemplate = `{
                     "description": "Электронная почта для связи",
                     "type": "string",
                     "example": "Электронная почта для связи"
+                },
+                "locality": {
+                    "description": "Населенный пункт склада",
+                    "type": "string",
+                    "example": "Населенный пункт склада"
                 },
                 "max_capacity": {
                     "description": "Максимальная вместимость склада",
@@ -5128,7 +5264,8 @@ const docTemplate = `{
                 },
                 "region": {
                     "description": "Регион склада",
-                    "type": "string"
+                    "type": "string",
+                    "example": "Регион склада"
                 },
                 "responsible_person": {
                     "description": "Ответственное лицо за склад",
@@ -5652,6 +5789,7 @@ const docTemplate = `{
                 "balance",
                 "bank_details",
                 "contact_person",
+                "contract_date",
                 "contract_number",
                 "legal_address",
                 "name",
@@ -5684,6 +5822,11 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 140,
                     "example": "Контактное лицо у поставщика"
+                },
+                "contract_date": {
+                    "description": "Дата договора с поставщиком",
+                    "type": "string",
+                    "example": "2022-01-01T00:00:00Z"
                 },
                 "contract_number": {
                     "description": "Номер и дата договора с поставщиком",

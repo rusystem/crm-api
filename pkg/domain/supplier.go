@@ -12,7 +12,8 @@ type Supplier struct {
 	Phone             string                 `json:"phone" binding:"required"`              // Телефон поставщика
 	Email             string                 `json:"email"`                                 // Электронная почта поставщика
 	Website           string                 `json:"website"`                               // Сайт поставщика
-	ContractNumber    string                 `json:"contract_number"`                       // Номер и дата договора с поставщиком
+	ContractNumber    string                 `json:"contract_number"`                       // Номер договора с поставщиком
+	ContractDate      time.Time              `json:"contract_date"`                         // Дата договора с поставщиком
 	ProductCategories string                 `json:"product_categories"`                    // Категории товаров, поставляемых поставщиком
 	PurchaseAmount    float64                `json:"purchase_amount"`                       // Общая сумма закупок у поставщика
 	Balance           float64                `json:"balance"`                               // Баланс по поставщику
@@ -40,6 +41,7 @@ type InputSupplier struct {
 	Email             string                 `json:"email" example:"Электронная почта поставщика"`                                     // Электронная почта поставщика
 	Website           string                 `json:"website" example:"Сайт поставщика"`                                                // Сайт поставщика
 	ContractNumber    string                 `json:"contract_number" binding:"required" example:"Номер и дата договора с поставщиком"` // Номер и дата договора с поставщиком
+	ContractDate      time.Time              `json:"contract_date" binding:"required" example:"2022-01-01T00:00:00Z"`                  // Дата договора с поставщиком
 	ProductCategories string                 `json:"product_categories" example:"Категории товаров, поставляемых поставщиком"`         // Категории товаров, поставляемых поставщиком
 	PurchaseAmount    float64                `json:"purchase_amount" example:"100.0"`                                                  // Общая сумма закупок у поставщика
 	Balance           float64                `json:"balance" binding:"required" example:"100.0"`                                       // Баланс по поставщику
@@ -68,6 +70,7 @@ type UpdateSupplier struct {
 	Email             *string                 `json:"email" example:"Электронная почта поставщика"`                                     // Электронная почта поставщика
 	Website           *string                 `json:"website" example:"Сайт поставщика"`                                                // Сайт поставщика
 	ContractNumber    *string                 `json:"contract_number" binding:"required" example:"Номер и дата договора с поставщиком"` // Номер и дата договора с поставщиком
+	ContractDate      *time.Time              `json:"contract_date" binding:"required" example:"2022-01-01T00:00:00Z"`                  // Дата договора с поставщиком
 	ProductCategories *string                 `json:"product_categories" example:"Категории товаров, поставляемых поставщиком"`         // Категории товаров, поставляемых поставщиком
 	PurchaseAmount    *float64                `json:"purchase_amount" example:"100.0"`                                                  // Общая сумма закупок у поставщика
 	Balance           *float64                `json:"balance" binding:"required" example:"100.0"`                                       // Баланс по поставщику

@@ -2,9 +2,11 @@ package v1
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/rusystem/crm-api/pkg/domain"
 	"net/http"
+	"time"
 )
 
 func (h *Handler) initWarehouseRoutes(api *gin.RouterGroup) {
@@ -19,6 +21,10 @@ func (h *Handler) initWarehouseRoutes(api *gin.RouterGroup) {
 		wh.PUT("/:id", h.adminIdentity, h.updateWarehouse)
 		wh.DELETE("/:id", h.adminIdentity, h.deleteWarehouse)
 		wh.GET("/responsible-person", h.adminIdentity, h.getResponsiblePerson)
+
+		wh.GET("/report/:id/xls", h.userIdentity, h.getWarehouseInfoReportXls)
+		wh.GET("/report/:id/pdf", h.userIdentity, h.getWarehouseInfoReportPdf)
+		wh.GET("report/list/xls", h.userIdentity, h.getWarehouseListReport)
 	}
 }
 
@@ -164,6 +170,9 @@ func (h *Handler) createWarehouse(c *gin.Context) {
 		CurrentOccupancy:  inp.CurrentOccupancy,
 		OtherFields:       inp.OtherFields,
 		Country:           inp.Country,
+		Region:            inp.Region,
+		Locality:          inp.Locality,
+		Comments:          inp.Comments,
 		CompanyId:         info.CompanyId,
 	})
 	if err != nil {
@@ -393,4 +402,96 @@ func (h *Handler) getIncomeHistory(c *gin.Context) {
 		Data:       history,
 		TotalCount: count,
 	})
+}
+
+// @Summary      Generate warehouse info xls
+// @Security 	 ApiKeyAuth
+// @Tags         warehouse
+// @Description  Возвращает XLS файл с данными склада
+// @ID           warehouse-info-report-xls
+// @Accept       json
+// @Produce      application/octet-stream
+// @Param 	  	 id path int true "Warehouse ID"
+// @Success      200 {file} file "XLS файл отчета"
+// @Failure 	 400,404 {object} domain.ErrorResponse
+// @Failure 	 500 {object} domain.ErrorResponse
+// @Failure 	 default {object} domain.ErrorResponse
+// @Router       /warehouse/report/{id}/xls [GET]
+func (h *Handler) getWarehouseInfoReportXls(c *gin.Context) {
+	id, err := parseIdIntPathParam(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusUnprocessableEntity, err.Error())
+		return
+	}
+
+	info, err := getUserInfo(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusUnauthorized, err.Error())
+		return
+	}
+
+	report, err := h.services.Warehouse.GenerateWarehouseInfoReportXls(c, id, info)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	currentTime := time.Now().Format("2006-01-02_15-04-05")
+	fileName := fmt.Sprintf("warehouse_%d_report_%s.xlsx", id, currentTime)
+
+	// Устанавливаем заголовки и отправляем файл
+	c.Header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	c.Header("Content-Disposition", fmt.Sprintf("attachment;filename=%s", fileName))
+
+	if err = report.Write(c.Writer); err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+}
+
+// @Summary      Generate warehouse info pdf
+// @Security 	 ApiKeyAuth
+// @Tags         warehouse
+// @Description  Возвращает PDF файл с данными склада
+// @ID           warehouse-info-report-pdf
+// @Accept       json
+// @Produce      application/pdf
+// @Param 		 id path int true "Warehouse ID"
+// @Success      200 {file} file "PDF файл отчета"
+// @Failure 	 400,404 {object} domain.ErrorResponse
+// @Failure 	 500 {object} domain.ErrorResponse
+// @Failure 	 default {object} domain.ErrorResponse
+// @Router       /warehouse/report/{id}/pdf [GET]
+func (h *Handler) getWarehouseInfoReportPdf(c *gin.Context) {
+	id, err := parseIdIntPathParam(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusUnprocessableEntity, err.Error())
+		return
+	}
+
+	info, err := getUserInfo(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusUnauthorized, err.Error())
+		return
+	}
+
+	report, err := h.services.Warehouse.GenerateWarehouseInfoReportPdf(c, id, info)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	// Формируем название файла с текущей датой и временем
+	currentTime := time.Now().Format("2006-01-02_15-04-05")
+	fileName := fmt.Sprintf("warehouse_%d_report_%s.pdf", id, currentTime)
+
+	// Устанавливаем заголовки и отправляем файл
+	c.Header("Content-Type", "application/pdf")
+	c.Header("Content-Disposition", fmt.Sprintf("attachment;filename=%s", fileName))
+	if err = report.Output(c.Writer); err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+}
+
+func (h *Handler) getWarehouseListReport(c *gin.Context) {
+
 }

@@ -96,6 +96,10 @@ func (s *SupplierService) Update(ctx context.Context, inp domain.UpdateSupplier,
 		supplier.ContractNumber = *inp.ContractNumber
 	}
 
+	if inp.ContractDate != nil {
+		supplier.ContractDate = *inp.ContractDate
+	}
+
 	if inp.ProductCategories != nil {
 		supplier.ProductCategories = *inp.ProductCategories
 	}

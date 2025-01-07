@@ -14,6 +14,7 @@ type Warehouse struct {
 	OtherFields       map[string]interface{} `json:"other_fields"`         // Дополнительные пользовательские поля
 	Country           string                 `json:"country"`              // Страна склада
 	Region            string                 `json:"region"`               // Регион слада
+	Locality          string                 `json:"locality"`             // Населенный пункт склада
 	Comments          string                 `json:"comments"`             // Комментарии к складу
 	CreatedAt         time.Time              `json:"created_at"`           // Дата создания склада
 	CompanyId         int64                  `json:"company_id"`           // Уникальный идентификатор компании
@@ -29,8 +30,9 @@ type InputWarehouse struct {
 	CurrentOccupancy  int64                  `json:"current_occupancy" example:"50"`                                                            // Текущая заполняемость склада
 	OtherFields       map[string]interface{} `json:"other_fields"`                                                                              // Дополнительные пользовательские поля
 	Country           string                 `json:"country" example:"Страна склада"`                                                           // Страна склада
-	Region            string                 `json:"region"`                                                                                    // Регион склада
-	Comments          string                 `json:"comments"`                                                                                  // Комментарии к складу
+	Region            string                 `json:"region" example:"Регион склада"`                                                            // Регион склада
+	Locality          string                 `json:"locality" example:"Населенный пункт склада"`                                                // Населенный пункт склада
+	Comments          string                 `json:"comments" example:"Комментарии к складу"`                                                   // Комментарии к складу
 }
 
 type WarehouseUpdate struct {
@@ -45,5 +47,6 @@ type WarehouseUpdate struct {
 	OtherFields       *map[string]interface{} `json:"other_fields"`       // Дополнительные пользовательские поля
 	Country           *string                 `json:"country"`            // Страна склада
 	Region            *string                 `json:"region"`             // Регион склада
+	Locality          *string                 `json:"locality"`           // Населенный пункт склада
 	Comments          *string                 `json:"comments"`           // Комментарии к складу
 }

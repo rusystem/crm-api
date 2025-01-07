@@ -37,11 +37,11 @@ func (wpr *WarehousePostgresRepository) Create(ctx context.Context, warehouse do
     INSERT INTO %s (
         name, address, responsible_person, phone, email,
         max_capacity, current_occupancy, other_fields, country, region,
-        comments, company_id
+        comments, company_id, locality
     ) VALUES (
         $1, $2, $3, $4, $5,
         $6, $7, $8, $9, $10,
-        $11, $12
+        $11, $12, $13
     ) RETURNING id
     `, domain.TableWarehouse)
 
@@ -49,7 +49,7 @@ func (wpr *WarehousePostgresRepository) Create(ctx context.Context, warehouse do
 	if err = wpr.db.QueryRowContext(ctx, query,
 		warehouse.Name, warehouse.Address, warehouse.ResponsiblePerson, warehouse.Phone, warehouse.Email,
 		warehouse.MaxCapacity, warehouse.CurrentOccupancy, otherFieldsJSON, warehouse.Country, warehouse.Region,
-		warehouse.Comments, warehouse.CompanyId,
+		warehouse.Comments, warehouse.CompanyId, warehouse.Locality,
 	).Scan(&id); err != nil {
 		return 0, fmt.Errorf("failed to insert warehouse: %v", err)
 	}
@@ -62,7 +62,7 @@ func (wpr *WarehousePostgresRepository) GetById(ctx context.Context, id int64) (
     SELECT
         id, name, address, responsible_person, phone, email,
         max_capacity, current_occupancy, other_fields, country, region,
-        comments, created_at, company_id
+        comments, created_at, company_id, locality
     FROM %s
     WHERE id = $1;
     `, domain.TableWarehouse)
@@ -74,7 +74,7 @@ func (wpr *WarehousePostgresRepository) GetById(ctx context.Context, id int64) (
 	err := row.Scan(
 		&warehouse.ID, &warehouse.Name, &warehouse.Address, &warehouse.ResponsiblePerson, &warehouse.Phone, &warehouse.Email,
 		&warehouse.MaxCapacity, &warehouse.CurrentOccupancy, &otherFieldsJSON, &warehouse.Country, &warehouse.Region,
-		&warehouse.Comments, &warehouse.CreatedAt, &warehouse.CompanyId,
+		&warehouse.Comments, &warehouse.CreatedAt, &warehouse.CompanyId, &warehouse.Locality,
 	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -102,14 +102,14 @@ func (wpr *WarehousePostgresRepository) Update(ctx context.Context, warehouse do
 	SET
 		name = $1, address = $2, responsible_person = $3, phone = $4, email = $5,
 		max_capacity = $6, current_occupancy = $7, other_fields = $8, country = $9,
-		region = $10, comments = $11
-	WHERE id = $12
+		region = $10, comments = $11, locality = $12
+	WHERE id = $13
 	`, domain.TableWarehouse)
 
 	_, err = wpr.db.ExecContext(ctx, query,
 		warehouse.Name, warehouse.Address, warehouse.ResponsiblePerson, warehouse.Phone, warehouse.Email,
 		warehouse.MaxCapacity, warehouse.CurrentOccupancy, otherFieldsJSON, warehouse.Country,
-		warehouse.Region, warehouse.Comments,
+		warehouse.Region, warehouse.Comments, warehouse.Locality,
 		warehouse.ID,
 	)
 	if err != nil {
@@ -142,7 +142,7 @@ func (wpr *WarehousePostgresRepository) GetListByCompanyId(ctx context.Context, 
 	SELECT
 		id, name, address, responsible_person, phone, email,
 		max_capacity, current_occupancy, other_fields, country, region, 
-		comments, created_at, company_id
+		comments, created_at, company_id, locality
 	FROM %s
 	WHERE company_id = $1 ORDER BY %s %s
 	LIMIT $2 OFFSET $3;
@@ -165,7 +165,7 @@ func (wpr *WarehousePostgresRepository) GetListByCompanyId(ctx context.Context, 
 		if err = rows.Scan(
 			&warehouse.ID, &warehouse.Name, &warehouse.Address, &warehouse.ResponsiblePerson, &warehouse.Phone, &warehouse.Email,
 			&warehouse.MaxCapacity, &warehouse.CurrentOccupancy, &otherFieldsJSON, &warehouse.Country, &warehouse.Region,
-			&warehouse.Comments, &warehouse.CreatedAt, &warehouse.CompanyId,
+			&warehouse.Comments, &warehouse.CreatedAt, &warehouse.CompanyId, &warehouse.Locality,
 		); err != nil {
 			return nil, 0, fmt.Errorf("failed to scan warehouse: %v", err)
 		}

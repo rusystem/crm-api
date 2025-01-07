@@ -315,6 +315,10 @@ definitions:
         example: Контактное лицо у поставщика
         maxLength: 140
         type: string
+      contract_date:
+        description: Дата договора с поставщиком
+        example: "2022-01-01T00:00:00Z"
+        type: string
       contract_number:
         description: Номер и дата договора с поставщиком
         example: Номер и дата договора с поставщиком
@@ -395,6 +399,7 @@ definitions:
     - balance
     - bank_details
     - contact_person
+    - contract_date
     - contract_number
     - legal_address
     - name
@@ -411,6 +416,7 @@ definitions:
         type: string
       comments:
         description: Комментарии к складу
+        example: Комментарии к складу
         type: string
       country:
         description: Страна склада
@@ -423,6 +429,10 @@ definitions:
       email:
         description: Электронная почта для связи
         example: Электронная почта для связи
+        type: string
+      locality:
+        description: Населенный пункт склада
+        example: Населенный пункт склада
         type: string
       max_capacity:
         description: Максимальная вместимость склада
@@ -445,6 +455,7 @@ definitions:
         type: string
       region:
         description: Регион склада
+        example: Регион склада
         type: string
       responsible_person:
         description: Ответственное лицо за склад
@@ -865,6 +876,10 @@ definitions:
         example: Контактное лицо у поставщика
         maxLength: 140
         type: string
+      contract_date:
+        description: Дата договора с поставщиком
+        example: "2022-01-01T00:00:00Z"
+        type: string
       contract_number:
         description: Номер и дата договора с поставщиком
         example: Номер и дата договора с поставщиком
@@ -945,6 +960,7 @@ definitions:
     - balance
     - bank_details
     - contact_person
+    - contract_date
     - contract_number
     - legal_address
     - name
@@ -4025,6 +4041,86 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get warehouse income history
+      tags:
+      - warehouse
+  /warehouse/report/{id}/pdf:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает PDF файл с данными склада
+      operationId: warehouse-info-report-pdf
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/pdf
+      responses:
+        "200":
+          description: PDF файл отчета
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Generate warehouse info pdf
+      tags:
+      - warehouse
+  /warehouse/report/{id}/xls:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает XLS файл с данными склада
+      operationId: warehouse-info-report-xls
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: XLS файл отчета
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Generate warehouse info xls
       tags:
       - warehouse
   /warehouse/responsible-person:
