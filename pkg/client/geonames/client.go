@@ -100,8 +100,8 @@ func (c *Client) FetchCountries(ctx context.Context, lang string) ([]domain.Coun
 
 	for _, country := range cr.Geonames {
 		countries = append(countries, domain.Country{
-			Id:   country.CountryID,
-			Name: country.CountryName,
+			CountryId: country.CountryID,
+			Name:      country.CountryName,
 		})
 	}
 
@@ -158,8 +158,8 @@ func (c *Client) FetchRegions(ctx context.Context, code, lang string) ([]domain.
 			// Добавляем только уникальные города
 			if _, exists := citiesMap[key]; !exists {
 				citiesMap[key] = domain.Region{
-					Name:       region.Name,
-					AdminCode1: region.AdminCode1,
+					Name:     region.Name,
+					RegionId: region.AdminCode1,
 				}
 			}
 		}
@@ -219,7 +219,10 @@ func (c *Client) FetchCitiesByRegion(ctx context.Context, countryCode, adminCode
 			}
 
 			nameSet[geo.Name] = true
-			cities = append(cities, domain.City{Name: geo.Name})
+			cities = append(cities, domain.City{
+				Name:   geo.Name,
+				CityId: geo.GeonameId,
+			})
 		}
 
 		// Переход к следующей странице

@@ -1,5 +1,17 @@
 basePath: /api/web-api-gateway/v1
 definitions:
+  domain.City:
+    description: City represents a city entity.
+    properties:
+      city_id:
+        description: Уникальный идентификатор города.
+        example: 499099
+        type: integer
+      name:
+        description: Название города.
+        example: Самара
+        type: string
+    type: object
   domain.CompanyUpdate:
     properties:
       address:
@@ -21,6 +33,18 @@ definitions:
       timezone:
         type: string
       website:
+        type: string
+    type: object
+  domain.Country:
+    description: Country represents a country entity.
+    properties:
+      country_id:
+        description: Уникальный идентификатор страны.
+        example: RU
+        type: string
+      name:
+        description: Название страны.
+        example: Россия
         type: string
     type: object
   domain.CreateCompany:
@@ -504,6 +528,18 @@ definitions:
   domain.MessageResponse:
     properties:
       message:
+        type: string
+    type: object
+  domain.Region:
+    description: Region represents a region entity.
+    properties:
+      name:
+        description: Название региона.
+        example: Самарская Область
+        type: string
+      region_id:
+        description: Административный код первого уровня
+        example: "65"
         type: string
     type: object
   domain.SectionCreate:
@@ -1460,16 +1496,16 @@ paths:
       description: Список городов
       operationId: get-city-list
       parameters:
-      - description: country code query param
+      - description: country id query param
         example: RU
         in: query
-        name: country_code
+        name: country_id
         required: true
         type: string
-      - description: admin code query param
-        example: "63"
+      - description: region id query param
+        example: "65"
         in: query
-        name: admin_code
+        name: region_id
         required: true
         type: string
       produces:
@@ -1541,10 +1577,10 @@ paths:
       description: Список регионов/областей
       operationId: get-region-list
       parameters:
-      - description: country code query param
+      - description: country id query param
         example: RU
         in: query
-        name: country_code
+        name: country_id
         required: true
         type: string
       produces:

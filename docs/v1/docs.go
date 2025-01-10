@@ -622,16 +622,16 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "example": "RU",
-                        "description": "country code query param",
-                        "name": "country_code",
+                        "description": "country id query param",
+                        "name": "country_id",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "example": "63",
-                        "description": "admin code query param",
-                        "name": "admin_code",
+                        "example": "65",
+                        "description": "region id query param",
+                        "name": "region_id",
                         "in": "query",
                         "required": true
                     }
@@ -746,8 +746,8 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "example": "RU",
-                        "description": "country code query param",
-                        "name": "country_code",
+                        "description": "country id query param",
+                        "name": "country_id",
                         "in": "query",
                         "required": true
                     }
@@ -4674,6 +4674,22 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "domain.City": {
+            "description": "City represents a city entity.",
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "description": "Уникальный идентификатор города.",
+                    "type": "integer",
+                    "example": 499099
+                },
+                "name": {
+                    "description": "Название города.",
+                    "type": "string",
+                    "example": "Самара"
+                }
+            }
+        },
         "domain.CompanyUpdate": {
             "type": "object",
             "properties": {
@@ -4706,6 +4722,22 @@ const docTemplate = `{
                 },
                 "website": {
                     "type": "string"
+                }
+            }
+        },
+        "domain.Country": {
+            "description": "Country represents a country entity.",
+            "type": "object",
+            "properties": {
+                "country_id": {
+                    "description": "Уникальный идентификатор страны.",
+                    "type": "string",
+                    "example": "RU"
+                },
+                "name": {
+                    "description": "Название страны.",
+                    "type": "string",
+                    "example": "Россия"
                 }
             }
         },
@@ -5325,6 +5357,22 @@ const docTemplate = `{
             "properties": {
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "domain.Region": {
+            "description": "Region represents a region entity.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Название региона.",
+                    "type": "string",
+                    "example": "Самарская Область"
+                },
+                "region_id": {
+                    "description": "Административный код первого уровня",
+                    "type": "string",
+                    "example": "65"
                 }
             }
         },

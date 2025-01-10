@@ -36,17 +36,11 @@ type RegionResponse struct {
 	Geonames []Region `json:"geonames"`
 }
 
-/*type CityResponse struct {
-	Geonames []struct {
-		Name       string `json:"name"`
-		AdminCode1 string `json:"adminCode1"`
-	} `json:"geonames"`
-}*/
-
 type CityResponse struct {
 	Geonames []struct {
 		Name        string `json:"name"`
 		ToponymName string `json:"toponymName"`
+		GeonameId   int64  `json:"geonameId"`
 	} `json:"geonames"`
 	TotalResultsCount int `json:"totalResultsCount"`
 }

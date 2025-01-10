@@ -33,6 +33,7 @@ func (h *Handler) initGeoRoutes(api *gin.RouterGroup) {
 // @ID get-country-list
 // @Accept json
 // @Produce json
+// @Success 200 {object} domain.Country
 // @Success 200 {object} domain.SuccessResponse
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
@@ -58,20 +59,21 @@ func (h *Handler) getCountryList(c *gin.Context) {
 // @ID get-region-list
 // @Accept json
 // @Produce json
-// @Param country_code query string true "country code query param" example(RU)
+// @Param country_id query string true "country id query param" example(RU)
+// @Success 200 {object} domain.Region
 // @Success 200 {object} domain.SuccessResponse
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
 // @Failure default {object} domain.ErrorResponse
 // @Router /geo/region/list [GET]
 func (h *Handler) getRegionList(c *gin.Context) {
-	countryCode, err := parseCountryCodeStringPathParam(c)
+	countryId, err := parseCountryCodeStringPathParam(c)
 	if err != nil {
 		newErrorResponse(c, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
-	regions, err := h.services.Geo.RegionList(c, countryCode, "ru") //todo учесть локализацию
+	regions, err := h.services.Geo.RegionList(c, countryId, "ru") //todo учесть локализацию
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -90,27 +92,28 @@ func (h *Handler) getRegionList(c *gin.Context) {
 // @ID get-city-list
 // @Accept json
 // @Produce json
-// @Param country_code query string true "country code query param" example(RU)
-// @Param admin_code query string true "admin code query param" example(63)
+// @Param country_id query string true "country id query param" example(RU)
+// @Param region_id query string true "region id query param" example(65)
+// @Success 200 {object} domain.City
 // @Success 200 {object} domain.SuccessResponse
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
 // @Failure default {object} domain.ErrorResponse
 // @Router /geo/city/list [GET]
 func (h *Handler) getCityList(c *gin.Context) {
-	countryCode, err := parseCountryCodeStringPathParam(c)
+	countryId, err := parseCountryCodeStringPathParam(c)
 	if err != nil {
 		newErrorResponse(c, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
-	adminCode, err := parseAdminCodeStringPathParam(c)
+	regionId, err := parseRegionStringPathParam(c)
 	if err != nil {
 		newErrorResponse(c, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
-	cities, err := h.services.Geo.CityList(c, countryCode, adminCode, "ru") //todo учесть локализацию
+	cities, err := h.services.Geo.CityList(c, countryId, regionId, "ru") //todo учесть локализацию
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

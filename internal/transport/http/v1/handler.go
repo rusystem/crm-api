@@ -206,7 +206,7 @@ func parseEmailPathParam(c *gin.Context) (string, error) {
 }
 
 func parseCountryCodeStringPathParam(c *gin.Context) (string, error) {
-	code := c.Query("country_code")
+	code := c.Query("country_id")
 	if code == "" {
 		return "", domain.ErrInvalidCountryCodeParam
 	}
@@ -220,8 +220,8 @@ func parseCountryCodeStringPathParam(c *gin.Context) (string, error) {
 	return code, nil
 }
 
-func parseAdminCodeStringPathParam(c *gin.Context) (string, error) {
-	code := c.Query("admin_code")
+func parseRegionStringPathParam(c *gin.Context) (string, error) {
+	code := c.Query("region_id")
 	if code == "" {
 		return "", domain.ErrInvalidAdminCodeParam
 	}
