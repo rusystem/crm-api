@@ -3,7 +3,7 @@ definitions:
   domain.City:
     description: City represents a city entity.
     properties:
-      city_id:
+      id:
         description: Уникальный идентификатор города.
         example: 499099
         type: integer
@@ -38,7 +38,7 @@ definitions:
   domain.Country:
     description: Country represents a country entity.
     properties:
-      country_id:
+      id:
         description: Уникальный идентификатор страны.
         example: RU
         type: string
@@ -533,13 +533,13 @@ definitions:
   domain.Region:
     description: Region represents a region entity.
     properties:
+      id:
+        description: Административный код первого уровня
+        example: "65"
+        type: string
       name:
         description: Название региона.
         example: Самарская Область
-        type: string
-      region_id:
-        description: Административный код первого уровня
-        example: "65"
         type: string
     type: object
   domain.SectionCreate:

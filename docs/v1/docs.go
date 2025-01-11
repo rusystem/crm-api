@@ -4678,7 +4678,7 @@ const docTemplate = `{
             "description": "City represents a city entity.",
             "type": "object",
             "properties": {
-                "city_id": {
+                "id": {
                     "description": "Уникальный идентификатор города.",
                     "type": "integer",
                     "example": 499099
@@ -4729,7 +4729,7 @@ const docTemplate = `{
             "description": "Country represents a country entity.",
             "type": "object",
             "properties": {
-                "country_id": {
+                "id": {
                     "description": "Уникальный идентификатор страны.",
                     "type": "string",
                     "example": "RU"
@@ -5364,15 +5364,15 @@ const docTemplate = `{
             "description": "Region represents a region entity.",
             "type": "object",
             "properties": {
+                "id": {
+                    "description": "Административный код первого уровня",
+                    "type": "string",
+                    "example": "65"
+                },
                 "name": {
                     "description": "Название региона.",
                     "type": "string",
                     "example": "Самарская Область"
-                },
-                "region_id": {
-                    "description": "Административный код первого уровня",
-                    "type": "string",
-                    "example": "65"
                 }
             }
         },
