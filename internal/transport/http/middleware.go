@@ -7,24 +7,37 @@ import (
 
 func corsMiddleware(c *gin.Context) {
 	origin := c.Request.Header.Get("Origin")
-	allowedOrigins := []string{"http://localhost", "http://127.0.0.1", "http://91.243.71.100"}
+	allowedOrigins := []string{
+		"http://localhost",
+		"http://127.0.0.1",
+		"http://91.243.71.100:5173",
+		"http://91.243.71.100:3000",
+	}
 
+	isAllowed := false
 	for _, o := range allowedOrigins {
 		if origin == o {
-			c.Header("Access-Control-Allow-Origin", origin)
+			isAllowed = true
 			break
 		}
 	}
 
-	c.Header("Access-Control-Allow-Origin", origin)
-	c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-	c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
-	c.Header("Access-Control-Allow-Credentials", "true")
-	c.Header("Content-Type", "application/json")
+	if isAllowed {
+		c.Header("Access-Control-Allow-Origin", origin)
+		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
+	}
 
-	// Для OPTIONS-запросов возвращаем статус OK
+	// Для OPTIONS-запросов возвращаем OK
 	if c.Request.Method == "OPTIONS" {
-		c.AbortWithStatus(http.StatusOK)
+		if isAllowed {
+			c.AbortWithStatus(http.StatusOK)
+			return
+		}
+
+		// Если Origin не разрешён, возвращаем 403
+		c.AbortWithStatus(http.StatusForbidden)
 		return
 	}
 
