@@ -15,6 +15,7 @@ type Repository struct {
 	Sections         Sections
 	Suppliers        Suppliers
 	Warehouse        Warehouse
+	UnitOfMeasure    UnitOfMeasure
 }
 
 func New(cfg *config.Config, cache *cache.MemoryCache, pc *sql.DB) *Repository {
@@ -27,5 +28,6 @@ func New(cfg *config.Config, cache *cache.MemoryCache, pc *sql.DB) *Repository {
 		Sections:         NewSectionsRepository(cfg, pc),
 		Suppliers:        NewSuppliersRepository(cfg, pc),
 		Warehouse:        NewWarehouseRepository(cfg, pc),
+		UnitOfMeasure:    NewUnitOfMeasureRepository(cfg, pc),
 	}
 }

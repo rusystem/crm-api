@@ -172,6 +172,7 @@ func (h *Handler) createSupplier(c *gin.Context) {
 		IsActive:          inp.IsActive,
 		OtherFields:       inp.OtherFields,
 		CompanyId:         info.CompanyId,
+		Locality:          inp.Locality,
 	})
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())

@@ -17,7 +17,18 @@ var validationMessages = map[string]map[string]string{
 	},
 	"Name": {
 		"required": "Name is required",
+		"min":      "Name must be at least 1 characters long",
 		"max":      "Name must not exceed 140 characters",
+	},
+	"NameEn": {
+		"required": "NameEn is required",
+		"min":      "NameEn must be at least 1 characters long",
+		"max":      "NameEn must not exceed 140 characters",
+	},
+	"Abbreviation": {
+		"required": "Abbreviation is required",
+		"min":      "Abbreviation must be at least 1 characters long",
+		"max":      "Abbreviation must not exceed 140 characters",
 	},
 	"Email": {
 		"required": "Email is required",

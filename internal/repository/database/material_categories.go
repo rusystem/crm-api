@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"github.com/rusystem/crm-api/pkg/domain"
 )
@@ -53,6 +54,10 @@ func (mc *MaterialCategoriesPostgresRepository) GetById(ctx context.Context, id,
 	if err := mc.psql.QueryRowContext(ctx, query, id, companyId).Scan(
 		&c.ID, &c.Name, &c.CompanyID, &c.Description, &c.Slug, &c.CreatedAt, &c.UpdatedAt, &c.IsActive, &c.ImgURL,
 	); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return domain.MaterialCategory{}, domain.ErrMaterialCategoryNotFound
+		}
+
 		return domain.MaterialCategory{}, err
 	}
 

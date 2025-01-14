@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/lib/pq"
 	"github.com/rusystem/crm-api/pkg/domain"
 )
 
@@ -54,21 +55,22 @@ func (mr *MaterialsPostgresRepository) CreatePlanning(ctx context.Context, mater
 
 	query := fmt.Sprintf(`
 		INSERT INTO %s (warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume, 
-						price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve, 
+						price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve, 
 						received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost, 
-						warehouse_section, incoming_delivery_number, other_fields, company_id)
+						warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, supplier_name, contract_number)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 
-				$22, $23, $24, $25, $26, $27, $28) RETURNING id`,
+				$22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32) RETURNING id`,
 		domain.TablePlanningMaterials)
 
 	var id int64
 	if err = mr.psql.QueryRowContext(ctx, query,
-		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, material.ProductCategory,
+		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, pq.Array(material.ProductCategory),
 		material.Unit, material.TotalQuantity, material.Volume, material.PriceWithoutVAT, material.TotalWithoutVAT,
-		material.SupplierID, material.Location, material.Contract, material.File, material.Status, material.Comments,
+		material.SupplierID, material.Location, material.ContractDate, material.File, material.Status, material.Comments,
 		material.Reserve, material.ReceivedDate, material.LastUpdated, material.MinStockLevel, material.ExpirationDate,
-		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection,
-		material.IncomingDeliveryNumber, otherFieldsJSON, material.CompanyID,
+		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection, material.IncomingDeliveryNumber,
+		otherFieldsJSON, material.CompanyID, material.InternalName, material.UnitsPerPackage, material.SupplierName,
+		material.ContractNumber,
 	).Scan(&id); err != nil {
 		return 0, fmt.Errorf("failed to insert planning material: %v", err)
 	}
@@ -87,19 +89,20 @@ func (mr *MaterialsPostgresRepository) UpdatePlanning(ctx context.Context, mater
 		SET
 			warehouse_id = $1, item_id = $2, name = $3, by_invoice = $4, article = $5, product_category = $6, unit = $7,
 			total_quantity = $8, volume = $9, price_without_vat = $10, total_without_vat = $11, supplier_id = $12, location = $13,
-			contract = $14, file = $15, status = $16, comments = $17, reserve = $18, received_date = $19, last_updated = $20,
+			contract_date = $14, file = $15, status = $16, comments = $17, reserve = $18, received_date = $19, last_updated = $20,
 			min_stock_level = $21, expiration_date = $22, responsible_person = $23, storage_cost = $24, warehouse_section = $25,
-			incoming_delivery_number = $26, other_fields = $27
-		WHERE id = $28`,
+			incoming_delivery_number = $26, other_fields = $27, internal_name = $28, units_per_package = $29, supplier_name = $30, 
+		    contract_number = $31
+		WHERE id = $32`,
 		domain.TablePlanningMaterials)
 
 	_, err = mr.psql.ExecContext(ctx, query,
-		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, material.ProductCategory,
+		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, pq.Array(material.ProductCategory),
 		material.Unit, material.TotalQuantity, material.Volume, material.PriceWithoutVAT, material.TotalWithoutVAT,
-		material.SupplierID, material.Location, material.Contract, material.File, material.Status, material.Comments,
+		material.SupplierID, material.Location, material.ContractDate, material.File, material.Status, material.Comments,
 		material.Reserve, material.ReceivedDate, material.LastUpdated, material.MinStockLevel, material.ExpirationDate,
-		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection,
-		material.IncomingDeliveryNumber, otherFieldsJSON, material.ID,
+		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection, material.IncomingDeliveryNumber, otherFieldsJSON,
+		material.InternalName, material.UnitsPerPackage, material.SupplierName, material.ContractNumber, material.ID,
 	)
 
 	return err
@@ -118,9 +121,10 @@ func (mr *MaterialsPostgresRepository) getPlanningById(ctx context.Context, id i
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, supplier_name, 
+		contract_number
 	FROM %s WHERE id = $1
 	`, domain.TablePlanningMaterials)
 
@@ -129,12 +133,13 @@ func (mr *MaterialsPostgresRepository) getPlanningById(ctx context.Context, id i
 
 	if err := mr.psql.QueryRowContext(ctx, query, id).Scan(
 		&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-		&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+		pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 		&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-		&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+		&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 		&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 		&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-		&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+		&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+		&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return domain.Material{}, domain.ErrMaterialNotFound
@@ -167,9 +172,10 @@ func (mr *MaterialsPostgresRepository) GetPlanningList(ctx context.Context, para
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE company_id = $1 ORDER BY %s %s LIMIT $2 OFFSET $3
 	`, domain.TablePlanningMaterials, params.SortField, params.Sort)
 
@@ -191,12 +197,13 @@ func (mr *MaterialsPostgresRepository) GetPlanningList(ctx context.Context, para
 
 		if err = rows.Scan(
 			&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-			&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+			pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 			&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-			&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+			&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 			&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 			&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+			&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 		); err != nil {
 			return nil, 0, err
 		}
@@ -245,22 +252,24 @@ func (mr *MaterialsPostgresRepository) MovePlanningToPurchased(ctx context.Conte
 	// 2. переносим в purchased
 	query = fmt.Sprintf(`
 		INSERT INTO %s (warehouse_id, name, by_invoice, article, product_category, unit, total_quantity, volume, 
-						price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve, 
+						price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve, 
 						received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost, 
-						warehouse_section, incoming_delivery_number, other_fields, company_id)
+						warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		                supplier_name, contract_number)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 
-				$22, $23, $24, $25, $26, $27) RETURNING id, item_id`,
+				$22, $23, $24, $25, $26, $27, $28, $29, $30, $31) RETURNING id, item_id`,
 		domain.TablePurchasedMaterials)
 
 	var newId int64
 	var itemId int64
 	if err = tx.QueryRowContext(ctx, query,
-		material.WarehouseID, material.Name, material.ByInvoice, material.Article, material.ProductCategory,
+		material.WarehouseID, material.Name, material.ByInvoice, material.Article, pq.Array(material.ProductCategory),
 		material.Unit, material.TotalQuantity, material.Volume, material.PriceWithoutVAT, material.TotalWithoutVAT,
-		material.SupplierID, material.Location, material.Contract, material.File, material.Status, material.Comments,
+		material.SupplierID, material.Location, material.ContractDate, material.File, material.Status, material.Comments,
 		material.Reserve, material.ReceivedDate, material.LastUpdated, material.MinStockLevel, material.ExpirationDate,
-		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection,
-		material.IncomingDeliveryNumber, otherFieldsJSON, material.CompanyID,
+		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection, material.IncomingDeliveryNumber,
+		otherFieldsJSON, material.CompanyID, material.InternalName, material.UnitsPerPackage, material.SupplierName,
+		material.ContractNumber,
 	).Scan(&newId, &itemId); err != nil {
 		return 0, 0, fmt.Errorf("failed to insert purchased material: %v", err)
 	}
@@ -268,20 +277,22 @@ func (mr *MaterialsPostgresRepository) MovePlanningToPurchased(ctx context.Conte
 	// 3. переносим в planning archive
 	query = fmt.Sprintf(`
 		INSERT INTO %s (warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume, 
-						price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve, 
+						price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve, 
 						received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost, 
-						warehouse_section, incoming_delivery_number, other_fields, company_id)
+						warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		                supplier_name, contract_number)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 
-				$22, $23, $24, $25, $26, $27, $28)`,
+				$22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32)`,
 		domain.TablePlanningMaterialsArchive)
 
 	_, err = tx.ExecContext(ctx, query,
-		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, material.ProductCategory,
+		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, pq.Array(material.ProductCategory),
 		material.Unit, material.TotalQuantity, material.Volume, material.PriceWithoutVAT, material.TotalWithoutVAT,
-		material.SupplierID, material.Location, material.Contract, material.File, material.Status, material.Comments,
+		material.SupplierID, material.Location, material.ContractDate, material.File, material.Status, material.Comments,
 		material.Reserve, material.ReceivedDate, material.LastUpdated, material.MinStockLevel, material.ExpirationDate,
-		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection,
-		material.IncomingDeliveryNumber, otherFieldsJSON, material.CompanyID,
+		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection, material.IncomingDeliveryNumber,
+		otherFieldsJSON, material.CompanyID, material.InternalName, material.UnitsPerPackage, material.SupplierName,
+		material.ContractNumber,
 	)
 	if err != nil {
 		return 0, 0, fmt.Errorf("failed to insert purchased archive material: %v", err)
@@ -298,22 +309,24 @@ func (mr *MaterialsPostgresRepository) CreatePurchased(ctx context.Context, mate
 
 	query := fmt.Sprintf(`
 		INSERT INTO %s (warehouse_id, name, by_invoice, article, product_category, unit, total_quantity, volume, 
-						price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve, 
+						price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve, 
 						received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost, 
-						warehouse_section, incoming_delivery_number, other_fields, company_id)
+						warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		                supplier_name, contract_number)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 
-				$22, $23, $24, $25, $26, $27) RETURNING id, item_id`,
+				$22, $23, $24, $25, $26, $27, $28, $29, $30, $31) RETURNING id, item_id`,
 		domain.TablePurchasedMaterials)
 
 	var id int64
 	var itemId int64
 	if err = mr.psql.QueryRowContext(ctx, query,
-		material.WarehouseID, material.Name, material.ByInvoice, material.Article, material.ProductCategory,
+		material.WarehouseID, material.Name, material.ByInvoice, material.Article, pq.Array(material.ProductCategory),
 		material.Unit, material.TotalQuantity, material.Volume, material.PriceWithoutVAT, material.TotalWithoutVAT,
-		material.SupplierID, material.Location, material.Contract, material.File, material.Status, material.Comments,
+		material.SupplierID, material.Location, material.ContractDate, material.File, material.Status, material.Comments,
 		material.Reserve, material.ReceivedDate, material.LastUpdated, material.MinStockLevel, material.ExpirationDate,
-		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection,
-		material.IncomingDeliveryNumber, otherFieldsJSON, material.CompanyID,
+		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection, material.IncomingDeliveryNumber,
+		otherFieldsJSON, material.CompanyID, material.InternalName, material.UnitsPerPackage, material.SupplierName,
+		material.ContractNumber,
 	).Scan(&id, &itemId); err != nil {
 		return 0, 0, fmt.Errorf("failed to insert purchased material: %v", err)
 	}
@@ -332,19 +345,21 @@ func (mr *MaterialsPostgresRepository) UpdatePurchased(ctx context.Context, mate
 		SET
 			warehouse_id = $1, item_id = $2, name = $3, by_invoice = $4, article = $5, product_category = $6, unit = $7,
 			total_quantity = $8, volume = $9, price_without_vat = $10, total_without_vat = $11, supplier_id = $12, location = $13,
-			contract = $14, file = $15, status = $16, comments = $17, reserve = $18, received_date = $19, last_updated = $20,
+			contract_date = $14, file = $15, status = $16, comments = $17, reserve = $18, received_date = $19, last_updated = $20,
 			min_stock_level = $21, expiration_date = $22, responsible_person = $23, storage_cost = $24, warehouse_section = $25,
-			incoming_delivery_number = $26, other_fields = $27
-		WHERE id = $28`,
+			incoming_delivery_number = $26, other_fields = $27, internal_name = $28, units_per_package = $29, supplier_name = $30, 
+		    contract_number = $31
+		WHERE id = $32`,
 		domain.TablePurchasedMaterials)
 
 	_, err = mr.psql.ExecContext(ctx, query,
-		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, material.ProductCategory,
+		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, pq.Array(material.ProductCategory),
 		material.Unit, material.TotalQuantity, material.Volume, material.PriceWithoutVAT, material.TotalWithoutVAT,
-		material.SupplierID, material.Location, material.Contract, material.File, material.Status, material.Comments,
+		material.SupplierID, material.Location, material.ContractDate, material.File, material.Status, material.Comments,
 		material.Reserve, material.ReceivedDate, material.LastUpdated, material.MinStockLevel, material.ExpirationDate,
-		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection,
-		material.IncomingDeliveryNumber, otherFieldsJSON, material.ID,
+		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection, material.IncomingDeliveryNumber,
+		otherFieldsJSON, material.InternalName, material.UnitsPerPackage, material.SupplierName,
+		material.ContractNumber, material.ID,
 	)
 
 	return err
@@ -363,9 +378,10 @@ func (mr *MaterialsPostgresRepository) getPurchasedById(ctx context.Context, id 
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE id = $1
 	`, domain.TablePurchasedMaterials)
 
@@ -374,12 +390,13 @@ func (mr *MaterialsPostgresRepository) getPurchasedById(ctx context.Context, id 
 
 	if err := mr.psql.QueryRowContext(ctx, query, id).Scan(
 		&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-		&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+		pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 		&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-		&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+		&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 		&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
-		&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-		&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+		&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection, &material.IncomingDeliveryNumber,
+		&otherFieldsJSON, &material.CompanyID, &material.InternalName, &material.UnitsPerPackage, &material.SupplierName,
+		&material.ContractNumber,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return domain.Material{}, domain.ErrMaterialNotFound
@@ -413,9 +430,10 @@ func (mr *MaterialsPostgresRepository) GetPurchasedList(ctx context.Context, par
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE company_id = $1 ORDER BY %s %s LIMIT $2 OFFSET $3
 	`, domain.TablePurchasedMaterials, params.SortField, params.Sort)
 
@@ -437,12 +455,13 @@ func (mr *MaterialsPostgresRepository) GetPurchasedList(ctx context.Context, par
 
 		if err = rows.Scan(
 			&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-			&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+			pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 			&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-			&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+			&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 			&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 			&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+			&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 		); err != nil {
 			return nil, 0, err
 		}
@@ -490,20 +509,22 @@ func (mr *MaterialsPostgresRepository) MovePurchasedToArchive(ctx context.Contex
 	// 2. переносим в purchased archive
 	query = fmt.Sprintf(`
 		INSERT INTO %s (warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume, 
-						price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve, 
+						price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve, 
 						received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost, 
-						warehouse_section, incoming_delivery_number, other_fields, company_id)
+						warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		                supplier_name, contract_number)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 
-				$22, $23, $24, $25, $26, $27, $28)`,
+				$22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32)`,
 		domain.TablePurchasedMaterialsArchive)
 
 	_, err = tx.ExecContext(ctx, query,
-		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, material.ProductCategory,
+		material.WarehouseID, material.ItemID, material.Name, material.ByInvoice, material.Article, pq.Array(material.ProductCategory),
 		material.Unit, material.TotalQuantity, material.Volume, material.PriceWithoutVAT, material.TotalWithoutVAT,
-		material.SupplierID, material.Location, material.Contract, material.File, material.Status, material.Comments,
+		material.SupplierID, material.Location, material.ContractDate, material.File, material.Status, material.Comments,
 		material.Reserve, material.ReceivedDate, material.LastUpdated, material.MinStockLevel, material.ExpirationDate,
-		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection,
-		material.IncomingDeliveryNumber, otherFieldsJSON, material.CompanyID,
+		material.ResponsiblePerson, material.StorageCost, material.WarehouseSection, material.IncomingDeliveryNumber,
+		otherFieldsJSON, material.CompanyID, material.InternalName, material.UnitsPerPackage, material.SupplierName,
+		material.ContractNumber,
 	)
 	if err != nil {
 		return fmt.Errorf("failed to insert purchased material archive: %v", err)
@@ -516,9 +537,10 @@ func (mr *MaterialsPostgresRepository) GetPlanningArchiveById(ctx context.Contex
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE id = $1
 	`, domain.TablePlanningMaterialsArchive)
 
@@ -527,12 +549,13 @@ func (mr *MaterialsPostgresRepository) GetPlanningArchiveById(ctx context.Contex
 
 	if err := mr.psql.QueryRowContext(ctx, query, id).Scan(
 		&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-		&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+		pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 		&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-		&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+		&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 		&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 		&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-		&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+		&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+		&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return domain.Material{}, domain.ErrMaterialNotFound
@@ -552,9 +575,10 @@ func (mr *MaterialsPostgresRepository) GetPurchasedArchiveById(ctx context.Conte
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE id = $1
 	`, domain.TablePurchasedMaterialsArchive)
 
@@ -563,12 +587,13 @@ func (mr *MaterialsPostgresRepository) GetPurchasedArchiveById(ctx context.Conte
 
 	if err := mr.psql.QueryRowContext(ctx, query, id).Scan(
 		&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-		&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+		pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 		&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-		&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+		&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 		&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 		&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-		&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+		&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+		&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return domain.Material{}, domain.ErrMaterialNotFound
@@ -601,9 +626,10 @@ func (mr *MaterialsPostgresRepository) GetPlanningArchiveList(ctx context.Contex
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE company_id = $1 ORDER BY %s %s LIMIT $2 OFFSET $3
 	`, domain.TablePlanningMaterialsArchive, params.SortField, params.Sort)
 
@@ -625,12 +651,13 @@ func (mr *MaterialsPostgresRepository) GetPlanningArchiveList(ctx context.Contex
 
 		if err = rows.Scan(
 			&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-			&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+			pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 			&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-			&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+			&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 			&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 			&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+			&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 		); err != nil {
 			return nil, 0, err
 		}
@@ -662,9 +689,10 @@ func (mr *MaterialsPostgresRepository) GetPurchasedArchiveList(ctx context.Conte
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE company_id = $1 ORDER BY %s %s LIMIT $2 OFFSET $3
 	`, domain.TablePurchasedMaterialsArchive, params.SortField, params.Sort)
 
@@ -686,12 +714,13 @@ func (mr *MaterialsPostgresRepository) GetPurchasedArchiveList(ctx context.Conte
 
 		if err = rows.Scan(
 			&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-			&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+			pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 			&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-			&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+			&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 			&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 			&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+			&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 		); err != nil {
 			return nil, 0, err
 		}
@@ -811,9 +840,10 @@ func (mr *MaterialsPostgresRepository) GetIncomeHistoryByWarehouseId(ctx context
 	query := fmt.Sprintf(`
 	SELECT 
 	    id, warehouse_id, item_id, name, by_invoice, article, product_category, unit, total_quantity, volume,
-		price_without_vat, total_without_vat, supplier_id, location, contract, file, status, comments, reserve,
+		price_without_vat, total_without_vat, supplier_id, location, contract_date, file, status, comments, reserve,
 		received_date, last_updated, min_stock_level, expiration_date, responsible_person, storage_cost,
-		warehouse_section, incoming_delivery_number, other_fields, company_id
+		warehouse_section, incoming_delivery_number, other_fields, company_id, internal_name, units_per_package, 
+		supplier_name, contract_number
 	FROM %s WHERE company_id = $1 AND warehouse_id = $2 ORDER BY received_date %s LIMIT $3 OFFSET $4
 	`, domain.TablePurchasedMaterials, params.Sort)
 
@@ -835,12 +865,13 @@ func (mr *MaterialsPostgresRepository) GetIncomeHistoryByWarehouseId(ctx context
 
 		if err = rows.Scan(
 			&material.ID, &material.WarehouseID, &material.ItemID, &material.Name, &material.ByInvoice, &material.Article,
-			&material.ProductCategory, &material.Unit, &material.TotalQuantity, &material.Volume,
+			pq.Array(&material.ProductCategory), &material.Unit, &material.TotalQuantity, &material.Volume,
 			&material.PriceWithoutVAT, &material.TotalWithoutVAT, &material.SupplierID, &material.Location,
-			&material.Contract, &material.File, &material.Status, &material.Comments, &material.Reserve,
+			&material.ContractDate, &material.File, &material.Status, &material.Comments, &material.Reserve,
 			&material.ReceivedDate, &material.LastUpdated, &material.MinStockLevel, &material.ExpirationDate,
 			&material.ResponsiblePerson, &material.StorageCost, &material.WarehouseSection,
-			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID,
+			&material.IncomingDeliveryNumber, &otherFieldsJSON, &material.CompanyID, &material.InternalName,
+			&material.UnitsPerPackage, &material.SupplierName, &material.ContractNumber,
 		); err != nil {
 			return nil, 0, err
 		}

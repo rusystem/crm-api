@@ -21,7 +21,7 @@ type Warehouse struct {
 }
 
 type InputWarehouse struct {
-	Name              string                 `json:"name" binding:"required,min=5,max=140" example:"Название склада"`                           // Название склада
+	Name              string                 `json:"name" binding:"required,min=1,max=140" example:"Название склада"`                           // Название склада
 	Address           string                 `json:"address" binding:"required,min=5,max=140" example:"Адрес склада"`                           // Адрес склада
 	ResponsiblePerson string                 `json:"responsible_person" binding:"required,min=5,max=140" example:"Ответственное лицо за склад"` // Ответственное лицо за склад
 	Phone             string                 `json:"phone" binding:"required,min=5" example:"Контактный телефон склада"`                        // Контактный телефон склада

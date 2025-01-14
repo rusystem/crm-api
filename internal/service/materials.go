@@ -136,8 +136,8 @@ func (s *MaterialsService) UpdatePlanningById(ctx context.Context, inp domain.Up
 		material.Location = *inp.Location
 	}
 
-	if inp.Contract != nil {
-		material.Contract = *inp.Contract
+	if inp.ContractDate != nil {
+		material.ContractDate = *inp.ContractDate
 	}
 
 	if inp.File != nil {
@@ -188,6 +188,22 @@ func (s *MaterialsService) UpdatePlanningById(ctx context.Context, inp domain.Up
 
 	if inp.OtherFields != nil {
 		material.OtherFields = *inp.OtherFields
+	}
+
+	if inp.InternalName != nil {
+		material.InternalName = *inp.InternalName
+	}
+
+	if inp.UnitsPerPackage != nil {
+		material.UnitsPerPackage = *inp.UnitsPerPackage
+	}
+
+	if inp.SupplierName != nil {
+		material.SupplierName = *inp.SupplierName
+	}
+
+	if inp.ContractNumber != nil {
+		material.ContractNumber = *inp.ContractNumber
 	}
 
 	return s.repo.Materials.UpdatePlanning(ctx, material)
@@ -316,8 +332,8 @@ func (s *MaterialsService) UpdatePurchasedById(ctx context.Context, inp domain.U
 		material.Location = *inp.Location
 	}
 
-	if inp.Contract != nil {
-		material.Contract = *inp.Contract
+	if inp.ContractDate != nil {
+		material.ContractDate = *inp.ContractDate
 	}
 
 	if inp.File != nil {
@@ -368,6 +384,22 @@ func (s *MaterialsService) UpdatePurchasedById(ctx context.Context, inp domain.U
 
 	if inp.OtherFields != nil {
 		material.OtherFields = *inp.OtherFields
+	}
+
+	if inp.InternalName != nil {
+		material.InternalName = *inp.InternalName
+	}
+
+	if inp.UnitsPerPackage != nil {
+		material.UnitsPerPackage = *inp.UnitsPerPackage
+	}
+
+	if inp.SupplierName != nil {
+		material.SupplierName = *inp.SupplierName
+	}
+
+	if inp.ContractNumber != nil {
+		material.ContractNumber = *inp.ContractNumber
 	}
 
 	return s.repo.Materials.UpdatePurchased(ctx, material)

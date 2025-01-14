@@ -18,6 +18,7 @@ var (
 	ErrSupplierNotFound         = errors.New("supplier doesn`t exists")
 	ErrMaterialNotFound         = errors.New("material doesn`t exists")
 	ErrMaterialCategoryNotFound = errors.New("material category doesn`t exists")
+	ErrUnitOfMeasureNotFound    = errors.New("unit of measure doesn`t exists")
 
 	ErrUserAlreadyExists = errors.New("user with such username or email already exists")
 

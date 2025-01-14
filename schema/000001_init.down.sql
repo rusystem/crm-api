@@ -13,4 +13,5 @@ DROP TABLE IF EXISTS warehouses;
 DROP TABLE IF EXISTS refresh_tokens;
 DROP TABLE IF EXISTS sections;
 DROP TABLE IF EXISTS material_categories;
+DROP TABLE IF EXISTS units_of_measure;
 

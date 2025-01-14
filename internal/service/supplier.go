@@ -148,6 +148,10 @@ func (s *SupplierService) Update(ctx context.Context, inp domain.UpdateSupplier,
 		supplier.OtherFields = *inp.OtherFields
 	}
 
+	if inp.Locality != nil {
+		supplier.Locality = *inp.Locality
+	}
+
 	return s.repo.Suppliers.Update(ctx, supplier)
 }
 

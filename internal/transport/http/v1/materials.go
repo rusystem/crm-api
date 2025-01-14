@@ -18,7 +18,7 @@ func (h *Handler) initMaterialsRoutes(api *gin.RouterGroup) {
 			planning.GET("/:id", h.getPlanningById)
 			planning.PUT("/:id", h.updatePlanningById)
 			planning.DELETE("/:id", h.deletePlanningById)
-			planning.GET("/list", h.getPlanningList)
+			planning.GET("/", h.getPlanningList)
 			planning.PUT("/move-to-purchased/:id", h.movePlanningToPurchased)
 		}
 
@@ -28,7 +28,7 @@ func (h *Handler) initMaterialsRoutes(api *gin.RouterGroup) {
 			purchased.GET("/:id", h.getPurchasedById)
 			purchased.PUT("/:id", h.updatePurchasedById)
 			purchased.DELETE("/:id", h.deletePurchasedById)
-			purchased.GET("/list", h.getPurchasedList)
+			purchased.GET("/", h.getPurchasedList)
 			purchased.GET("/:id/qr-code", h.getPurchasedQrCode)
 			purchased.GET("/:id/barcode", h.getPurchasedBarcode)
 			purchased.PUT("/move-to-archive/:id", h.movePurchasedToArchive)
@@ -39,14 +39,14 @@ func (h *Handler) initMaterialsRoutes(api *gin.RouterGroup) {
 			planning := archive.Group("/planning")
 			{
 				planning.GET("/:id", h.getPlanningArchiveById)
-				planning.GET("/list", h.getPlanningArchiveList)
+				planning.GET("/", h.getPlanningArchiveList)
 				planning.DELETE("/:id", h.deletePlanningArchiveById)
 			}
 
 			purchased := archive.Group("/purchased")
 			{
 				purchased.GET("/:id", h.getPurchasedArchiveById)
-				purchased.GET("/list", h.getPurchasedArchiveList)
+				purchased.GET("/", h.getPurchasedArchiveList)
 				purchased.DELETE("/:id", h.deletePurchasedArchiveById)
 			}
 		}
@@ -62,7 +62,7 @@ func (h *Handler) initMaterialsRoutes(api *gin.RouterGroup) {
 			category.GET("/:id", h.getCategoryById)
 			category.PUT("/:id", h.updateCategory)
 			category.DELETE("/:id", h.deleteCategory)
-			category.GET("/list", h.getCategoryList)
+			category.GET("/", h.getCategoryList)
 			category.GET("/search", h.searchCategory)
 		}
 	}
@@ -106,7 +106,7 @@ func (h *Handler) createPlanning(c *gin.Context) {
 		PriceWithoutVAT:        inp.PriceWithoutVAT,
 		TotalWithoutVAT:        inp.TotalWithoutVAT,
 		SupplierID:             inp.SupplierID,
-		Contract:               inp.Contract,
+		ContractDate:           inp.ContractDate,
 		File:                   inp.File,
 		Status:                 inp.Status,
 		Comments:               inp.Comments,
@@ -121,6 +121,10 @@ func (h *Handler) createPlanning(c *gin.Context) {
 		IncomingDeliveryNumber: inp.IncomingDeliveryNumber,
 		OtherFields:            inp.OtherFields,
 		CompanyID:              info.CompanyId,
+		InternalName:           inp.InternalName,
+		UnitsPerPackage:        inp.UnitsPerPackage,
+		SupplierName:           inp.SupplierName,
+		ContractNumber:         inp.ContractNumber,
 	})
 	if err != nil {
 		if errors.Is(err, domain.ErrWarehouseNotFound) || errors.Is(err, domain.ErrSupplierNotFound) {
@@ -300,7 +304,7 @@ func (h *Handler) deletePlanningById(c *gin.Context) {
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
 // @Failure default {object} domain.ErrorResponse
-// @Router /materials/planning/list [GET]
+// @Router /materials/planning [GET]
 func (h *Handler) getPlanningList(c *gin.Context) {
 	info, err := getUserInfo(c)
 	if err != nil {
@@ -430,7 +434,7 @@ func (h *Handler) createPurchased(c *gin.Context) {
 		TotalWithoutVAT:        inp.TotalWithoutVAT,
 		SupplierID:             inp.SupplierID,
 		Location:               inp.Location,
-		Contract:               inp.Contract,
+		ContractDate:           inp.ContractDate,
 		File:                   inp.File,
 		Status:                 inp.Status,
 		Comments:               inp.Comments,
@@ -445,6 +449,10 @@ func (h *Handler) createPurchased(c *gin.Context) {
 		IncomingDeliveryNumber: inp.IncomingDeliveryNumber,
 		OtherFields:            inp.OtherFields,
 		CompanyID:              info.CompanyId,
+		InternalName:           inp.InternalName,
+		UnitsPerPackage:        inp.UnitsPerPackage,
+		SupplierName:           inp.SupplierName,
+		ContractNumber:         inp.ContractNumber,
 	})
 	if err != nil {
 		if errors.Is(err, domain.ErrWarehouseNotFound) || errors.Is(err, domain.ErrSupplierNotFound) {
@@ -626,7 +634,7 @@ func (h *Handler) deletePurchasedById(c *gin.Context) {
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
 // @Failure default {object} domain.ErrorResponse
-// @Router /materials/purchased/list [GET]
+// @Router /materials/purchased [GET]
 func (h *Handler) getPurchasedList(c *gin.Context) {
 	info, err := getUserInfo(c)
 	if err != nil {
@@ -890,7 +898,7 @@ func (h *Handler) getPlanningArchiveById(c *gin.Context) {
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
 // @Failure default {object} domain.ErrorResponse
-// @Router /materials/archive/planning/list [GET]
+// @Router /materials/archive/planning [GET]
 func (h *Handler) getPlanningArchiveList(c *gin.Context) {
 	info, err := getUserInfo(c)
 	if err != nil {
@@ -1041,7 +1049,7 @@ func (h *Handler) getPurchasedArchiveById(c *gin.Context) {
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
 // @Failure default {object} domain.ErrorResponse
-// @Router /materials/archive/purchased/list [GET]
+// @Router /materials/archive/purchased [GET]
 func (h *Handler) getPurchasedArchiveList(c *gin.Context) {
 	info, err := getUserInfo(c)
 	if err != nil {
@@ -1381,7 +1389,7 @@ func (h *Handler) deleteCategory(c *gin.Context) {
 // @Failure 400,404 {object} domain.ErrorResponse
 // @Failure 500 {object} domain.ErrorResponse
 // @Failure default {object} domain.ErrorResponse
-// @Router /materials/category/list [GET]
+// @Router /materials/category [GET]
 func (h *Handler) getCategoryList(c *gin.Context) {
 	info, err := getUserInfo(c)
 	if err != nil {

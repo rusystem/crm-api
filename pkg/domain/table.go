@@ -12,4 +12,5 @@ const (
 	TableSupplier                  = "suppliers"
 	TableMaterialCategories        = "material_categories"
 	SectionsTable                  = "sections"
+	UnitsOfMeasureTable            = "units_of_measure"
 )

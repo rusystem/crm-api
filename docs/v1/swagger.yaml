@@ -103,23 +103,27 @@ definitions:
   domain.CreatePlanningMaterial:
     properties:
       article:
-        description: Артикул товара
+        description: Артикул материала
         example: SB-1234
         type: string
       by_invoice:
-        description: Накладная на товар
+        description: Номер товарной накладной
         example: INV-987654
         type: string
       comments:
         description: Комментарии
         example: Urgent order
         type: string
-      contract:
+      contract_date:
         description: Дата договора
         example: "2023-08-15T10:00:00Z"
         type: string
+      contract_number:
+        description: Номер договора
+        example: "11"
+        type: string
       expiration_date:
-        description: Срок годности товара
+        description: Срок годности материала
         example: "2024-08-15T10:00:00Z"
         type: string
       file:
@@ -130,12 +134,16 @@ definitions:
         description: Входящий номер поставки
         example: DEL-56789
         type: string
+      internal_name:
+        description: Наименование материала для внутреннего пользования
+        example: Наименование материала для внутреннего пользования
+        type: string
       min_stock_level:
         description: Минимальный уровень запаса
         example: 10
         type: integer
       name:
-        description: Наименование товара
+        description: Наименование материала от поставщика
         example: Steel Beam
         type: string
       other_fields:
@@ -147,19 +155,23 @@ definitions:
         example: 150.75
         type: number
       product_category:
-        description: Категория товара
-        example: Construction
-        type: string
+        description: Категории материала
+        example:
+        - Construction
+        - Bricks
+        items:
+          type: string
+        type: array
       received_date:
-        description: Дата поступления товара
+        description: Дата поступления на склад
         example: "2023-08-20T10:00:00Z"
         type: string
       reserve:
-        description: Резерв товара
+        description: Количество на резерве
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за товар
+        description: Ответственное лицо за закуп
         example: John Doe
         type: string
       status:
@@ -167,15 +179,19 @@ definitions:
         example: active
         type: string
       storage_cost:
-        description: Стоимость хранения товара
+        description: Стоимость хранения единицы материала
         example: 500
         type: number
       supplier_id:
         description: Поставщик товара
         example: 1
         type: integer
+      supplier_name:
+        description: Поставщик
+        example: Поставщик
+        type: string
       total_quantity:
-        description: Общее количество товара
+        description: Количество материала
         example: 500
         type: integer
       total_without_vat:
@@ -186,16 +202,20 @@ definitions:
         description: Единица измерения
         example: pcs
         type: string
+      units_per_package:
+        description: Количество в одной упаковке
+        example: 4
+        type: integer
       volume:
         description: Объем товара
         example: 25
         type: integer
       warehouse_id:
-        description: Id склада
+        description: Склад(место хранения) id
         example: 1
         type: integer
       warehouse_section:
-        description: Секция склада, где хранится товар
+        description: Секция хранения
         example: B-Section-2
         type: string
     required:
@@ -204,23 +224,27 @@ definitions:
   domain.CreatePurchasedMaterial:
     properties:
       article:
-        description: Артикул товара
+        description: Артикул материала
         example: SB-1234
         type: string
       by_invoice:
-        description: Накладная на товар
+        description: Номер товарной накладной
         example: INV-987654
         type: string
       comments:
         description: Комментарии
         example: Urgent order
         type: string
-      contract:
+      contract_date:
         description: Дата договора
         example: "2023-08-15T10:00:00Z"
         type: string
+      contract_number:
+        description: Номер договора
+        example: "33"
+        type: string
       expiration_date:
-        description: Срок годности товара
+        description: Срок годности материала
         example: "2024-08-15T10:00:00Z"
         type: string
       file:
@@ -230,6 +254,10 @@ definitions:
       incoming_delivery_number:
         description: Входящий номер поставки
         example: DEL-56789
+        type: string
+      internal_name:
+        description: Наименование материала для внутреннего пользования
+        example: Наименование материала для внутреннего пользования
         type: string
       location:
         description: Локация на складе
@@ -240,7 +268,7 @@ definitions:
         example: 10
         type: integer
       name:
-        description: Наименование товара
+        description: Наименование материала от поставщика
         example: Steel Beam
         type: string
       other_fields:
@@ -252,19 +280,23 @@ definitions:
         example: 150.75
         type: number
       product_category:
-        description: Категория товара
-        example: Construction
-        type: string
+        description: Категории материала
+        example:
+        - Construction
+        - Bricks
+        items:
+          type: string
+        type: array
       received_date:
-        description: Дата поступления товара
+        description: Дата поступления на склад
         example: "2023-08-20T10:00:00Z"
         type: string
       reserve:
-        description: Резерв товара
+        description: Количество на резерве
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за товар
+        description: Ответственное лицо за закуп
         example: John Doe
         type: string
       status:
@@ -272,15 +304,19 @@ definitions:
         example: active
         type: string
       storage_cost:
-        description: Стоимость хранения товара
+        description: Стоимость хранения единицы материала
         example: 500
         type: number
       supplier_id:
         description: Поставщик товара
         example: 1
         type: integer
+      supplier_name:
+        description: Поставщик
+        example: Поставщик 3
+        type: string
       total_quantity:
-        description: Общее количество товара
+        description: Количество материала
         example: 500
         type: integer
       total_without_vat:
@@ -291,20 +327,53 @@ definitions:
         description: Единица измерения
         example: pcs
         type: string
+      units_per_package:
+        description: Количество в одной упаковке
+        example: 2
+        type: integer
       volume:
         description: Объем товара
         example: 25
         type: integer
       warehouse_id:
-        description: Id склада
+        description: Склад(место хранения) id
         example: 1
         type: integer
       warehouse_section:
-        description: Секция склада, где хранится товар
+        description: Секция хранения
         example: B-Section-2
         type: string
     required:
     - name
+    type: object
+  domain.CreateUnitOfMeasure:
+    properties:
+      abbreviation:
+        description: Аббревиатура
+        example: kg
+        maxLength: 140
+        minLength: 1
+        type: string
+      description:
+        description: Описание
+        example: Единица измерения веса
+        type: string
+      name:
+        description: Название на языке системы
+        example: Килограмм
+        maxLength: 140
+        minLength: 1
+        type: string
+      name_en:
+        description: Название на английском
+        example: Kilogram
+        maxLength: 140
+        minLength: 1
+        type: string
+    required:
+    - abbreviation
+    - name
+    - name_en
     type: object
   domain.ErrorResponse:
     properties:
@@ -367,11 +436,15 @@ definitions:
         description: Юридический адрес поставщика
         example: Юридический адрес поставщика
         type: string
+      locality:
+        description: Населенный пункт поставщика
+        example: Населенный пункт поставщика
+        type: string
       name:
         description: Наименование поставщика
         example: ООО Название поставщика
         maxLength: 140
-        minLength: 5
+        minLength: 1
         type: string
       other_fields:
         additionalProperties: true
@@ -379,17 +452,25 @@ definitions:
         type: object
       payment_terms:
         description: Условия оплаты по контракту
-        example: Условия оплаты по контракту
-        type: string
+        example:
+        - условие_оплаты_по_контракту_1
+        - условие_оплаты_по_контракту_2
+        items:
+          type: string
+        type: array
       phone:
         description: Телефон поставщика
         example: Телефон поставщика
-        minLength: 5
+        minLength: 7
         type: string
       product_categories:
         description: Категории товаров, поставляемых поставщиком
-        example: Категории товаров, поставляемых поставщиком
-        type: string
+        example:
+        - категория_товаров_1
+        - категория_товаров_2
+        items:
+          type: string
+        type: array
       product_types:
         description: Количество типов товаров от поставщика
         example: 100
@@ -466,7 +547,7 @@ definitions:
         description: Название склада
         example: Название склада
         maxLength: 140
-        minLength: 5
+        minLength: 1
         type: string
       other_fields:
         additionalProperties: true
@@ -605,6 +686,7 @@ definitions:
       name:
         example: Дмитрий
         maxLength: 140
+        minLength: 1
         type: string
       password:
         example: "12345678"
@@ -686,23 +768,27 @@ definitions:
   domain.UpdatePlanningMaterial:
     properties:
       article:
-        description: Артикул товара
+        description: Артикул материала
         example: SB-1234
         type: string
       by_invoice:
-        description: Накладная на товар
+        description: Номер товарной накладной
         example: INV-987654
         type: string
       comments:
         description: Комментарии
         example: Urgent order
         type: string
-      contract:
+      contract_date:
         description: Дата договора
         example: "2023-08-15T10:00:00Z"
         type: string
+      contract_number:
+        description: Номер договора
+        example: "22"
+        type: string
       expiration_date:
-        description: Срок годности товара
+        description: Срок годности материала
         example: "2024-08-15T10:00:00Z"
         type: string
       file:
@@ -713,6 +799,10 @@ definitions:
         description: Входящий номер поставки
         example: DEL-56789
         type: string
+      internal_name:
+        description: Наименование материала для внутреннего пользования
+        example: Наименование материала для внутреннего пользования
+        type: string
       location:
         description: Локация на складе
         example: A1-Section-3
@@ -722,7 +812,7 @@ definitions:
         example: 10
         type: integer
       name:
-        description: Наименование товара
+        description: Наименование материала от поставщика
         example: Steel Beam
         type: string
       other_fields:
@@ -734,19 +824,23 @@ definitions:
         example: 150.75
         type: number
       product_category:
-        description: Категория товара
-        example: Construction
-        type: string
+        description: Категории материала
+        example:
+        - Construction
+        - Bricks
+        items:
+          type: string
+        type: array
       received_date:
-        description: Дата поступления товара
+        description: Дата поступления на склад
         example: "2023-08-20T10:00:00Z"
         type: string
       reserve:
-        description: Резерв товара
+        description: Количество на резерве
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за товар
+        description: Ответственное лицо за закуп
         example: John Doe
         type: string
       status:
@@ -754,15 +848,19 @@ definitions:
         example: active
         type: string
       storage_cost:
-        description: Стоимость хранения товара
+        description: Стоимость хранения единицы материала
         example: 500
         type: number
       supplier_id:
         description: Поставщик товара
         example: 1
         type: integer
+      supplier_name:
+        description: Поставщик
+        example: Поставщик 2
+        type: string
       total_quantity:
-        description: Общее количество товара
+        description: Количество материала
         example: 500
         type: integer
       total_without_vat:
@@ -773,39 +871,47 @@ definitions:
         description: Единица измерения
         example: pcs
         type: string
+      units_per_package:
+        description: Количество в одной упаковке
+        example: 10
+        type: integer
       volume:
         description: Объем товара
         example: 25
         type: integer
       warehouse_id:
-        description: Id склада
+        description: Склад(место хранения) id
         example: 1
         type: integer
       warehouse_section:
-        description: Секция склада, где хранится товар
+        description: Секция хранения
         example: B-Section-2
         type: string
     type: object
   domain.UpdatePurchasedMaterial:
     properties:
       article:
-        description: Артикул товара
+        description: Артикул материала
         example: SB-1234
         type: string
       by_invoice:
-        description: Накладная на товар
+        description: Номер товарной накладной
         example: INV-987654
         type: string
       comments:
         description: Комментарии
         example: Urgent order
         type: string
-      contract:
+      contract_date:
         description: Дата договора
         example: "2023-08-15T10:00:00Z"
         type: string
+      contract_number:
+        description: Номер договора
+        example: "44"
+        type: string
       expiration_date:
-        description: Срок годности товара
+        description: Срок годности материала
         example: "2024-08-15T10:00:00Z"
         type: string
       file:
@@ -816,6 +922,10 @@ definitions:
         description: Входящий номер поставки
         example: DEL-56789
         type: string
+      internal_name:
+        description: Наименование материала для внутреннего пользования
+        example: Наименование материала для внутреннего пользования
+        type: string
       location:
         description: Локация на складе
         example: A1-Section-3
@@ -825,7 +935,7 @@ definitions:
         example: 10
         type: integer
       name:
-        description: Наименование товара
+        description: Наименование материала от поставщика
         example: Steel Beam
         type: string
       other_fields:
@@ -837,19 +947,23 @@ definitions:
         example: 150.75
         type: number
       product_category:
-        description: Категория товара
-        example: Construction
-        type: string
+        description: Категории материала
+        example:
+        - Construction
+        - Bricks
+        items:
+          type: string
+        type: array
       received_date:
-        description: Дата поступления товара
+        description: Дата поступления на склад
         example: "2023-08-20T10:00:00Z"
         type: string
       reserve:
-        description: Резерв товара
+        description: Количество на резерве
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за товар
+        description: Ответственное лицо за закуп
         example: John Doe
         type: string
       status:
@@ -857,15 +971,19 @@ definitions:
         example: active
         type: string
       storage_cost:
-        description: Стоимость хранения товара
+        description: Стоимость хранения единицы материала
         example: 500
         type: number
       supplier_id:
         description: Поставщик товара
         example: 1
         type: integer
+      supplier_name:
+        description: Поставщик
+        example: Поставщик 3
+        type: string
       total_quantity:
-        description: Общее количество товара
+        description: Количество материала
         example: 500
         type: integer
       total_without_vat:
@@ -876,16 +994,20 @@ definitions:
         description: Единица измерения
         example: pcs
         type: string
+      units_per_package:
+        description: Количество в одной упаковке
+        example: 10
+        type: integer
       volume:
         description: Объем товара
         example: 25
         type: integer
       warehouse_id:
-        description: Id склада
+        description: Склад(место хранения) id
         example: 1
         type: integer
       warehouse_section:
-        description: Секция склада, где хранится товар
+        description: Секция хранения
         example: B-Section-2
         type: string
     type: object
@@ -940,11 +1062,15 @@ definitions:
         description: Юридический адрес поставщика
         example: Юридический адрес поставщика
         type: string
+      locality:
+        description: Населенный пункт поставщика
+        example: Населенный пункт поставщика
+        type: string
       name:
         description: Наименование поставщика
         example: ООО Название поставщика
         maxLength: 140
-        minLength: 5
+        minLength: 1
         type: string
       other_fields:
         additionalProperties: true
@@ -952,8 +1078,12 @@ definitions:
         type: object
       payment_terms:
         description: Условия оплаты по контракту
-        example: Условия оплаты по контракту
-        type: string
+        example:
+        - условие_оплаты_по_контракту_1
+        - условие_оплаты_по_контракту_2
+        items:
+          type: string
+        type: array
       phone:
         description: Телефон поставщика
         example: Телефон поставщика
@@ -961,8 +1091,12 @@ definitions:
         type: string
       product_categories:
         description: Категории товаров, поставляемых поставщиком
-        example: Категории товаров, поставляемых поставщиком
-        type: string
+        example:
+        - категория_товаров_1
+        - категория_товаров_2
+        items:
+          type: string
+        type: array
       product_types:
         description: Количество типов товаров от поставщика
         example: 100
@@ -1002,6 +1136,25 @@ definitions:
     - name
     - phone
     - warehouse_address
+    type: object
+  domain.UpdateUnitOfMeasure:
+    properties:
+      abbreviation:
+        description: Аббревиатура
+        example: kg
+        type: string
+      description:
+        description: Описание
+        example: Единица измерения веса
+        type: string
+      name:
+        description: Название на языке системы
+        example: Килограмм
+        type: string
+      name_en:
+        description: Название на английском
+        example: Kilogram
+        type: string
     type: object
   domain.UserProfileUpdate:
     properties:
@@ -1611,6 +1764,86 @@ paths:
       summary: Get region list
       tags:
       - geo
+  /materials/archive/planning:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка запланированных материалов из архива
+      operationId: get-planning-archive-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - warehouse_id
+        - item_id
+        - name
+        - article
+        - product_category
+        - total_quantity
+        - volume
+        - price_without_vat
+        - total_without_vat
+        - supplier_id
+        - location
+        - status
+        - received_date
+        - last_updated
+        - min_stock_level
+        - expiration_date
+        - storage_cost
+        - warehouse_section
+        - incoming_delivery_number
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get planning archive list
+      tags:
+      - materials archive
   /materials/archive/planning/{id}:
     delete:
       consumes:
@@ -1690,12 +1923,12 @@ paths:
       summary: Get planning archive by id
       tags:
       - materials archive
-  /materials/archive/planning/list:
+  /materials/archive/purchased:
     get:
       consumes:
       - application/json
-      description: Получение списка запланированных материалов из архива
-      operationId: get-planning-archive-list
+      description: Получение списка закупленных материалов из архива
+      operationId: get-purchased-archive-list
       parameters:
       - description: Sort order
         enum:
@@ -1767,7 +2000,7 @@ paths:
             $ref: '#/definitions/domain.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get planning archive list
+      summary: Get purchased archive list
       tags:
       - materials archive
   /materials/archive/purchased/{id}:
@@ -1849,12 +2082,12 @@ paths:
       summary: Get purchased archive by id
       tags:
       - materials archive
-  /materials/archive/purchased/list:
+  /materials/category:
     get:
       consumes:
       - application/json
-      description: Получение списка закупленных материалов из архива
-      operationId: get-purchased-archive-list
+      description: Список категорий материалов
+      operationId: get-material-category-list
       parameters:
       - description: Sort order
         enum:
@@ -1868,25 +2101,11 @@ paths:
         description: Field to sort by
         enum:
         - id
-        - warehouse_id
-        - item_id
         - name
-        - article
-        - product_category
-        - total_quantity
-        - volume
-        - price_without_vat
-        - total_without_vat
-        - supplier_id
-        - location
-        - status
-        - received_date
-        - last_updated
-        - min_stock_level
-        - expiration_date
-        - storage_cost
-        - warehouse_section
-        - incoming_delivery_number
+        - slug
+        - created_at
+        - updated_at
+        - is_active
         in: query
         name: sort_field
         required: true
@@ -1926,10 +2145,9 @@ paths:
             $ref: '#/definitions/domain.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get purchased archive list
+      summary: Get material category list
       tags:
-      - materials archive
-  /materials/category:
+      - materials category
     post:
       consumes:
       - application/json
@@ -2094,72 +2312,6 @@ paths:
       summary: Update material category
       tags:
       - materials category
-  /materials/category/list:
-    get:
-      consumes:
-      - application/json
-      description: Список категорий материалов
-      operationId: get-material-category-list
-      parameters:
-      - description: Sort order
-        enum:
-        - asc
-        - desc
-        in: query
-        name: sort
-        required: true
-        type: string
-      - default: name
-        description: Field to sort by
-        enum:
-        - id
-        - name
-        - slug
-        - created_at
-        - updated_at
-        - is_active
-        in: query
-        name: sort_field
-        required: true
-        type: string
-      - description: limit query param
-        in: query
-        name: limit
-        required: true
-        type: integer
-      - description: offset query param
-        in: query
-        name: offset
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/domain.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get material category list
-      tags:
-      - materials category
   /materials/category/search:
     get:
       consumes:
@@ -2234,6 +2386,85 @@ paths:
       tags:
       - materials category
   /materials/planning:
+    get:
+      consumes:
+      - application/json
+      description: Список планируемых материалов
+      operationId: get-planning-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - warehouse_id
+        - item_id
+        - name
+        - article
+        - product_category
+        - total_quantity
+        - volume
+        - price_without_vat
+        - total_without_vat
+        - supplier_id
+        - location
+        - status
+        - received_date
+        - last_updated
+        - min_stock_level
+        - expiration_date
+        - storage_cost
+        - warehouse_section
+        - incoming_delivery_number
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get planning list
+      tags:
+      - materials planning
     post:
       consumes:
       - application/json
@@ -2398,12 +2629,52 @@ paths:
       summary: Update planning material
       tags:
       - materials planning
-  /materials/planning/list:
+  /materials/planning/move-to-purchased/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Перемещение планируемого материала в закупленные
+      operationId: move-planning-to-purchased
+      parameters:
+      - description: ID планируемого материала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Move planning material to purchased
+      tags:
+      - materials planning
+  /materials/purchased:
     get:
       consumes:
       - application/json
-      description: Список планируемых материалов
-      operationId: get-planning-list
+      description: Получение списка закупленных материалов
+      operationId: get-purchased-list
       parameters:
       - description: Sort order
         enum:
@@ -2475,50 +2746,9 @@ paths:
             $ref: '#/definitions/domain.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get planning list
+      summary: Get purchased list
       tags:
-      - materials planning
-  /materials/planning/move-to-purchased/{id}:
-    put:
-      consumes:
-      - application/json
-      description: Перемещение планируемого материала в закупленные
-      operationId: move-planning-to-purchased
-      parameters:
-      - description: ID планируемого материала
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/domain.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Move planning material to purchased
-      tags:
-      - materials planning
-  /materials/purchased:
+      - materials purchased
     post:
       consumes:
       - application/json
@@ -2763,86 +2993,6 @@ paths:
       summary: Get purchased QR code
       tags:
       - materials purchased
-  /materials/purchased/list:
-    get:
-      consumes:
-      - application/json
-      description: Получение списка закупленных материалов
-      operationId: get-purchased-list
-      parameters:
-      - description: Sort order
-        enum:
-        - asc
-        - desc
-        in: query
-        name: sort
-        required: true
-        type: string
-      - default: name
-        description: Field to sort by
-        enum:
-        - id
-        - warehouse_id
-        - item_id
-        - name
-        - article
-        - product_category
-        - total_quantity
-        - volume
-        - price_without_vat
-        - total_without_vat
-        - supplier_id
-        - location
-        - status
-        - received_date
-        - last_updated
-        - min_stock_level
-        - expiration_date
-        - storage_cost
-        - warehouse_section
-        - incoming_delivery_number
-        in: query
-        name: sort_field
-        required: true
-        type: string
-      - description: limit query param
-        in: query
-        name: limit
-        required: true
-        type: integer
-      - description: offset query param
-        in: query
-        name: offset
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/domain.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/domain.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get purchased list
-      tags:
-      - materials purchased
   /materials/purchased/move-to-archive/{id}:
     put:
       consumes:
@@ -2968,6 +3118,235 @@ paths:
       summary: Search materials
       tags:
       - materials
+  /measure:
+    get:
+      consumes:
+      - application/json
+      description: Список единиц измерений
+      operationId: get-unit-of-measure-list
+      parameters:
+      - description: Sort order
+        enum:
+        - asc
+        - desc
+        in: query
+        name: sort
+        required: true
+        type: string
+      - default: name
+        description: Field to sort by
+        enum:
+        - id
+        - name
+        - name_en
+        - abbreviation
+        - description
+        in: query
+        name: sort_field
+        required: true
+        type: string
+      - description: limit query param
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: offset query param
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get unit of measure list
+      tags:
+      - unit of measure
+    post:
+      consumes:
+      - application/json
+      description: Создание единицы измерения
+      operationId: create-unit-of-measure
+      parameters:
+      - description: Необходимо указать данные единицы измерения
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateUnitOfMeasure'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create unit of measure
+      tags:
+      - unit of measure
+  /measure/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаление единицы измерения
+      operationId: delete-unit-of-measure
+      parameters:
+      - description: ID единицы измерения
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete unit of measure
+      tags:
+      - unit of measure
+    get:
+      consumes:
+      - application/json
+      description: Получение единицы измерения
+      operationId: get-unit-of-measure
+      parameters:
+      - description: ID единицы измерения
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get unit of measure
+      tags:
+      - unit of measure
+    put:
+      consumes:
+      - application/json
+      description: Обновление единицы измерения
+      operationId: update-unit-of-measure
+      parameters:
+      - description: ID единицы измерения
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Необходимо указать данные единицы измерения
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateUnitOfMeasure'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update unit of measure
+      tags:
+      - unit of measure
   /register:
     post:
       consumes:

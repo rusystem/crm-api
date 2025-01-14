@@ -42,6 +42,9 @@ func (h *Handler) Init(api *gin.RouterGroup) {
 
 		// geo route
 		h.initGeoRoutes(v1)
+
+		// unit of measure route
+		h.initUnitOfMeasureRoutes(v1)
 	}
 }
 
@@ -135,6 +138,8 @@ var allowedFields = map[string]bool{
 	"registration_date":        true,
 	"last_login":               true,
 	"role":                     true,
+	"abbreviation":             true,
+	"description≈":             true,
 }
 
 func parseSortParam(c *gin.Context) (string, string, error) {

@@ -786,7 +786,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/materials/archive/planning/list": {
+        "/materials/archive/planning": {
             "get": {
                 "security": [
                     {
@@ -1018,7 +1018,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/materials/archive/purchased/list": {
+        "/materials/archive/purchased": {
             "get": {
                 "security": [
                     {
@@ -1251,70 +1251,6 @@ const docTemplate = `{
             }
         },
         "/materials/category": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Создание категории материала",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "materials category"
-                ],
-                "summary": "Create material category",
-                "operationId": "create-material-category",
-                "parameters": [
-                    {
-                        "description": "Необходимо указать данные категории материала",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domain.CreateMaterialCategory"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.SuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/materials/category/list": {
             "get": {
                 "security": [
                     {
@@ -1374,6 +1310,68 @@ const docTemplate = `{
                         "name": "offset",
                         "in": "query",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Создание категории материала",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "materials category"
+                ],
+                "summary": "Create material category",
+                "operationId": "create-material-category",
+                "parameters": [
+                    {
+                        "description": "Необходимо указать данные категории материала",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreateMaterialCategory"
+                        }
                     }
                 ],
                 "responses": {
@@ -1708,70 +1706,6 @@ const docTemplate = `{
             }
         },
         "/materials/planning": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Создание планируемого материала",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "materials planning"
-                ],
-                "summary": "Create planning material",
-                "operationId": "create-planning-material",
-                "parameters": [
-                    {
-                        "description": "Необходимо указать данные планируемого материала",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domain.CreatePlanningMaterial"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.SuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/materials/planning/list": {
             "get": {
                 "security": [
                     {
@@ -1845,6 +1779,68 @@ const docTemplate = `{
                         "name": "offset",
                         "in": "query",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Создание планируемого материала",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "materials planning"
+                ],
+                "summary": "Create planning material",
+                "operationId": "create-planning-material",
+                "parameters": [
+                    {
+                        "description": "Необходимо указать данные планируемого материала",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreatePlanningMaterial"
+                        }
                     }
                 ],
                 "responses": {
@@ -2135,70 +2131,6 @@ const docTemplate = `{
             }
         },
         "/materials/purchased": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Создание закупленного материала",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "materials purchased"
-                ],
-                "summary": "Create purchased material",
-                "operationId": "create-purchased-material",
-                "parameters": [
-                    {
-                        "description": "Необходимо указать данные закупленного материала",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domain.CreatePurchasedMaterial"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.SuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/domain.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/materials/purchased/list": {
             "get": {
                 "security": [
                     {
@@ -2272,6 +2204,68 @@ const docTemplate = `{
                         "name": "offset",
                         "in": "query",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Создание закупленного материала",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "materials purchased"
+                ],
+                "summary": "Create purchased material",
+                "operationId": "create-purchased-material",
+                "parameters": [
+                    {
+                        "description": "Необходимо указать данные закупленного материала",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreatePurchasedMaterial"
+                        }
                     }
                 ],
                 "responses": {
@@ -2765,6 +2759,354 @@ const docTemplate = `{
                         "description": "name query param",
                         "name": "name",
                         "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/measure": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Список единиц измерений",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "unit of measure"
+                ],
+                "summary": "Get unit of measure list",
+                "operationId": "get-unit-of-measure-list",
+                "parameters": [
+                    {
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "type": "string",
+                        "description": "Sort order",
+                        "name": "sort",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "id",
+                            "name",
+                            "name_en",
+                            "abbreviation",
+                            "description"
+                        ],
+                        "type": "string",
+                        "default": "name",
+                        "description": "Field to sort by",
+                        "name": "sort_field",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit query param",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset query param",
+                        "name": "offset",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Создание единицы измерения",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "unit of measure"
+                ],
+                "summary": "Create unit of measure",
+                "operationId": "create-unit-of-measure",
+                "parameters": [
+                    {
+                        "description": "Необходимо указать данные единицы измерения",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CreateUnitOfMeasure"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/measure/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Получение единицы измерения",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "unit of measure"
+                ],
+                "summary": "Get unit of measure",
+                "operationId": "get-unit-of-measure",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID единицы измерения",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Обновление единицы измерения",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "unit of measure"
+                ],
+                "summary": "Update unit of measure",
+                "operationId": "update-unit-of-measure",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID единицы измерения",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Необходимо указать данные единицы измерения",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.UpdateUnitOfMeasure"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/domain.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Удаление единицы измерения",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "unit of measure"
+                ],
+                "summary": "Delete unit of measure",
+                "operationId": "delete-unit-of-measure",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID единицы измерения",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -4820,12 +5162,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "article": {
-                    "description": "Артикул товара",
+                    "description": "Артикул материала",
                     "type": "string",
                     "example": "SB-1234"
                 },
                 "by_invoice": {
-                    "description": "Накладная на товар",
+                    "description": "Номер товарной накладной",
                     "type": "string",
                     "example": "INV-987654"
                 },
@@ -4834,13 +5176,18 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Urgent order"
                 },
-                "contract": {
+                "contract_date": {
                     "description": "Дата договора",
                     "type": "string",
                     "example": "2023-08-15T10:00:00Z"
                 },
+                "contract_number": {
+                    "description": "Номер договора",
+                    "type": "string",
+                    "example": "11"
+                },
                 "expiration_date": {
-                    "description": "Срок годности товара",
+                    "description": "Срок годности материала",
                     "type": "string",
                     "example": "2024-08-15T10:00:00Z"
                 },
@@ -4854,13 +5201,18 @@ const docTemplate = `{
                     "type": "string",
                     "example": "DEL-56789"
                 },
+                "internal_name": {
+                    "description": "Наименование материала для внутреннего пользования",
+                    "type": "string",
+                    "example": "Наименование материала для внутреннего пользования"
+                },
                 "min_stock_level": {
                     "description": "Минимальный уровень запаса",
                     "type": "integer",
                     "example": 10
                 },
                 "name": {
-                    "description": "Наименование товара",
+                    "description": "Наименование материала от поставщика",
                     "type": "string",
                     "example": "Steel Beam"
                 },
@@ -4875,22 +5227,28 @@ const docTemplate = `{
                     "example": 150.75
                 },
                 "product_category": {
-                    "description": "Категория товара",
-                    "type": "string",
-                    "example": "Construction"
+                    "description": "Категории материала",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Construction",
+                        "Bricks"
+                    ]
                 },
                 "received_date": {
-                    "description": "Дата поступления товара",
+                    "description": "Дата поступления на склад",
                     "type": "string",
                     "example": "2023-08-20T10:00:00Z"
                 },
                 "reserve": {
-                    "description": "Резерв товара",
+                    "description": "Количество на резерве",
                     "type": "string",
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за товар",
+                    "description": "Ответственное лицо за закуп",
                     "type": "string",
                     "example": "John Doe"
                 },
@@ -4900,7 +5258,7 @@ const docTemplate = `{
                     "example": "active"
                 },
                 "storage_cost": {
-                    "description": "Стоимость хранения товара",
+                    "description": "Стоимость хранения единицы материала",
                     "type": "number",
                     "example": 500
                 },
@@ -4909,8 +5267,13 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
+                "supplier_name": {
+                    "description": "Поставщик",
+                    "type": "string",
+                    "example": "Поставщик"
+                },
                 "total_quantity": {
-                    "description": "Общее количество товара",
+                    "description": "Количество материала",
                     "type": "integer",
                     "example": 500
                 },
@@ -4924,18 +5287,23 @@ const docTemplate = `{
                     "type": "string",
                     "example": "pcs"
                 },
+                "units_per_package": {
+                    "description": "Количество в одной упаковке",
+                    "type": "integer",
+                    "example": 4
+                },
                 "volume": {
                     "description": "Объем товара",
                     "type": "integer",
                     "example": 25
                 },
                 "warehouse_id": {
-                    "description": "Id склада",
+                    "description": "Склад(место хранения) id",
                     "type": "integer",
                     "example": 1
                 },
                 "warehouse_section": {
-                    "description": "Секция склада, где хранится товар",
+                    "description": "Секция хранения",
                     "type": "string",
                     "example": "B-Section-2"
                 }
@@ -4948,12 +5316,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "article": {
-                    "description": "Артикул товара",
+                    "description": "Артикул материала",
                     "type": "string",
                     "example": "SB-1234"
                 },
                 "by_invoice": {
-                    "description": "Накладная на товар",
+                    "description": "Номер товарной накладной",
                     "type": "string",
                     "example": "INV-987654"
                 },
@@ -4962,13 +5330,18 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Urgent order"
                 },
-                "contract": {
+                "contract_date": {
                     "description": "Дата договора",
                     "type": "string",
                     "example": "2023-08-15T10:00:00Z"
                 },
+                "contract_number": {
+                    "description": "Номер договора",
+                    "type": "string",
+                    "example": "33"
+                },
                 "expiration_date": {
-                    "description": "Срок годности товара",
+                    "description": "Срок годности материала",
                     "type": "string",
                     "example": "2024-08-15T10:00:00Z"
                 },
@@ -4982,6 +5355,11 @@ const docTemplate = `{
                     "type": "string",
                     "example": "DEL-56789"
                 },
+                "internal_name": {
+                    "description": "Наименование материала для внутреннего пользования",
+                    "type": "string",
+                    "example": "Наименование материала для внутреннего пользования"
+                },
                 "location": {
                     "description": "Локация на складе",
                     "type": "string",
@@ -4993,7 +5371,7 @@ const docTemplate = `{
                     "example": 10
                 },
                 "name": {
-                    "description": "Наименование товара",
+                    "description": "Наименование материала от поставщика",
                     "type": "string",
                     "example": "Steel Beam"
                 },
@@ -5008,22 +5386,28 @@ const docTemplate = `{
                     "example": 150.75
                 },
                 "product_category": {
-                    "description": "Категория товара",
-                    "type": "string",
-                    "example": "Construction"
+                    "description": "Категории материала",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Construction",
+                        "Bricks"
+                    ]
                 },
                 "received_date": {
-                    "description": "Дата поступления товара",
+                    "description": "Дата поступления на склад",
                     "type": "string",
                     "example": "2023-08-20T10:00:00Z"
                 },
                 "reserve": {
-                    "description": "Резерв товара",
+                    "description": "Количество на резерве",
                     "type": "string",
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за товар",
+                    "description": "Ответственное лицо за закуп",
                     "type": "string",
                     "example": "John Doe"
                 },
@@ -5033,7 +5417,7 @@ const docTemplate = `{
                     "example": "active"
                 },
                 "storage_cost": {
-                    "description": "Стоимость хранения товара",
+                    "description": "Стоимость хранения единицы материала",
                     "type": "number",
                     "example": 500
                 },
@@ -5042,8 +5426,13 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
+                "supplier_name": {
+                    "description": "Поставщик",
+                    "type": "string",
+                    "example": "Поставщик 3"
+                },
                 "total_quantity": {
-                    "description": "Общее количество товара",
+                    "description": "Количество материала",
                     "type": "integer",
                     "example": 500
                 },
@@ -5057,20 +5446,61 @@ const docTemplate = `{
                     "type": "string",
                     "example": "pcs"
                 },
+                "units_per_package": {
+                    "description": "Количество в одной упаковке",
+                    "type": "integer",
+                    "example": 2
+                },
                 "volume": {
                     "description": "Объем товара",
                     "type": "integer",
                     "example": 25
                 },
                 "warehouse_id": {
-                    "description": "Id склада",
+                    "description": "Склад(место хранения) id",
                     "type": "integer",
                     "example": 1
                 },
                 "warehouse_section": {
-                    "description": "Секция склада, где хранится товар",
+                    "description": "Секция хранения",
                     "type": "string",
                     "example": "B-Section-2"
+                }
+            }
+        },
+        "domain.CreateUnitOfMeasure": {
+            "type": "object",
+            "required": [
+                "abbreviation",
+                "name",
+                "name_en"
+            ],
+            "properties": {
+                "abbreviation": {
+                    "description": "Аббревиатура",
+                    "type": "string",
+                    "maxLength": 140,
+                    "minLength": 1,
+                    "example": "kg"
+                },
+                "description": {
+                    "description": "Описание",
+                    "type": "string",
+                    "example": "Единица измерения веса"
+                },
+                "name": {
+                    "description": "Название на языке системы",
+                    "type": "string",
+                    "maxLength": 140,
+                    "minLength": 1,
+                    "example": "Килограмм"
+                },
+                "name_en": {
+                    "description": "Название на английском",
+                    "type": "string",
+                    "maxLength": 140,
+                    "minLength": 1,
+                    "example": "Kilogram"
                 }
             }
         },
@@ -5165,11 +5595,16 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Юридический адрес поставщика"
                 },
+                "locality": {
+                    "description": "Населенный пункт поставщика",
+                    "type": "string",
+                    "example": "Населенный пункт поставщика"
+                },
                 "name": {
                     "description": "Наименование поставщика",
                     "type": "string",
                     "maxLength": 140,
-                    "minLength": 5,
+                    "minLength": 1,
                     "example": "ООО Название поставщика"
                 },
                 "other_fields": {
@@ -5179,19 +5614,31 @@ const docTemplate = `{
                 },
                 "payment_terms": {
                     "description": "Условия оплаты по контракту",
-                    "type": "string",
-                    "example": "Условия оплаты по контракту"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "условие_оплаты_по_контракту_1",
+                        "условие_оплаты_по_контракту_2"
+                    ]
                 },
                 "phone": {
                     "description": "Телефон поставщика",
                     "type": "string",
-                    "minLength": 5,
+                    "minLength": 7,
                     "example": "Телефон поставщика"
                 },
                 "product_categories": {
                     "description": "Категории товаров, поставляемых поставщиком",
-                    "type": "string",
-                    "example": "Категории товаров, поставляемых поставщиком"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "категория_товаров_1",
+                        "категория_товаров_2"
+                    ]
                 },
                 "product_types": {
                     "description": "Количество типов товаров от поставщика",
@@ -5280,7 +5727,7 @@ const docTemplate = `{
                     "description": "Название склада",
                     "type": "string",
                     "maxLength": 140,
-                    "minLength": 5,
+                    "minLength": 1,
                     "example": "Название склада"
                 },
                 "other_fields": {
@@ -5468,6 +5915,7 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 140,
+                    "minLength": 1,
                     "example": "Дмитрий"
                 },
                 "password": {
@@ -5574,12 +6022,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "article": {
-                    "description": "Артикул товара",
+                    "description": "Артикул материала",
                     "type": "string",
                     "example": "SB-1234"
                 },
                 "by_invoice": {
-                    "description": "Накладная на товар",
+                    "description": "Номер товарной накладной",
                     "type": "string",
                     "example": "INV-987654"
                 },
@@ -5588,13 +6036,18 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Urgent order"
                 },
-                "contract": {
+                "contract_date": {
                     "description": "Дата договора",
                     "type": "string",
                     "example": "2023-08-15T10:00:00Z"
                 },
+                "contract_number": {
+                    "description": "Номер договора",
+                    "type": "string",
+                    "example": "22"
+                },
                 "expiration_date": {
-                    "description": "Срок годности товара",
+                    "description": "Срок годности материала",
                     "type": "string",
                     "example": "2024-08-15T10:00:00Z"
                 },
@@ -5608,6 +6061,11 @@ const docTemplate = `{
                     "type": "string",
                     "example": "DEL-56789"
                 },
+                "internal_name": {
+                    "description": "Наименование материала для внутреннего пользования",
+                    "type": "string",
+                    "example": "Наименование материала для внутреннего пользования"
+                },
                 "location": {
                     "description": "Локация на складе",
                     "type": "string",
@@ -5619,7 +6077,7 @@ const docTemplate = `{
                     "example": 10
                 },
                 "name": {
-                    "description": "Наименование товара",
+                    "description": "Наименование материала от поставщика",
                     "type": "string",
                     "example": "Steel Beam"
                 },
@@ -5634,22 +6092,28 @@ const docTemplate = `{
                     "example": 150.75
                 },
                 "product_category": {
-                    "description": "Категория товара",
-                    "type": "string",
-                    "example": "Construction"
+                    "description": "Категории материала",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Construction",
+                        "Bricks"
+                    ]
                 },
                 "received_date": {
-                    "description": "Дата поступления товара",
+                    "description": "Дата поступления на склад",
                     "type": "string",
                     "example": "2023-08-20T10:00:00Z"
                 },
                 "reserve": {
-                    "description": "Резерв товара",
+                    "description": "Количество на резерве",
                     "type": "string",
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за товар",
+                    "description": "Ответственное лицо за закуп",
                     "type": "string",
                     "example": "John Doe"
                 },
@@ -5659,7 +6123,7 @@ const docTemplate = `{
                     "example": "active"
                 },
                 "storage_cost": {
-                    "description": "Стоимость хранения товара",
+                    "description": "Стоимость хранения единицы материала",
                     "type": "number",
                     "example": 500
                 },
@@ -5668,8 +6132,13 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
+                "supplier_name": {
+                    "description": "Поставщик",
+                    "type": "string",
+                    "example": "Поставщик 2"
+                },
                 "total_quantity": {
-                    "description": "Общее количество товара",
+                    "description": "Количество материала",
                     "type": "integer",
                     "example": 500
                 },
@@ -5683,18 +6152,23 @@ const docTemplate = `{
                     "type": "string",
                     "example": "pcs"
                 },
+                "units_per_package": {
+                    "description": "Количество в одной упаковке",
+                    "type": "integer",
+                    "example": 10
+                },
                 "volume": {
                     "description": "Объем товара",
                     "type": "integer",
                     "example": 25
                 },
                 "warehouse_id": {
-                    "description": "Id склада",
+                    "description": "Склад(место хранения) id",
                     "type": "integer",
                     "example": 1
                 },
                 "warehouse_section": {
-                    "description": "Секция склада, где хранится товар",
+                    "description": "Секция хранения",
                     "type": "string",
                     "example": "B-Section-2"
                 }
@@ -5704,12 +6178,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "article": {
-                    "description": "Артикул товара",
+                    "description": "Артикул материала",
                     "type": "string",
                     "example": "SB-1234"
                 },
                 "by_invoice": {
-                    "description": "Накладная на товар",
+                    "description": "Номер товарной накладной",
                     "type": "string",
                     "example": "INV-987654"
                 },
@@ -5718,13 +6192,18 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Urgent order"
                 },
-                "contract": {
+                "contract_date": {
                     "description": "Дата договора",
                     "type": "string",
                     "example": "2023-08-15T10:00:00Z"
                 },
+                "contract_number": {
+                    "description": "Номер договора",
+                    "type": "string",
+                    "example": "44"
+                },
                 "expiration_date": {
-                    "description": "Срок годности товара",
+                    "description": "Срок годности материала",
                     "type": "string",
                     "example": "2024-08-15T10:00:00Z"
                 },
@@ -5738,6 +6217,11 @@ const docTemplate = `{
                     "type": "string",
                     "example": "DEL-56789"
                 },
+                "internal_name": {
+                    "description": "Наименование материала для внутреннего пользования",
+                    "type": "string",
+                    "example": "Наименование материала для внутреннего пользования"
+                },
                 "location": {
                     "description": "Локация на складе",
                     "type": "string",
@@ -5749,7 +6233,7 @@ const docTemplate = `{
                     "example": 10
                 },
                 "name": {
-                    "description": "Наименование товара",
+                    "description": "Наименование материала от поставщика",
                     "type": "string",
                     "example": "Steel Beam"
                 },
@@ -5764,22 +6248,28 @@ const docTemplate = `{
                     "example": 150.75
                 },
                 "product_category": {
-                    "description": "Категория товара",
-                    "type": "string",
-                    "example": "Construction"
+                    "description": "Категории материала",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Construction",
+                        "Bricks"
+                    ]
                 },
                 "received_date": {
-                    "description": "Дата поступления товара",
+                    "description": "Дата поступления на склад",
                     "type": "string",
                     "example": "2023-08-20T10:00:00Z"
                 },
                 "reserve": {
-                    "description": "Резерв товара",
+                    "description": "Количество на резерве",
                     "type": "string",
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за товар",
+                    "description": "Ответственное лицо за закуп",
                     "type": "string",
                     "example": "John Doe"
                 },
@@ -5789,7 +6279,7 @@ const docTemplate = `{
                     "example": "active"
                 },
                 "storage_cost": {
-                    "description": "Стоимость хранения товара",
+                    "description": "Стоимость хранения единицы материала",
                     "type": "number",
                     "example": 500
                 },
@@ -5798,8 +6288,13 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
+                "supplier_name": {
+                    "description": "Поставщик",
+                    "type": "string",
+                    "example": "Поставщик 3"
+                },
                 "total_quantity": {
-                    "description": "Общее количество товара",
+                    "description": "Количество материала",
                     "type": "integer",
                     "example": 500
                 },
@@ -5813,18 +6308,23 @@ const docTemplate = `{
                     "type": "string",
                     "example": "pcs"
                 },
+                "units_per_package": {
+                    "description": "Количество в одной упаковке",
+                    "type": "integer",
+                    "example": 10
+                },
                 "volume": {
                     "description": "Объем товара",
                     "type": "integer",
                     "example": 25
                 },
                 "warehouse_id": {
-                    "description": "Id склада",
+                    "description": "Склад(место хранения) id",
                     "type": "integer",
                     "example": 1
                 },
                 "warehouse_section": {
-                    "description": "Секция склада, где хранится товар",
+                    "description": "Секция хранения",
                     "type": "string",
                     "example": "B-Section-2"
                 }
@@ -5906,11 +6406,16 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Юридический адрес поставщика"
                 },
+                "locality": {
+                    "description": "Населенный пункт поставщика",
+                    "type": "string",
+                    "example": "Населенный пункт поставщика"
+                },
                 "name": {
                     "description": "Наименование поставщика",
                     "type": "string",
                     "maxLength": 140,
-                    "minLength": 5,
+                    "minLength": 1,
                     "example": "ООО Название поставщика"
                 },
                 "other_fields": {
@@ -5920,8 +6425,14 @@ const docTemplate = `{
                 },
                 "payment_terms": {
                     "description": "Условия оплаты по контракту",
-                    "type": "string",
-                    "example": "Условия оплаты по контракту"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "условие_оплаты_по_контракту_1",
+                        "условие_оплаты_по_контракту_2"
+                    ]
                 },
                 "phone": {
                     "description": "Телефон поставщика",
@@ -5931,8 +6442,14 @@ const docTemplate = `{
                 },
                 "product_categories": {
                     "description": "Категории товаров, поставляемых поставщиком",
-                    "type": "string",
-                    "example": "Категории товаров, поставляемых поставщиком"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "категория_товаров_1",
+                        "категория_товаров_2"
+                    ]
                 },
                 "product_types": {
                     "description": "Количество типов товаров от поставщика",
@@ -5968,6 +6485,31 @@ const docTemplate = `{
                     "description": "Сайт поставщика",
                     "type": "string",
                     "example": "Сайт поставщика"
+                }
+            }
+        },
+        "domain.UpdateUnitOfMeasure": {
+            "type": "object",
+            "properties": {
+                "abbreviation": {
+                    "description": "Аббревиатура",
+                    "type": "string",
+                    "example": "kg"
+                },
+                "description": {
+                    "description": "Описание",
+                    "type": "string",
+                    "example": "Единица измерения веса"
+                },
+                "name": {
+                    "description": "Название на языке системы",
+                    "type": "string",
+                    "example": "Килограмм"
+                },
+                "name_en": {
+                    "description": "Название на английском",
+                    "type": "string",
+                    "example": "Kilogram"
                 }
             }
         },

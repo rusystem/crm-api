@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/lib/pq"
 	"github.com/rusystem/crm-api/pkg/domain"
 )
 
@@ -35,16 +36,17 @@ func (sr *SuppliersPostgresRepository) Create(ctx context.Context, supplier doma
 		INSERT INTO %s (name, legal_address, actual_address, warehouse_address, contact_person, phone, email, 
 		                       website, contract_number, product_categories, purchase_amount, balance, product_types, 
 		                       comments, files, country, region, tax_id, bank_details, registration_date, payment_terms, 
-		                       is_active, other_fields, company_id, contract_date) 
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING id`,
+		                       is_active, other_fields, company_id, contract_date, locality) 
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26) RETURNING id`,
 		domain.TableSupplier)
 
 	var id int64
 	if err = sr.psql.QueryRowContext(ctx, query, supplier.Name, supplier.LegalAddress, supplier.ActualAddress,
 		supplier.WarehouseAddress, supplier.ContactPerson, supplier.Phone, supplier.Email, supplier.Website,
-		supplier.ContractNumber, supplier.ProductCategories, supplier.PurchaseAmount, supplier.Balance, supplier.ProductTypes,
+		supplier.ContractNumber, pq.Array(supplier.ProductCategories), supplier.PurchaseAmount, supplier.Balance, supplier.ProductTypes,
 		supplier.Comments, supplier.Files, supplier.Country, supplier.Region, supplier.TaxID, supplier.BankDetails,
-		supplier.RegistrationDate, supplier.PaymentTerms, supplier.IsActive, otherFieldsJSON, supplier.CompanyId, supplier.ContractDate,
+		supplier.RegistrationDate, pq.Array(supplier.PaymentTerms), supplier.IsActive, otherFieldsJSON, supplier.CompanyId, supplier.ContractDate,
+		supplier.Locality,
 	).Scan(&id); err != nil {
 		return 0, err
 	}
@@ -59,7 +61,8 @@ func (sr *SuppliersPostgresRepository) GetById(ctx context.Context, id int64) (d
         contact_person, phone, email, website, contract_number,
         product_categories, purchase_amount, balance, product_types,
         comments, files, country, region, tax_id, bank_details,
-        registration_date, payment_terms, is_active, other_fields, company_id, contract_date
+        registration_date, payment_terms, is_active, other_fields, 
+        company_id, contract_date, locality
     FROM %s
     WHERE id = $1;
     `, domain.TableSupplier)
@@ -72,11 +75,11 @@ func (sr *SuppliersPostgresRepository) GetById(ctx context.Context, id int64) (d
 	err := row.Scan(
 		&supplier.ID, &supplier.Name, &supplier.LegalAddress, &supplier.ActualAddress,
 		&supplier.WarehouseAddress, &supplier.ContactPerson, &supplier.Phone, &supplier.Email,
-		&supplier.Website, &supplier.ContractNumber, &supplier.ProductCategories, &supplier.PurchaseAmount,
+		&supplier.Website, &supplier.ContractNumber, pq.Array(&supplier.ProductCategories), &supplier.PurchaseAmount,
 		&supplier.Balance, &supplier.ProductTypes, &supplier.Comments, &supplier.Files,
 		&supplier.Country, &supplier.Region, &supplier.TaxID, &supplier.BankDetails,
-		&supplier.RegistrationDate, &supplier.PaymentTerms, &supplier.IsActive, &otherFieldsJSON,
-		&supplier.CompanyId, &supplier.ContractDate,
+		&supplier.RegistrationDate, pq.Array(&supplier.PaymentTerms), &supplier.IsActive, &otherFieldsJSON,
+		&supplier.CompanyId, &supplier.ContractDate, &supplier.Locality,
 	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -104,15 +107,17 @@ func (sr *SuppliersPostgresRepository) Update(ctx context.Context, supplier doma
 		SET name = $1, legal_address = $2, actual_address = $3, warehouse_address = $4, contact_person = $5,
 			phone = $6, email = $7, website = $8, contract_number = $9, product_categories = $10, purchase_amount = $11,
 			balance = $12, product_types = $13, comments = $14, files = $15, country = $16, region = $17, tax_id = $18,
-			bank_details = $19, registration_date = $20, payment_terms = $21, is_active = $22, other_fields = $23, contract_date = $24
-		WHERE id = $25;
+			bank_details = $19, registration_date = $20, payment_terms = $21, is_active = $22, other_fields = $23, contract_date = $24,
+		    locality = $25
+		WHERE id = $26;
 	`, domain.TableSupplier)
 
 	_, err = sr.psql.ExecContext(ctx, query, supplier.Name, supplier.LegalAddress, supplier.ActualAddress,
 		supplier.WarehouseAddress, supplier.ContactPerson, supplier.Phone, supplier.Email, supplier.Website,
-		supplier.ContractNumber, supplier.ProductCategories, supplier.PurchaseAmount, supplier.Balance, supplier.ProductTypes,
-		supplier.Comments, supplier.Files, supplier.Country, supplier.Region, supplier.TaxID, supplier.BankDetails,
-		supplier.RegistrationDate, supplier.PaymentTerms, supplier.IsActive, otherFieldsJSON, supplier.ContractDate, supplier.ID)
+		supplier.ContractNumber, pq.Array(supplier.ProductCategories), supplier.PurchaseAmount, supplier.Balance,
+		supplier.ProductTypes, supplier.Comments, supplier.Files, supplier.Country, supplier.Region, supplier.TaxID,
+		supplier.BankDetails, supplier.RegistrationDate, pq.Array(supplier.PaymentTerms), supplier.IsActive, otherFieldsJSON,
+		supplier.ContractDate, supplier.Locality, supplier.ID)
 
 	return err
 }
@@ -143,7 +148,7 @@ func (sr *SuppliersPostgresRepository) GetListByCompanyId(ctx context.Context, i
 		product_categories, purchase_amount, balance, product_types,
 		comments, files, country, region, tax_id, bank_details,
 		registration_date, payment_terms, is_active, other_fields, company_id, 
-		contract_date
+		contract_date, locality
 	FROM %s
 	WHERE company_id = $1 ORDER BY %s %s
 	LIMIT $2 OFFSET $3;
@@ -168,11 +173,11 @@ func (sr *SuppliersPostgresRepository) GetListByCompanyId(ctx context.Context, i
 		if err = rows.Scan(
 			&supplier.ID, &supplier.Name, &supplier.LegalAddress, &supplier.ActualAddress,
 			&supplier.WarehouseAddress, &supplier.ContactPerson, &supplier.Phone, &supplier.Email,
-			&supplier.Website, &supplier.ContractNumber, &supplier.ProductCategories, &supplier.PurchaseAmount,
+			&supplier.Website, &supplier.ContractNumber, pq.Array(&supplier.ProductCategories), &supplier.PurchaseAmount,
 			&supplier.Balance, &supplier.ProductTypes, &supplier.Comments, &supplier.Files,
 			&supplier.Country, &supplier.Region, &supplier.TaxID, &supplier.BankDetails,
-			&supplier.RegistrationDate, &supplier.PaymentTerms, &supplier.IsActive, &otherFieldsJSON,
-			&supplier.CompanyId, &supplier.ContractDate,
+			&supplier.RegistrationDate, pq.Array(&supplier.PaymentTerms), &supplier.IsActive, &otherFieldsJSON,
+			&supplier.CompanyId, &supplier.ContractDate, &supplier.Locality,
 		); err != nil {
 			return nil, 0, err
 		}

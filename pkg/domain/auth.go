@@ -13,7 +13,7 @@ type EmailInput struct {
 type SignUp struct {
 	CompanyId                int64    `json:"company_id" example:"1"`
 	Username                 string   `json:"username" binding:"required,min=5,max=140" example:"dmitry"`
-	Name                     string   `json:"name" binding:"required,max=140" example:"Дмитрий"`
+	Name                     string   `json:"name" binding:"required,min=1,max=140" example:"Дмитрий"`
 	Email                    string   `json:"email" binding:"required,email,min=5,max=140" example:"dmitry@test.com"`
 	Phone                    string   `json:"phone" binding:"required,min=7,max=140" example:"+77777777777"`
 	Password                 string   `json:"password" binding:"required,min=8,max=255" example:"12345678"`

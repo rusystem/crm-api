@@ -11,6 +11,7 @@ CREATE SEQUENCE companies_id_seq;
 CREATE SEQUENCE refresh_tokens_id_seq;
 CREATE SEQUENCE sections_id_seq;
 CREATE SEQUENCE material_categories_id_seq;
+CREATE SEQUENCE units_of_measure_id_seq;
 CREATE
 EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -50,7 +51,7 @@ CREATE TABLE "planning_materials"
     "total_without_vat"        DECIMAL,
     "supplier_id"              INT,
     "location"                 VARCHAR(255),
-    "contract"                 DATE,
+    "contract_date"            DATE,
     "file"                     VARCHAR(255),
     "status"                   VARCHAR(255),
     "comments"                 TEXT,
@@ -64,7 +65,11 @@ CREATE TABLE "planning_materials"
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
     "other_fields"             JSONB,
-    "company_id"               INT
+    "company_id"               INT,
+    "internal_name"            TEXT,
+    "units_per_package"        INT,
+    "supplier_name"            TEXT,
+    "contract_number"          VARCHAR(255)
 );
 
 CREATE TABLE "purchased_materials"
@@ -83,7 +88,7 @@ CREATE TABLE "purchased_materials"
     "total_without_vat"        DECIMAL,
     "supplier_id"              INT,
     "location"                 VARCHAR(255),
-    "contract"                 DATE,
+    "contract_date"            DATE,
     "file"                     VARCHAR(255),
     "status"                   VARCHAR(255),
     "comments"                 TEXT,
@@ -97,7 +102,11 @@ CREATE TABLE "purchased_materials"
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
     "other_fields"             JSONB,
-    "company_id"               INT
+    "company_id"               INT,
+    "internal_name"            TEXT,
+    "units_per_package"        INT,
+    "supplier_name"            TEXT,
+    "contract_number"          VARCHAR(255)
 );
 
 CREATE TABLE "planning_materials_archive"
@@ -116,7 +125,7 @@ CREATE TABLE "planning_materials_archive"
     "total_without_vat"        DECIMAL,
     "supplier_id"              INT,
     "location"                 VARCHAR(255),
-    "contract"                 DATE,
+    "contract_date"            DATE,
     "file"                     VARCHAR(255),
     "status"                   VARCHAR(255),
     "comments"                 TEXT,
@@ -130,7 +139,11 @@ CREATE TABLE "planning_materials_archive"
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
     "other_fields"             JSONB,
-    "company_id"               INT
+    "company_id"               INT,
+    "internal_name"            TEXT,
+    "units_per_package"        INT,
+    "supplier_name"            TEXT,
+    "contract_number"          VARCHAR(255)
 );
 
 CREATE TABLE "purchased_materials_archive"
@@ -149,7 +162,7 @@ CREATE TABLE "purchased_materials_archive"
     "total_without_vat"        DECIMAL,
     "supplier_id"              INT,
     "location"                 VARCHAR(255),
-    "contract"                 DATE,
+    "contract_date"            DATE,
     "file"                     VARCHAR(255),
     "status"                   VARCHAR(255),
     "comments"                 TEXT,
@@ -163,7 +176,11 @@ CREATE TABLE "purchased_materials_archive"
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
     "other_fields"             JSONB,
-    "company_id"               INT
+    "company_id"               INT,
+    "internal_name"            TEXT,
+    "units_per_package"        INT,
+    "supplier_name"            TEXT,
+    "contract_number"          VARCHAR(255)
 );
 
 CREATE TABLE "suppliers"
@@ -178,7 +195,7 @@ CREATE TABLE "suppliers"
     "email"              VARCHAR(255),
     "website"            VARCHAR(255),
     "contract_number"    VARCHAR(255),
-    "product_categories" VARCHAR(255),
+    "product_categories" TEXT[],
     "purchase_amount"    DECIMAL,
     "balance"            DECIMAL,
     "product_types"      INT,
@@ -189,11 +206,12 @@ CREATE TABLE "suppliers"
     "tax_id"             VARCHAR(255),
     "bank_details"       TEXT,
     "registration_date"  DATE,
-    "payment_terms"      TEXT,
+    "payment_terms"      TEXT[],
     "is_active"          BOOLEAN,
     "other_fields"       JSONB,
     "company_id"         INT,
-    "contract_date"      TIMESTAMP
+    "contract_date"      TIMESTAMP,
+    "locality"           TEXT
 );
 
 CREATE TABLE "users"
@@ -265,6 +283,16 @@ CREATE TABLE "material_categories"
     "img_url"     VARCHAR(255)
 );
 
+CREATE TABLE "units_of_measure"
+(
+    "id"           INT PRIMARY KEY DEFAULT nextval('units_of_measure_id_seq'),
+    "name"         VARCHAR(255) NOT NULL UNIQUE, -- Название на языке системы (по умолчанию русский)
+    "name_en"      VARCHAR(255) NOT NULL,        -- Название на английском
+    "abbreviation" VARCHAR(50)  NOT NULL UNIQUE, -- Аббревиатура
+    "description"  TEXT,                         -- Описание
+    "company_id"   INT          NOT NULL         -- ID компании
+);
+
 ALTER TABLE "planning_materials"
     ADD FOREIGN KEY ("warehouse_id") REFERENCES "warehouses" ("id");
 
@@ -327,6 +355,9 @@ CREATE INDEX idx_planning_materials_company_id ON planning_materials (company_id
 CREATE INDEX idx_purchased_materials_company_id ON purchased_materials (company_id);
 CREATE INDEX idx_planning_materials_archive_company_id ON planning_materials_archive (company_id);
 CREATE INDEX idx_purchased_materials_archive_company_id ON purchased_materials_archive (company_id);
+
+CREATE UNIQUE INDEX units_of_measure_unique_name_abbr_company
+    ON units_of_measure (name, abbreviation, company_id);
 
 DO
 $$
@@ -397,3 +428,12 @@ VALUES ('full_all_access'),
        ('production_data_access'),
        ('status_and_calculate_access'),
        ('purchase_planning_access') ON CONFLICT ("name") DO NOTHING;
+
+INSERT INTO "units_of_measure" ("name", "name_en", "abbreviation", "description", "company_id")
+VALUES
+    ('Килограмм', 'Kilogram', 'kg', 'Единица измерения веса', 1),
+    ('Метр', 'Meter', 'm', 'Единица измерения длины', 1),
+    ('Литр', 'Liter', 'l', 'Единица измерения объема', 1),
+    ('Штука', 'Piece', 'pcs', 'Единица измерения для подсчета количества предметов', 1),
+    ('Упаковка', 'Package', 'pkg', 'Единица измерения упаковок', 1)
+    ON CONFLICT ("name") DO NOTHING;
