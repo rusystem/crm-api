@@ -58,9 +58,6 @@ func (h *Handler) Init() *gin.Engine {
 		}
 	}()
 
-	//router.RedirectTrailingSlash = false
-	//router.RemoveExtraSlash = false
-
 	router.Use(
 		gin.Recovery(),
 		gin.Logger(),
