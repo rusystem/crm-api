@@ -3,48 +3,44 @@ package http
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 )
 
 func corsMiddleware(c *gin.Context) {
-	// Получаем Origin из заголовков запроса
 	origin := c.Request.Header.Get("Origin")
 
-	// Список разрешённых источников
+	origin = strings.TrimSuffix(origin, "/")
+
 	allowedOrigins := map[string]bool{
-		"http://localhost:3000":     true, // Локальный фронтенд
-		"http://localhost":          true, // Локальный фронтенд
-		"http://127.0.0.1:3000":     true, // Альтернативный локальный адрес
-		"http://91.243.71.100:3000": true, // IP фронтенда
-		"http://91.243.71.100:5173": true, // Vite DevServer
-		"http://91.243.71.100":      true, // Vite DevServer
+		"http://localhost":          true,
+		"http://127.0.0.1:3000":     true,
+		"http://91.243.71.100:3000": true,
+		"http://91.243.71.100:5173": true,
+		"http://91.243.71.100":      true,
 	}
 
-	// Проверяем, разрешён ли Origin
 	isAllowed := allowedOrigins[origin]
 
-	// Устанавливаем CORS-заголовки
 	if isAllowed {
 		c.Header("Access-Control-Allow-Origin", origin)
 	} else {
-		c.Header("Access-Control-Allow-Origin", "") // Заблокировать неразрешённые Origin
+		c.Header("Access-Control-Allow-Origin", "")
 	}
 
 	c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 	c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization, Accept, X-Requested-With")
-	c.Header("Access-Control-Expose-Headers", "Authorization") // Позволяет клиенту читать этот заголовок
-	c.Header("Access-Control-Allow-Credentials", "true")       // Поддержка авторизационных данных (куки/токены)
+	c.Header("Access-Control-Expose-Headers", "Authorization")
+	c.Header("Access-Control-Allow-Credentials", "true")
 
-	// Обработка preflight-запросов (OPTIONS)
 	if c.Request.Method == http.MethodOptions {
 		if isAllowed {
-			c.AbortWithStatus(http.StatusOK) // Успешный ответ для разрешённого Origin
+			c.AbortWithStatus(http.StatusOK)
 		} else {
-			c.AbortWithStatus(http.StatusForbidden) // 403 для неразрешённого Origin
+			c.AbortWithStatus(http.StatusForbidden)
 		}
 		return
 	}
 
-	// Продолжаем выполнение для других методов
 	c.Next()
 }
 
