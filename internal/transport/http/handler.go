@@ -61,10 +61,10 @@ func (h *Handler) Init() *gin.Engine {
 	router.Use(
 		gin.Recovery(),
 		gin.Logger(),
+		trailingSlashMiddleware,
 		corsMiddleware,
 		secureFunc,
 		limiter.Limit(h.cfg.Limiter.RPS, h.cfg.Limiter.Burst, h.cfg.Limiter.TTL),
-		trailingSlashMiddleware,
 	)
 
 	router.GET("/ping", func(c *gin.Context) {
