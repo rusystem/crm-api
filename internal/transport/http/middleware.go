@@ -9,8 +9,10 @@ func corsMiddleware(c *gin.Context) {
 	origin := c.Request.Header.Get("Origin")
 
 	allowedOrigins := map[string]bool{
+		"http://localhost":          true,
 		"http://localhost:3000":     true,
 		"http://127.0.0.1:3000":     true,
+		"http://91.243.71.100":      true,
 		"http://91.243.71.100:3000": true,
 		"http://91.243.71.100:5173": true,
 	}
