@@ -50,10 +50,8 @@ func corsMiddleware(c *gin.Context) {
 
 func trailingSlashMiddleware(c *gin.Context) {
 	path := c.Request.URL.Path
-
 	if len(path) > 1 && path[len(path)-1] != '/' {
-		c.Request.URL.Path = path + "/"
+		c.Request.URL.Path += "/"
 	}
-
 	c.Next()
 }

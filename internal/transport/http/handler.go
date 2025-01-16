@@ -62,6 +62,7 @@ func (h *Handler) Init() *gin.Engine {
 	//router.RemoveExtraSlash = false
 
 	router.Use(
+		trailingSlashMiddleware,
 		gin.Recovery(),
 		gin.Logger(),
 		corsMiddleware,
