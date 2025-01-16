@@ -7,35 +7,31 @@ import (
 
 func corsMiddleware(c *gin.Context) {
 	origin := c.Request.Header.Get("Origin")
-	allowedOrigins := []string{
-		"http://localhost",
-		"http://127.0.0.1",
-		"http://91.243.71.100:5173",
-		"http://91.243.71.100:3000",
+
+	allowedOrigins := map[string]bool{
+		"http://localhost:3000":     true,
+		"http://127.0.0.1:3000":     true,
+		"http://91.243.71.100:3000": true,
+		"http://91.243.71.100:5173": true,
 	}
 
-	isAllowed := false
-	for _, o := range allowedOrigins {
-		if origin == o {
-			isAllowed = true
-			break
-		}
-	}
+	c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+	c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization, Accept, X-Requested-With")
+	c.Header("Access-Control-Expose-Headers", "Authorization")
+	c.Header("Access-Control-Allow-Credentials", "true")
 
-	if isAllowed {
+	if allowedOrigins[origin] {
 		c.Header("Access-Control-Allow-Origin", origin)
-		c.Header("Access-Control-Allow-Credentials", "true")
-		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
+	} else {
+		c.Header("Access-Control-Allow-Origin", "")
 	}
 
-	if c.Request.Method == "OPTIONS" {
-		if isAllowed {
+	if c.Request.Method == http.MethodOptions {
+		if allowedOrigins[origin] {
 			c.AbortWithStatus(http.StatusOK)
-			return
+		} else {
+			c.AbortWithStatus(http.StatusForbidden)
 		}
-
-		c.AbortWithStatus(http.StatusForbidden)
 		return
 	}
 
