@@ -29,16 +29,24 @@ func corsMiddleware(c *gin.Context) {
 		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
 	}
 
-	// Для OPTIONS-запросов возвращаем OK
 	if c.Request.Method == "OPTIONS" {
 		if isAllowed {
 			c.AbortWithStatus(http.StatusOK)
 			return
 		}
 
-		// Если Origin не разрешён, возвращаем 403
 		c.AbortWithStatus(http.StatusForbidden)
 		return
+	}
+
+	c.Next()
+}
+
+func trailingSlashMiddleware(c *gin.Context) {
+	path := c.Request.URL.Path
+
+	if len(path) > 1 && path[len(path)-1] != '/' {
+		c.Request.URL.Path = path + "/"
 	}
 
 	c.Next()
