@@ -65,6 +65,8 @@ func (s *MaterialsService) CreatePlanning(ctx context.Context, info domain.JWTIn
 		return 0, domain.ErrNotAllowed
 	}
 
+	material.SupplierName = supplier.Name
+
 	return s.repo.Materials.CreatePlanning(ctx, material)
 }
 
@@ -270,6 +272,8 @@ func (s *MaterialsService) CreatePurchased(ctx context.Context, info domain.JWTI
 	if supplier.CompanyId != info.CompanyId && !tools.IsFullAccessSection(info.Sections) {
 		return 0, 0, domain.ErrNotAllowed
 	}
+
+	material.SupplierName = supplier.Name
 
 	return s.repo.Materials.CreatePurchased(ctx, material)
 }

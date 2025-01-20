@@ -187,6 +187,11 @@ func (s *WarehouseServices) GenerateWarehouseInfoReportXls(ctx context.Context, 
 	sheetName := "Warehouse Report"
 	f.SetSheetName("Sheet1", sheetName)
 
+	responsibleUser, err := s.repo.User.GetById(ctx, wh.ResponsiblePerson)
+	if err != nil {
+		return nil, err
+	}
+
 	fields := []struct {
 		Label string
 		Value string
@@ -194,7 +199,7 @@ func (s *WarehouseServices) GenerateWarehouseInfoReportXls(ctx context.Context, 
 		{"ID", strconv.Itoa(int(wh.ID))},
 		{"Наименование", wh.Name},
 		{"Адрес", wh.Address},
-		{"Ответственный", wh.ResponsiblePerson},
+		{"Ответственный", responsibleUser.Name},
 		{"Телефон", wh.Phone},
 		{"Электронная почта", wh.Email},
 		{"Макс. вместимость", fmt.Sprintf("%d м²", wh.MaxCapacity)},
@@ -237,6 +242,11 @@ func (s *WarehouseServices) GenerateWarehouseInfoReportPdf(ctx context.Context, 
 	pdf.Cell(190, 10, fmt.Sprintf("Отчет по складу: %s", wh.Name))
 	pdf.Ln(12)
 
+	responsibleUser, err := s.repo.User.GetById(ctx, wh.ResponsiblePerson)
+	if err != nil {
+		return nil, err
+	}
+
 	pdf.SetFont("Arial", "", 12)
 	fields := []struct {
 		Label string
@@ -245,7 +255,7 @@ func (s *WarehouseServices) GenerateWarehouseInfoReportPdf(ctx context.Context, 
 		{"ID", strconv.Itoa(int(wh.ID))},
 		{"Наименование", wh.Name},
 		{"Адрес", wh.Address},
-		{"Ответственный", wh.ResponsiblePerson},
+		{"Ответственный", responsibleUser.Name},
 		{"Телефон", wh.Phone},
 		{"Электронная почта", wh.Email},
 		{"Макс. вместимость", fmt.Sprintf("%d м.кв.", wh.MaxCapacity)},

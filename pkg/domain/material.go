@@ -27,7 +27,7 @@ type Material struct {
 	LastUpdated            time.Time              `json:"last_updated"`             // Дата последнего обновления информации о товаре
 	MinStockLevel          int64                  `json:"min_stock_level"`          // Минимальный уровень запаса
 	ExpirationDate         time.Time              `json:"expiration_date"`          // Срок годности материала
-	ResponsiblePerson      string                 `json:"responsible_person"`       // Ответственное лицо за закуп
+	ResponsiblePerson      int64                  `json:"responsible_person"`       // ID ответственного лица за закуп
 	StorageCost            float64                `json:"storage_cost"`             // Стоимость хранения единицы материала
 	WarehouseSection       string                 `json:"warehouse_section"`        // Секция хранения
 	IncomingDeliveryNumber string                 `json:"incoming_delivery_number"` // Входящий номер поставки
@@ -69,7 +69,7 @@ type CreatePlanningMaterial struct {
 	ReceivedDate           time.Time              `json:"received_date" example:"2023-08-20T10:00:00Z"`                               // Дата поступления на склад
 	MinStockLevel          int64                  `json:"min_stock_level" example:"10"`                                               // Минимальный уровень запаса
 	ExpirationDate         time.Time              `json:"expiration_date" example:"2024-08-15T10:00:00Z"`                             // Срок годности материала
-	ResponsiblePerson      string                 `json:"responsible_person" example:"John Doe"`                                      // Ответственное лицо за закуп
+	ResponsiblePerson      int64                  `json:"responsible_person" example:"1"`                                             // ID ответственного лица за закуп
 	StorageCost            float64                `json:"storage_cost" example:"500.00"`                                              // Стоимость хранения единицы материала
 	WarehouseSection       string                 `json:"warehouse_section" example:"B-Section-2"`                                    // Секция хранения
 	IncomingDeliveryNumber string                 `json:"incoming_delivery_number" example:"DEL-56789"`                               // Входящий номер поставки
@@ -103,7 +103,7 @@ type UpdatePlanningMaterial struct {
 	ReceivedDate           *time.Time              `json:"received_date" example:"2023-08-20T10:00:00Z"`                               // Дата поступления на склад
 	MinStockLevel          *int64                  `json:"min_stock_level" example:"10"`                                               // Минимальный уровень запаса
 	ExpirationDate         *time.Time              `json:"expiration_date" example:"2024-08-15T10:00:00Z"`                             // Срок годности материала
-	ResponsiblePerson      *string                 `json:"responsible_person" example:"John Doe"`                                      // Ответственное лицо за закуп
+	ResponsiblePerson      *int64                  `json:"responsible_person" example:"1"`                                             // ID ответственного лица за закуп
 	StorageCost            *float64                `json:"storage_cost" example:"500.00"`                                              // Стоимость хранения единицы материала
 	WarehouseSection       *string                 `json:"warehouse_section" example:"B-Section-2"`                                    // Секция хранения
 	IncomingDeliveryNumber *string                 `json:"incoming_delivery_number" example:"DEL-56789"`                               // Входящий номер поставки
@@ -141,7 +141,7 @@ type CreatePurchasedMaterial struct {
 	ReceivedDate           time.Time              `json:"received_date" example:"2023-08-20T10:00:00Z"`                               // Дата поступления на склад
 	MinStockLevel          int64                  `json:"min_stock_level" example:"10"`                                               // Минимальный уровень запаса
 	ExpirationDate         time.Time              `json:"expiration_date" example:"2024-08-15T10:00:00Z"`                             // Срок годности материала
-	ResponsiblePerson      string                 `json:"responsible_person" example:"John Doe"`                                      // Ответственное лицо за закуп
+	ResponsiblePerson      int64                  `json:"responsible_person" example:"1"`                                             // ID ответственного лица за закуп
 	StorageCost            float64                `json:"storage_cost" example:"500.00"`                                              // Стоимость хранения единицы материала
 	WarehouseSection       string                 `json:"warehouse_section" example:"B-Section-2"`                                    // Секция хранения
 	IncomingDeliveryNumber string                 `json:"incoming_delivery_number" example:"DEL-56789"`                               // Входящий номер поставки
@@ -175,7 +175,7 @@ type UpdatePurchasedMaterial struct {
 	ReceivedDate           *time.Time              `json:"received_date" example:"2023-08-20T10:00:00Z"`                               // Дата поступления на склад
 	MinStockLevel          *int64                  `json:"min_stock_level" example:"10"`                                               // Минимальный уровень запаса
 	ExpirationDate         *time.Time              `json:"expiration_date" example:"2024-08-15T10:00:00Z"`                             // Срок годности материала
-	ResponsiblePerson      *string                 `json:"responsible_person" example:"John Doe"`                                      // Ответственное лицо за закуп
+	ResponsiblePerson      *int64                  `json:"responsible_person" example:"1"`                                             // ID ответственного лица за закуп
 	StorageCost            *float64                `json:"storage_cost" example:"500.00"`                                              // Стоимость хранения единицы материала
 	WarehouseSection       *string                 `json:"warehouse_section" example:"B-Section-2"`                                    // Секция хранения
 	IncomingDeliveryNumber *string                 `json:"incoming_delivery_number" example:"DEL-56789"`                               // Входящий номер поставки

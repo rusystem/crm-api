@@ -84,8 +84,6 @@ var validationMessages = map[string]map[string]string{
 	},
 	"ResponsiblePerson": {
 		"required": "Responsible person is required",
-		"min":      "Responsible person must be at least 5 characters long",
-		"max":      "Responsible person must not exceed 140 characters",
 	},
 }
 

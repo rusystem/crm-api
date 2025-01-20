@@ -21,7 +21,7 @@ CREATE TABLE "warehouses"
     "id"                 INT PRIMARY KEY DEFAULT nextval('warehouses_id_seq'),
     "name"               VARCHAR(255),
     "address"            VARCHAR(255),
-    "responsible_person" VARCHAR(255),
+    "responsible_person" INT,
     "phone"              VARCHAR(50),
     "email"              VARCHAR(255),
     "max_capacity"       INT,
@@ -60,7 +60,7 @@ CREATE TABLE "planning_materials"
     "last_updated"             DATE,
     "min_stock_level"          INT,
     "expiration_date"          DATE,
-    "responsible_person"       VARCHAR(255),
+    "responsible_person"       INT,
     "storage_cost"             DECIMAL,
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
@@ -97,7 +97,7 @@ CREATE TABLE "purchased_materials"
     "last_updated"             DATE,
     "min_stock_level"          INT,
     "expiration_date"          DATE,
-    "responsible_person"       VARCHAR(255),
+    "responsible_person"       INT,
     "storage_cost"             DECIMAL,
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
@@ -134,7 +134,7 @@ CREATE TABLE "planning_materials_archive"
     "last_updated"             DATE,
     "min_stock_level"          INT,
     "expiration_date"          DATE,
-    "responsible_person"       VARCHAR(255),
+    "responsible_person"       INT,
     "storage_cost"             DECIMAL,
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
@@ -171,7 +171,7 @@ CREATE TABLE "purchased_materials_archive"
     "last_updated"             DATE,
     "min_stock_level"          INT,
     "expiration_date"          DATE,
-    "responsible_person"       VARCHAR(255),
+    "responsible_person"       INT,
     "storage_cost"             DECIMAL,
     "warehouse_section"        VARCHAR(255),
     "incoming_delivery_number" VARCHAR(255),
@@ -430,10 +430,8 @@ VALUES ('full_all_access'),
        ('purchase_planning_access') ON CONFLICT ("name") DO NOTHING;
 
 INSERT INTO "units_of_measure" ("name", "name_en", "abbreviation", "description", "company_id")
-VALUES
-    ('Килограмм', 'Kilogram', 'kg', 'Единица измерения веса', 1),
-    ('Метр', 'Meter', 'm', 'Единица измерения длины', 1),
-    ('Литр', 'Liter', 'l', 'Единица измерения объема', 1),
-    ('Штука', 'Piece', 'pcs', 'Единица измерения для подсчета количества предметов', 1),
-    ('Упаковка', 'Package', 'pkg', 'Единица измерения упаковок', 1)
-    ON CONFLICT ("name") DO NOTHING;
+VALUES ('Килограмм', 'Kilogram', 'kg', 'Единица измерения веса', 1),
+       ('Метр', 'Meter', 'm', 'Единица измерения длины', 1),
+       ('Литр', 'Liter', 'l', 'Единица измерения объема', 1),
+       ('Штука', 'Piece', 'pcs', 'Единица измерения для подсчета количества предметов', 1),
+       ('Упаковка', 'Package', 'pkg', 'Единица измерения упаковок', 1) ON CONFLICT ("name") DO NOTHING;
