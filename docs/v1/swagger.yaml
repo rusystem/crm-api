@@ -171,9 +171,9 @@ definitions:
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за закуп
-        example: John Doe
-        type: string
+        description: ID ответственного лица за закуп
+        example: 1
+        type: integer
       status:
         description: Статус товара
         example: active
@@ -296,9 +296,9 @@ definitions:
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за закуп
-        example: John Doe
-        type: string
+        description: ID ответственного лица за закуп
+        example: 1
+        type: integer
       status:
         description: Статус товара
         example: active
@@ -563,11 +563,9 @@ definitions:
         example: Регион склада
         type: string
       responsible_person:
-        description: Ответственное лицо за склад
-        example: Ответственное лицо за склад
-        maxLength: 140
-        minLength: 5
-        type: string
+        description: Ответственного лица за склад
+        example: 1
+        type: integer
     required:
     - address
     - name
@@ -840,9 +838,9 @@ definitions:
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за закуп
-        example: John Doe
-        type: string
+        description: ID ответственного лица за закуп
+        example: 1
+        type: integer
       status:
         description: Статус товара
         example: active
@@ -963,9 +961,9 @@ definitions:
         example: "50"
         type: string
       responsible_person:
-        description: Ответственное лицо за закуп
-        example: John Doe
-        type: string
+        description: ID ответственного лица за закуп
+        example: 1
+        type: integer
       status:
         description: Статус товара
         example: active

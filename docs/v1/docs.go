@@ -5248,9 +5248,9 @@ const docTemplate = `{
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за закуп",
-                    "type": "string",
-                    "example": "John Doe"
+                    "description": "ID ответственного лица за закуп",
+                    "type": "integer",
+                    "example": 1
                 },
                 "status": {
                     "description": "Статус товара",
@@ -5407,9 +5407,9 @@ const docTemplate = `{
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за закуп",
-                    "type": "string",
-                    "example": "John Doe"
+                    "description": "ID ответственного лица за закуп",
+                    "type": "integer",
+                    "example": 1
                 },
                 "status": {
                     "description": "Статус товара",
@@ -5747,11 +5747,9 @@ const docTemplate = `{
                     "example": "Регион склада"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за склад",
-                    "type": "string",
-                    "maxLength": 140,
-                    "minLength": 5,
-                    "example": "Ответственное лицо за склад"
+                    "description": "Ответственного лица за склад",
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -6113,9 +6111,9 @@ const docTemplate = `{
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за закуп",
-                    "type": "string",
-                    "example": "John Doe"
+                    "description": "ID ответственного лица за закуп",
+                    "type": "integer",
+                    "example": 1
                 },
                 "status": {
                     "description": "Статус товара",
@@ -6269,9 +6267,9 @@ const docTemplate = `{
                     "example": "50"
                 },
                 "responsible_person": {
-                    "description": "Ответственное лицо за закуп",
-                    "type": "string",
-                    "example": "John Doe"
+                    "description": "ID ответственного лица за закуп",
+                    "type": "integer",
+                    "example": 1
                 },
                 "status": {
                     "description": "Статус товара",
