@@ -128,10 +128,12 @@ func (s *MaterialsService) UpdatePlanningById(ctx context.Context, inp domain.Up
 	if inp.SupplierID != nil {
 		material.SupplierID = *inp.SupplierID
 
-		_, err = s.repo.Suppliers.GetById(ctx, material.SupplierID)
+		supplier, err := s.repo.Suppliers.GetById(ctx, material.SupplierID)
 		if err != nil {
 			return err
 		}
+
+		material.SupplierName = supplier.Name
 	}
 
 	if inp.Location != nil {
@@ -198,10 +200,6 @@ func (s *MaterialsService) UpdatePlanningById(ctx context.Context, inp domain.Up
 
 	if inp.UnitsPerPackage != nil {
 		material.UnitsPerPackage = *inp.UnitsPerPackage
-	}
-
-	if inp.SupplierName != nil {
-		material.SupplierName = *inp.SupplierName
 	}
 
 	if inp.ContractNumber != nil {
@@ -330,6 +328,13 @@ func (s *MaterialsService) UpdatePurchasedById(ctx context.Context, inp domain.U
 
 	if inp.SupplierID != nil {
 		material.SupplierID = *inp.SupplierID
+
+		supplier, err := s.repo.Suppliers.GetById(ctx, material.SupplierID)
+		if err != nil {
+			return err
+		}
+
+		material.SupplierName = supplier.Name
 	}
 
 	if inp.Location != nil {
@@ -396,10 +401,6 @@ func (s *MaterialsService) UpdatePurchasedById(ctx context.Context, inp domain.U
 
 	if inp.UnitsPerPackage != nil {
 		material.UnitsPerPackage = *inp.UnitsPerPackage
-	}
-
-	if inp.SupplierName != nil {
-		material.SupplierName = *inp.SupplierName
 	}
 
 	if inp.ContractNumber != nil {

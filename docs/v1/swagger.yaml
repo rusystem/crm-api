@@ -186,10 +186,6 @@ definitions:
         description: Поставщик товара
         example: 1
         type: integer
-      supplier_name:
-        description: Поставщик
-        example: Поставщик
-        type: string
       total_quantity:
         description: Количество материала
         example: 500
@@ -311,10 +307,6 @@ definitions:
         description: Поставщик товара
         example: 1
         type: integer
-      supplier_name:
-        description: Поставщик
-        example: Поставщик 3
-        type: string
       total_quantity:
         description: Количество материала
         example: 500
@@ -853,10 +845,6 @@ definitions:
         description: Поставщик товара
         example: 1
         type: integer
-      supplier_name:
-        description: Поставщик
-        example: Поставщик 2
-        type: string
       total_quantity:
         description: Количество материала
         example: 500
@@ -976,10 +964,6 @@ definitions:
         description: Поставщик товара
         example: 1
         type: integer
-      supplier_name:
-        description: Поставщик
-        example: Поставщик 3
-        type: string
       total_quantity:
         description: Количество материала
         example: 500

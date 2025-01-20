@@ -76,7 +76,6 @@ type CreatePlanningMaterial struct {
 	OtherFields            map[string]interface{} `json:"other_fields"`                                                               // Дополнительные пользовательские поля
 	InternalName           string                 `json:"internal_name" example:"Наименование материала для внутреннего пользования"` // Наименование материала для внутреннего пользования
 	UnitsPerPackage        int64                  `json:"units_per_package" example:"4"`                                              // Количество в одной упаковке
-	SupplierName           string                 `json:"supplier_name" example:"Поставщик"`                                          // Поставщик
 	ContractNumber         string                 `json:"contract_number" example:"11"`                                               // Номер договора
 }
 
@@ -110,7 +109,6 @@ type UpdatePlanningMaterial struct {
 	OtherFields            *map[string]interface{} `json:"other_fields"`                                                               // Дополнительные пользовательские поля
 	InternalName           *string                 `json:"internal_name" example:"Наименование материала для внутреннего пользования"` // Наименование материала для внутреннего пользования
 	UnitsPerPackage        *int64                  `json:"units_per_package" example:"10"`                                             // Количество в одной упаковке
-	SupplierName           *string                 `json:"supplier_name" example:"Поставщик 2"`                                        // Поставщик
 	ContractNumber         *string                 `json:"contract_number" example:"22"`                                               // Номер договора
 }
 
@@ -148,7 +146,6 @@ type CreatePurchasedMaterial struct {
 	OtherFields            map[string]interface{} `json:"other_fields"`                                                               // Дополнительные пользовательские поля
 	InternalName           string                 `json:"internal_name" example:"Наименование материала для внутреннего пользования"` // Наименование материала для внутреннего пользования
 	UnitsPerPackage        int64                  `json:"units_per_package" example:"2"`                                              // Количество в одной упаковке
-	SupplierName           string                 `json:"supplier_name" example:"Поставщик 3"`                                        // Поставщик
 	ContractNumber         string                 `json:"contract_number" example:"33"`                                               // Номер договора
 }
 
@@ -182,6 +179,5 @@ type UpdatePurchasedMaterial struct {
 	OtherFields            *map[string]interface{} `json:"other_fields"`                                                               // Дополнительные пользовательские поля
 	InternalName           *string                 `json:"internal_name" example:"Наименование материала для внутреннего пользования"` // Наименование материала для внутреннего пользования
 	UnitsPerPackage        *int64                  `json:"units_per_package" example:"10"`                                             // Количество в одной упаковке
-	SupplierName           *string                 `json:"supplier_name" example:"Поставщик 3"`                                        // Поставщик
 	ContractNumber         *string                 `json:"contract_number" example:"44"`                                               // Номер договора
 }

@@ -5267,11 +5267,6 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
-                "supplier_name": {
-                    "description": "Поставщик",
-                    "type": "string",
-                    "example": "Поставщик"
-                },
                 "total_quantity": {
                     "description": "Количество материала",
                     "type": "integer",
@@ -5425,11 +5420,6 @@ const docTemplate = `{
                     "description": "Поставщик товара",
                     "type": "integer",
                     "example": 1
-                },
-                "supplier_name": {
-                    "description": "Поставщик",
-                    "type": "string",
-                    "example": "Поставщик 3"
                 },
                 "total_quantity": {
                     "description": "Количество материала",
@@ -6130,11 +6120,6 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
-                "supplier_name": {
-                    "description": "Поставщик",
-                    "type": "string",
-                    "example": "Поставщик 2"
-                },
                 "total_quantity": {
                     "description": "Количество материала",
                     "type": "integer",
@@ -6285,11 +6270,6 @@ const docTemplate = `{
                     "description": "Поставщик товара",
                     "type": "integer",
                     "example": 1
-                },
-                "supplier_name": {
-                    "description": "Поставщик",
-                    "type": "string",
-                    "example": "Поставщик 3"
                 },
                 "total_quantity": {
                     "description": "Количество материала",

@@ -123,7 +123,6 @@ func (h *Handler) createPlanning(c *gin.Context) {
 		CompanyID:              info.CompanyId,
 		InternalName:           inp.InternalName,
 		UnitsPerPackage:        inp.UnitsPerPackage,
-		SupplierName:           inp.SupplierName,
 		ContractNumber:         inp.ContractNumber,
 	})
 	if err != nil {
@@ -451,7 +450,6 @@ func (h *Handler) createPurchased(c *gin.Context) {
 		CompanyID:              info.CompanyId,
 		InternalName:           inp.InternalName,
 		UnitsPerPackage:        inp.UnitsPerPackage,
-		SupplierName:           inp.SupplierName,
 		ContractNumber:         inp.ContractNumber,
 	})
 	if err != nil {
